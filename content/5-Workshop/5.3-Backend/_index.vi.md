@@ -156,7 +156,7 @@ AWS SAM giúp triển khai backend serverless dễ dàng hơn nhờ:
 - Triển khai full stack bằng một lệnh (sam deploy --guided)
 ### File template.yaml (SAM)
 Tạo file:
-```bash
+```yaml
 
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
