@@ -1,12 +1,11 @@
 ---
 title : "Tổng quan và kiến trúc hệ thống"
-date: "2006-01-02" 
+date: "2025-12-07" 
 weight : 1
 chapter : false
 pre : " <b> 5.1. </b> "
 ---
 
-#### Giới thiệu về Serverless Student Management System
 
 **Serverless Student Management System** (SMS) là nền tảng quản lý sinh viên hiện đại, xây dựng hoàn toàn trên các dịch vụ serverless của AWS. Hệ thống này giúp các trường học hoặc doanh nghiệp nhỏ dễ dàng quản lý, phân tích, và tương tác với dữ liệu sinh viên ở quy mô từ nhỏ đến lớn mà không cần lo lắng về hạ tầng phần cứng.  
 Các thành phần serverless như Lambda, DynamoDB, AppSync, EventBridge giúp hệ thống tự động mở rộng, tối ưu chi phí, duy trì độ tin cậy và bảo mật cao.

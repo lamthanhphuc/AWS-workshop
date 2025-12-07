@@ -6,7 +6,6 @@ chapter: false
 pre: "<b> 5.2. </b>"
 ---
 
-# Chuẩn bị môi trường & tài khoản AWS
 
 Để triển khai thành công Workshop **Serverless Student Management System**, cần chuẩn bị đầy đủ môi trường kỹ thuật, tài khoản AWS và các dịch vụ nền tảng theo kiến trúc serverless – event-driven.  
 Trang này hướng dẫn những bước thiết yếu trước khi bắt đầu phát triển backend, frontend và các thành phần sự kiện.
@@ -21,7 +20,13 @@ Trang này hướng dẫn những bước thiết yếu trước khi bắt đầ
 - Bật **MFA** để bảo mật tài khoản root.  
 - Tạo **IAM User** dành cho các thành viên nhóm và phân vai trò theo nguyên tắc **Least Privilege**.
 
-### Thiết lập các quyền IAM (IAM Permissions)
+![IAM User](/images/5-Workshop/5.2-Prerequisite/IAMUser.png)  
+*Hình 1: Các IAM user mẫu.*
+
+---
+
+## Thiết lập các quyền IAM (IAM Permissions)
+
 Để triển khai đầy đủ hệ thống serverless của dự án, IAM User cần quyền thao tác với:
 
 - AWS Lambda  
@@ -34,7 +39,10 @@ Trang này hướng dẫn những bước thiết yếu trước khi bắt đầ
 - S3  
 - CloudWatch  
 - Amplify  
-- IAM (giới hạn ở PassRole và tạo Role cho Lambda)  
+- IAM (giới hạn ở PassRole và các thao tác tạo role phục vụ Lambda)
+
+![Permissions](/images/5-Workshop/5.2-Prerequisite/Permissions.png)  
+*Hình 2: Permissions mẫu.*
 
 Một ví dụ policy cấp quyền rộng cho mục đích workshop:
 

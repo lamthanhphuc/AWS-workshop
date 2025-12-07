@@ -1,207 +1,228 @@
 ---
 title : "Triển khai Backend: DynamoDB, Lambda, API Gateway, Cognito"
-date: "2006-01-02"
+date: "2025-12-07"
 weight : 3
 chapter : false
 pre : "<b> 5.3. </b>"
 ---
 
-#  Thiết lập các dịch vụ nền tảng
-
-Thiết lập ban đầu các dịch vụ cốt lõi được sử dụng xuyên suốt dự án.
 
 ---
 
-## 🔷 Amazon DynamoDB
+# 1. Amazon DynamoDB
 
-Dùng để lưu trữ:
+DynamoDB là cơ sở dữ liệu NoSQL serverless, lưu trữ tất cả dữ liệu của hệ thống:
 
-- Thông tin sinh viên
-- Lớp học, môn học
-- Giảng viên
-- Điểm số
-- Dữ liệu tương tác phục vụ mô hình ML
-- Lịch sử chat, sự kiện hệ thống
+- Thông tin sinh viên  
+- Lớp học, môn học  
+- Giảng viên  
+- Điểm số  
+- Lịch sử chat, sự kiện hệ thống  
+- Dữ liệu ML phục vụ gợi ý (Personalize)  
 
-### 🗂 **Cấu trúc bảng DynamoDB (Single-Table Design)**
+Hệ thống backend Spring Boot tương tác DynamoDB qua:
+
+- AWS SDK for Java 17  
+- Spring Data DynamoDB hoặc repository do team tự viết  
+- Presigned URL (upload tài liệu, hồ sơ)  
+- EventBridge (phát sinh sự kiện academic event → xử lý qua Lambda)
+
+---
+
+##  **Thiết kế bảng DynamoDB (Single-Table Design)**
 
 **Bảng:** `Student-Management-Database`
 
 | Thành phần | Ý nghĩa |
 |-----------|---------|
-| **Partition Key (PK)** | USER#, CLASS#, SUBJECT#, … |
-| **Sort Key (SK)** | PROFILE, INFO, STUDENT#, … |
-| **GSI1PK** | ROLE#, TYPE#, USER#… |
-| **GSI1SK** | NAME#, CLASS#, SUBJECT#… |
+| PK        | USER#, CLASS#, SUBJECT#, TEACHER#, GRADE# |
+| SK        | PROFILE, INFO, STUDENT#, SUBJECT#, CLASS# |
+| GSI1PK    | ROLE#, TYPE#, EMAIL#, CLASS# |
+| GSI1SK    | NAME#, CREATED_AT#, SUBJECT# |
 
-**Billing mode:** On-Demand (khuyến nghị, tránh lỗi throttling và tối ưu chi phí)
+**Billing mode:** On-Demand → phù hợp workshop (không cần cấu hình capacity).
 
 ![DynamoDB](/images/5-Workshop/5.2-Prerequisite/DynamoDB.png)
 
 ---
 
-## 🔷 Amazon Cognito
+##  **Triển khai DynamoDB qua AWS CLI**
 
-Dùng để xác thực người dùng (Student, Lecturer, Admin).
+###  Tạo bảng
 
-### ✔ Các bước thiết lập:
+```bash
+aws dynamodb create-table \
+  --table-name Student-Management-Database \
+  --attribute-definitions \
+      AttributeName=PK,AttributeType=S \
+      AttributeName=SK,AttributeType=S \
+  --key-schema \
+      AttributeName=PK,KeyType=HASH \
+      AttributeName=SK,KeyType=RANGE \
+  --billing-mode PAY_PER_REQUEST
+```
+# 2. Amazon Cognito
 
-- Tạo **User Pool**
-- Tạo **App Client (No secret)**
-- Cho phép đăng nhập bằng **email**
-- Tạo nhóm (Group): `student`, `lecturer`, `admin`  
-- Tích hợp JWT vào API Gateway (Cognito Authorizer)
+Cognito cung cấp:
 
-![Cognito](/images/5-Workshop/5.2-Prerequisite/Cognito.png)
+- Quản lý tài khoản
 
----
+- Đăng nhập bằng email
 
-## 🔷 Amazon S3
+- JWT Authentication dùng Spring Security
 
-Dùng cho:
+- Phân quyền theo Group (student, lecturer, admin)
 
-- Lưu ảnh đại diện (avatar)
+- Backend Spring Boot dùng:
+
+- Cognito JWT Filter
+
+- Spring Security @PreAuthorize("hasRole('ADMIN')")
+
+##  **Triển khai Cognito qua AWS CLI**
+
+### Tạo User Pool
+```bash
+Sao chép mã
+aws cognito-idp create-user-pool \
+  --pool-name Student-App-Pool \
+  --auto-verified-attributes email
+```
+### Tạo App Client
+```bash
+Sao chép mã
+aws cognito-idp create-user-pool-client \
+  --user-pool-id <UserPoolId> \
+  --client-name StudentAppClient \
+  --no-generate-secret
+  ```
+
+# 3. Amazon S3
+S3 được dùng cho:
+
+- Lưu avatar sinh viên
+
 - Tài liệu lớp học
-- Build artifacts frontend
-- Deploy website
 
-![S3](/images/5-Workshop/5.2-Prerequisite/S3.png)
+- Build artifacts (React/Vite)
 
----
+- Deploy website qua S3 + CloudFront
 
-## 🔷 Amazon API Gateway (REST API)
+- Log & asset học liệu
 
-### AUTHENTICATION
-| Method | Endpoint               | Description                |
-|--------|------------------------|----------------------------|
-| POST   | /auth/login            | Login bằng tài khoản thường |
-| POST   | /auth/google           | Login bằng Google          |
-| POST   | /auth/logout           | Logout                     |
-| POST   | /auth/change-password  | Đổi mật khẩu               |
-| POST   | /auth/forgot-password  | Quên mật khẩu              |
 
-### USER PROFILE
-| Method | Endpoint   | Description   |
-|--------|------------|---------------|
-| GET    | /profile   | Xem profile   |
-| PATCH  | /profile   | Chỉnh sửa profile |
 
-### NOTIFICATIONS
-| Method | Endpoint                    | Description |
-|--------|------------------------------|-------------|
-| GET    | /notifications               | Thông báo chung (dashboard) |
-| POST   | /lecturer/notifications/email | GV gửi thông báo email |
-| GET    | /student/notifications       | Thông báo riêng của Student |
+## Triển khai S3 qua AWS CLI
+### Tạo Bucket
+```bash
+Sao chép mã
+aws s3api create-bucket \
+  --bucket aws-sam-cli-managed-default-samclisourcebucket-qsrwrbr9usyq \
+  --region ap-southeast-1 \
+  --create-bucket-configuration LocationConstraint=ap-southeast-1
+  ```
 
-### ADMIN DASHBOARD
-| Method | Endpoint                | Description                  |
-|--------|--------------------------|------------------------------|
-| GET    | /admin/all-students     | Tổng số sinh viên           |
-| GET    | /admin/active-classes   | Tổng lớp đang hoạt động     |
+# 4. Amazon API Gateway + Lambda
+API Gateway đóng vai trò:
 
-### SEARCH & FILTER
-| Method | Endpoint   | Description |
-|--------|------------|-------------|
-| GET    | /search    | Search đa loại dữ liệu theo role |
+- Cổng API cho toàn hệ thống
 
-### EXPORT DATA
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET    | /export  | Xuất dữ liệu |
+- Xác thực Cognito Authorizer
 
-### ADMIN – USER MANAGEMENT
-| Method | Endpoint              | Description |
-|--------|------------------------|-------------|
-| POST   | /admin/register        | Tạo user mới |
-| GET    | /admin/users           | Liệt kê user |
-| PATCH  | /admin/users/{id}      | Deactivate user (status=0) |
+- Route đến Lambda để xử lý nghiệp vụ
 
-### ADMIN – SUBJECT MANAGEMENT
-| Method | Endpoint                     | Description |
-|--------|-------------------------------|-------------|
-| POST   | /admin/subjects               | Tạo môn học |
-| GET    | /admin/subjects               | Liệt kê môn học |
-| PATCH  | /admin/subjects/{id}          | Chỉnh sửa môn học |
-| PATCH  | /admin/subjects/ban/{id}      | Deactivate subject (status=0) |
+- Logging CloudWatch
 
-### ADMIN – CLASS MANAGEMENT
-| Method | Endpoint               | Description |
-|--------|-------------------------|-------------|
-| POST   | /admin/classes          | Tạo lớp học |
-| GET    | /admin/classes          | Liệt kê lớp |
-| PUT    | /admin/classes/{id}     | Chỉnh sửa lớp |
-| PATCH  | /admin/classes/{id}     | Deactivate class |
+- Tích hợp CORS
 
-### ENROLL MANAGEMENT
-| Method | Endpoint        | Description       |
-|--------|------------------|-------------------|
-| POST   | /admin/enroll    | Enroll sinh viên |
+- Backend được triển khai qua:
 
-### AUDIT LOGS
-| Method | Endpoint           | Description     |
-|--------|----------------------|-----------------|
-| GET    | /admin/audit-logs    | Xem audit logs |
+- Lambda (Java 17, Maven build)
 
-### RANKING & ANALYTICS
-| Method | Endpoint           | Description |
-|--------|----------------------|-------------|
-| GET    | /admin/ranking       | Ranking toàn hệ thống |
+- API Gateway REST API
 
-### LECTURER – CLASSES
-| Method | Endpoint                   | Description |
-|--------|------------------------------|-------------|
-| GET    | /lecturer/classes            | Liệt kê lớp |
-| PUT    | /lecturer/classes/{id}       | Chỉnh sửa lớp |
-| DELETE | /lecturer/classes/{id}       | Deactivate class |
+- Lambda Function URL (nội bộ)
 
-### LECTURER – STUDENTS
-| Method | Endpoint                         | Description |
-|--------|-----------------------------------|-------------|
-| GET    | /lecturer/students/{class_id}     | Danh sách HS trong lớp |
 
-### LECTURER – ASSIGNMENTS
-| Method | Endpoint                                         | Description |
-|--------|---------------------------------------------------|-------------|
-| POST   | /lecturer/assignments                             | Tạo assignment |
-| GET    | /lecturer/classes/{class_id}/assignments          | Liệt kê assignments |
-| PUT    | /lecturer/assignments/{id}                        | Chỉnh sửa assignment |
-| DELETE | /lecturer/assignments/{id}                        | Xoá assignment |
-| POST   | /lecturer/assignments/{assignment_id}/update-grades | Tạo/Sửa điểm |
-| GET    | /lecturer/assignments/get-submissions             | Xem submissions |
 
-### LECTURER – RANKING
-| Method | Endpoint                       | Description |
-|--------|----------------------------------|-------------|
-| GET    | /lecturer/ranking/{class_id}     | Ranking trong lớp |
+##  Triển khai Lambda & API Gateway bằng AWS SAM
 
-### STUDENT – CLASSES
-| Method | Endpoint                               | Description |
-|--------|-----------------------------------------|-------------|
-| POST   | /student/enroll                         | Enroll / Unenroll |
-| GET    | /student/classes/class-enrolled         | Danh sách lớp đang học |
-| GET    | /student/search                         | Tìm lớp / giảng viên |
+AWS SAM giúp triển khai backend serverless dễ dàng hơn nhờ:
 
-### STUDENT – ASSIGNMENTS
-| Method | Endpoint                                    | Description |
-|--------|----------------------------------------------|-------------|
-| GET    | /student/assignments                        | Danh sách assignment |
-| POST   | /student/submit                             | Nộp bài |
-| GET    | /student/assignments/get-submissions        | Xem submissions cá nhân |
+- Quản lý Lambda, API Gateway, IAM Role trong 1 file template.yaml
 
-### STUDENT – RANKING
-| Method | Endpoint                          | Description |
-|--------|------------------------------------|-------------|
-| GET    | /student/ranking/{class_id}        | Ranking lớp |
+- Build Java bằng Maven tự động (sam build)
 
-# 🎯 Tổng kết
+- Triển khai full stack bằng một lệnh (sam deploy --guided)
+### File template.yaml (SAM)
+Tạo file:
+```bash
 
-Trang **“Triển khai Backend”** mô tả toàn bộ các dịch vụ AWS cốt lõi bạn cần thiết lập trước khi bắt đầu phát triển chức năng:
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Student Management System - Backend (Lambda + API Gateway)
 
-- DynamoDB (Single-table design)
-- Cognito (Authentication)
-- S3 (Storage & Frontend deploy)
-- API Gateway + Lambda (Backend serverless)
+Globals:
+  Function:
+    Timeout: 15
+    MemorySize: 512
+    Runtime: java17
 
-Các thành phần này tạo nền tảng để xây dựng hệ thống **Serverless – Realtime – Event-Driven** của **Student Management System**.
+Resources:
 
----
+  StudentServiceFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: com.example.Handler::handleRequest
+      CodeUri: ./
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AmazonDynamoDBFullAccess
+      Events:
+        GetStudents:
+          Type: Api
+          Properties:
+            Path: /students
+            Method: GET
+            Auth:
+              Authorizer: CognitoAuthorizer
+    CognitoAuthorizer:
+        Type: AWS::Serverless::Api
+        Properties:
+        StageName: prod
+        Auth:
+            Authorizers:
+            CognitoAuthorizer:
+                UserPoolArn: arn:aws:cognito-idp:<region>:<account-id>:userpool/<UserPoolId>
+```
+### Build Lambda bằng SAM
+
+SAM tự chạy Maven, tự đóng gói JAR:
+```bash
+sam build
+```
+### Deploy bằng SAM
+```bash
+sam deploy --guided
+```
+
+Lần đầu bạn nhập:
+
+- Stack Name: student-management-backend
+
+- Region: ap-southeast-1
+
+- Allow SAM to create IAM roles? → Y
+
+- Save arguments? → Y
+
+Sau khi deploy thành công, SAM sẽ trả về:
+
+- API Endpoint
+
+- Lambda ARN
+
+- CloudFormation Stack
+# Tổng kết
+
+Các thành phần này tạo nền tảng để xây dựng hệ thống Serverless – Realtime – Event-Driven cho Student Management System.
