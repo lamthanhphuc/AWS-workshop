@@ -155,19 +155,19 @@ Có thể tải [tệp ước tính ngân sách](/images/2-Proposal/MyEstimate.p
 
 | **Dịch vụ**            | **Mô tả sử dụng**                                           | **Chi phí ước tính / tháng (USD)** | **Ghi chú**                                                                           |
 | ---------------------- | ----------------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------- |
-| **Amazon API Gateway** | Xử lý ~100k-500k API calls/tháng                            | ~$0.00 – $1.75                     | HTTP APIs: $1.00/triệu cuộc gọi; REST: $3.50/triệu; miễn phí 1M cuộc gọi đầu tiên.             |
-| **AWS Lambda**         | ~200k-500k yêu cầu, 100k-200k GB-giây                       | ~$0.00 – $0.20                     | Yêu cầu: $0.20/triệu; Thời gian: $0.0000166667/GB-giây; miễn phí 1M yêu cầu + 400k GB-giây.             |
-| **Amazon DynamoDB**    | ~5-10 GB lưu trữ, 250k-500k đọc/ghi                         | ~$0.00 – $0.75                     | Đọc: $0.25/triệu; Ghi: $1.25/triệu; Lưu trữ: $0.25/GB; miễn phí 25 GB + 25 RCU/WCU.                |
-| **Amazon Cognito**     | ~100-200 người dùng hoạt động hàng tháng                    | ~$0.00                             | Cơ bản: $0.015/người dùng; miễn phí 10k người dùng đầu tiên (đủ cho 50-100 sinh viên + admin).                                   |
-| **Amazon S3**          | ~5 GB lưu trữ, yêu cầu thấp                                 | ~$0.023 – $0.12                    | Lưu trữ: $0.023/GB; Yêu cầu: $0.0004/1k GET; có tín dụng miễn phí.                    |
-| **Amazon CloudWatch**  | ~5 GB nhật ký, 10 số liệu/cảnh báo                          | ~$0.03 – $0.50                     | Nhật ký: $0.50/GB thu thập; Lưu trữ: $0.03/GB; Số liệu: $0.30/số liệu; miễn phí 5 GB. |
-| **AWS Amplify**        | Lưu trữ dashboard, vài lần build/tháng                      | ~$0.00 – $1.00                     | Phút build: $0.01/phút; Lưu trữ: $0.15/GB phục vụ; có miễn phí.                       |
-| **Amazon Route 53**    | Truy vấn DNS, vùng lưu trữ                                  | ~$0.50 – $1.00                     | Vùng lưu trữ: $0.50/vùng/tháng; Truy vấn DNS: $0.40/triệu truy vấn.                   |
-| **AWS WAF**            | Đánh giá Web ACL, quy tắc                                   | ~$1.00 – $3.00                     | Web ACL: $1.00/tháng; Quy tắc: $0.60/triệu yêu cầu; quy tắc quản lý thêm phí.         |
-| **AWS CodeBuild**      | ~10 lần build/tháng, 100 phút                               | ~$0.00 – $0.50                     | $0.005/phút build; miễn phí 100 phút/tháng.                                           |
-| **AWS CodeDeploy**     | Triển khai ứng dụng                                         | ~$0.00 – $0.20                     | EC2/tại chỗ: $0.02/triển khai; serverless miễn phí.                                   |
-| **Amazon CloudFront**  | CDN phân phối nội dung tĩnh (kết nối Route53 & Amplify/S3)  | ~$0.10 – $1.00                     | Miễn phí 1 TB/tháng đầu tiên trong Free Tier; $0.085/GB sau đó.                       |
-| **AWS CodePipeline**   | Tự động hóa CI/CD (kết nối GitLab → CodeBuild → CodeDeploy) | ~$1.00                             | $1.00/tháng cho mỗi pipeline đang hoạt động.                                          |
+| **Amazon API Gateway** | Xử lý ~100k-500k API calls/tháng                            | $3.8                              | HTTP APIs, REST APIs, miễn phí 1M cuộc gọi đầu tiên.                                   |
+| **AWS Lambda**         | ~200k-500k yêu cầu, 100k-200k GB-giây                       | $0.5                              | Yêu cầu, GB-giây, miễn phí 1M yêu cầu + 400k GB-giây.                                 |
+| **Amazon DynamoDB**    | ~5-10 GB lưu trữ, 250k-500k đọc/ghi                         | $1                                | Đọc, ghi, lưu trữ, miễn phí 25 GB + 25 RCU/WCU.                                       |
+| **Amazon Cognito**     | ~100-200 người dùng hoạt động hàng tháng                    | $0                                | Miễn phí 10k người dùng đầu tiên.                                                     |
+| **Amazon S3**          | ~5 GB lưu trữ, yêu cầu thấp                                 | $0.13                             | Lưu trữ, yêu cầu, có tín dụng miễn phí.                                               |
+| **Amazon CloudWatch**  | ~5 GB nhật ký, 10 số liệu/cảnh báo                          | $4                                | Nhật ký, số liệu, cảnh báo, miễn phí 5 GB.                                            |
+| **AWS Amplify**        | Lưu trữ dashboard, vài lần build/tháng                      | $1                                | Phút build, lưu trữ, có miễn phí.                                                     |
+| **Amazon Route 53**    | Truy vấn DNS, vùng lưu trữ                                  | $1                                | Vùng lưu trữ, truy vấn DNS.                                                           |
+| **AWS WAF**            | Đánh giá Web ACL, quy tắc                                   | $7                                | Web ACL, quy tắc, phí quản lý quy tắc.                                                |
+| **AWS CodeBuild**      | ~10 lần build/tháng, 100 phút                               | $0.9                              | $0.005/phút build, miễn phí 100 phút/tháng.                                           |
+| **AWS CodeDeploy**     | Triển khai ứng dụng                                         | $0.8                              | EC2/tại chỗ, serverless miễn phí.                                                     |
+| **Amazon CloudFront**  | CDN phân phối nội dung tĩnh (kết nối Route53 & Amplify/S3)  | $1                                | Miễn phí 1 TB/tháng đầu tiên, $0.085/GB sau đó.                                       |
+| **AWS CodePipeline**   | Tự động hóa CI/CD (kết nối GitLab → CodeBuild → CodeDeploy) | $1                                | $1/tháng cho mỗi pipeline đang hoạt động.                                             |
 
 #### Tổng cộng ước tính
 | **Tổng chi phí / tháng (ước lượng)** | **Tổng 3 tháng (ước lượng)** | **Với AWS Free Tier** | **Ghi chú**                                                                                                             |

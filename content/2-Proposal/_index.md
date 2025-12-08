@@ -143,23 +143,24 @@ Download [budget estimate file](/images/2-Proposal/MyEstimate.pdf) for detailed 
 
 #### Infrastructure Costs
 
+
 **AWS Services:**
 
-| **Services** | **Usage Description** | **Estimated Cost / Month (USD)** | **Notes** |
-| ---------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| **Amazon API Gateway** | Handles ~100k-500k API calls/month | ~$0.00 – $1.75 | HTTP APIs: $1.00/million calls; REST: $3.50/million; first 1M calls free. |
-| **AWS Lambda** | ~200k-500k requests, 100k-200k GB-sec | ~$0.00 – $0.20 | Requests: $0.20/million; Time: $0.0000166667/GB-sec; 1M requests + 400k GB-sec free. |
-| **Amazon DynamoDB** | ~5-10 GB storage, 250k-500k reads/writes | ~$0.00 – $0.75 | Reads: $0.25/million; Writes: $1.25/million; Storage: $0.25/GB; 25 GB + 25 RCU/WCU free. |
-| **Amazon Cognito** | ~100-200 monthly active users | ~$0.00 | Basic: $0.015/user; first 10k users free (enough for 50-100 students + admin). |
-| **Amazon S3** | ~5 GB storage, low requirements | ~$0.023 – $0.12 | Storage: $0.023/GB; Requests: $0.0004/1k GET; free credits available. |
-| **Amazon CloudWatch** | ~5 GB logs, 10 metrics/alarms | ~$0.03 – $0.50 | Logs: $0.50/GB collected; Storage: $0.03/GB; Metrics: $0.30/metric; 5 GB free. |
-| **AWS Amplify** | Dashboard hosting, few builds/month | ~$0.00 – $1.00 | Build minutes: $0.01/minute; Storage: $0.15/GB served; free credits available. |
-| **Amazon Route 53** | DNS queries, storage zones | ~$0.50 – $1.00 | Storage Zone: $0.50/zone/month; DNS Queries: $0.40/million queries. |
-| **AWS WAF** | Web ACL Assessment, Rules | ~$1.00 – $3.00 | Web ACL: $1.00/month; Rules: $0.60/million requests; rule management costs extra. |
-| **AWS CodeBuild** | ~10 builds/month, 100 minutes | ~$0.00 – $0.50 | $0.005/min build; 100 minutes/month free. |
-| **AWS CodeDeploy** | Application Deployment | ~$0.00 – $0.20 | EC2/on-premises: $0.02/deploy; serverless free. |
-| **Amazon CloudFront** | Static Content Delivery CDN (Route53 & Amplify/S3 Connection) | ~$0.10 – $1.00 | First 1 TB/month free in Free Tier; $0.085/GB thereafter. |
-| **AWS CodePipeline** | CI/CD automation (GitLab connection → CodeBuild → CodeDeploy) | ~$1.00 | $1.00/month for each active pipeline. |
+| **Services**           | **Usage Description**                        | **Estimated Cost / Month (USD)** | **Notes** |
+|------------------------|----------------------------------------------|-------------------------------|-------------------------------|
+| **Amazon API Gateway** | Handles ~100k-500k API calls/month           | $3.8                          | HTTP APIs, REST APIs, first 1M calls free |
+| **AWS Lambda**         | ~200k-500k requests, 100k-200k GB-sec        | $0.5                          | Requests, GB-sec, 1M requests + 400k GB-sec free |
+| **Amazon DynamoDB**    | ~5-10 GB storage, 250k-500k reads/writes     | $1                            | Reads, Writes, Storage, 25 GB + 25 RCU/WCU free |
+| **Amazon Cognito**     | ~100-200 monthly active users                | $0                            | First 10k users free |
+| **Amazon S3**          | ~5 GB storage, low requirements              | $0.13                         | Storage, requests, free credits available |
+| **Amazon CloudWatch**  | ~5 GB logs, 10 metrics/alarms                | $4                            | Logs, metrics, alarms, 5 GB free |
+| **AWS Amplify**        | Dashboard hosting, few builds/month          | $1                            | Build minutes, storage, free credits available |
+| **Amazon Route 53**    | DNS queries, storage zones                   | $1                            | Storage zone, DNS queries |
+| **AWS WAF**            | Web ACL Assessment, Rules                    | $7                            | Web ACL, rules, rule management costs extra |
+| **AWS CodeBuild**      | ~10 builds/month, 100 minutes                | $0.9                          | $0.005/min build, 100 minutes/month free |
+| **AWS CodeDeploy**     | Application Deployment                       | $0.8                          | EC2/on-premises, serverless free |
+| **Amazon CloudFront**  | Static Content Delivery CDN                  | $1                            | First 1 TB/month free, $0.085/GB thereafter |
+| **AWS CodePipeline**   | CI/CD automation (GitLab → CodeBuild → CodeDeploy) | $1                       | $1/month for each active pipeline |
 
 #### Estimated total
 | **Total cost / month (estimated)** | **3-month total (estimated)** | **With AWS Free Tier** | **Notes** |
