@@ -24,4 +24,4 @@ In this workshop, you will:
 
 - Apply practical knowledge to real lessons or similar projects, easily expand to mobile environments or integrate advanced AI.
 
-![overview](/images/5-Workshop/5.1-Workshop-overview/Solution.drawio.png)
+![overview](/images/5-Workshop/5.1-Workshop-overview/solution.drawio.png)
