@@ -1,13 +1,11 @@
 ---
-title: "Environment Preparation & AWS Account Setup"
+title: "Prerequiste"
 date: "2025-12-07"
 weight: 2
 chapter: false
 pre: "<b> 5.2. </b>"
 ---
 
-
-#### Overview
 To successfully deploy the **Serverless Student Management System** Workshop, it is necessary to fully prepare the technical environment, AWS account and platform services according to the serverless – event-driven architecture.
 
 This page guides the essential steps before starting to develop the backend, frontend and event components.
@@ -17,6 +15,7 @@ This page guides the essential steps before starting to develop the backend, fro
 ## Prepare AWS account
 
 ### Create and configure AWS account
+
 - Create a personal AWS account or use AWS Educate/AWS Academy.
 
 - Activate **AWS Free Tier** to optimize costs during the workshop period.
@@ -26,7 +25,8 @@ This page guides the essential steps before starting to develop the backend, fro
 - Create **IAM User** for team members and assign roles according to the **Least Privilege** principle.
 
 ![IAM User](/images/5-Workshop/5.2-Prerequisite/IAMUser.png)
-*Figure 1: Sample IAM users.*
+
+<center><i>Figure 1: Sample IAM users.</i></center>
 
 ---
 
@@ -75,3 +75,4 @@ An example of a broad permission policy for workshop purposes:
     }
   ]
 }
+```
