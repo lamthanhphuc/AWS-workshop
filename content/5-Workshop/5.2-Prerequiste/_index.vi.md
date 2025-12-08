@@ -6,7 +6,7 @@ chapter: false
 pre: "<b> 5.2. </b>"
 ---
 
-
+#### Tổng quan
 Để triển khai thành công Workshop **Serverless Student Management System**, cần chuẩn bị đầy đủ môi trường kỹ thuật, tài khoản AWS và các dịch vụ nền tảng theo kiến trúc serverless – event-driven.  
 Trang này hướng dẫn những bước thiết yếu trước khi bắt đầu phát triển backend, frontend và các thành phần sự kiện.
 

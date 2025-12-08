@@ -22,7 +22,7 @@ Các dịch vụ core: API Gateway (REST), Lambda xử lý logic nghiệp vụ, 
 2. [Chuẩn bị môi trường & tài khoản AWS](5.2-Prerequiste/)
 3. [Triển khai Backend: DynamoDB, Lambda, API Gateway, Cognito](5.3-Backend/)
 4. [Xây dựng Frontend: Amplify, Route 53, CloudFront, WAF](5.4-Frontend/)
-5. [CI/CD_Pipeline](5.5-CI/CD PIPELINE/)
+5. [CI/CD_Pipeline](5.5-CI/CDPIPELINE/)
 6. [CloudWatch](5.6-CLOUDWATCH/)
 
 #### Mục tiêu trải nghiệm

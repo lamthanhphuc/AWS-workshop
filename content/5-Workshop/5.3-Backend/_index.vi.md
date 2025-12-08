@@ -106,9 +106,9 @@ S3 được dùng cho:
 
 
 
-## PHẦN 3: LAMBDA + API GATEWAY (Backend)
+## 4. LAMBDA + API GATEWAY (Backend)
 
-### 3.1 Chuẩn bị Java Spring cho Lambda
+### 4.1 Chuẩn bị Java Spring cho Lambda
 
 **Thêm dependencies vào pom.xml:**
 ```xml
@@ -180,7 +180,7 @@ public class StreamLambdaHandler implements RequestStreamHandler {
 }
 ```
 
-### 3.2 Build JAR
+### 4.2 Build JAR
 
 ```bash
 cd backend-project
@@ -188,7 +188,7 @@ mvn clean package -DskipTests
 # Output: target/your-app.jar
 ```
 
-### 3.3 Tạo Lambda Function
+### 4.3 Tạo Lambda Function
 
 1. Vào **AWS Console → Lambda → Create function**
 2. Cấu hình:
@@ -202,14 +202,14 @@ mvn clean package -DskipTests
 
 4. Handler: `com.example.StreamLambdaHandler::handleRequest`
 
-### 3.4 Cấu hình IAM Role cho Lambda
+### 4.4 Cấu hình IAM Role cho Lambda
 
 Attach policies:
 - `AmazonDynamoDBFullAccess`
 - `AWSLambdaBasicExecutionRole`
 - `AmazonCognitoPowerUser`
 
-### 3.5 Tạo API Gateway
+### 4.5 Tạo API Gateway
 
 1. Vào **AWS Console → API Gateway → Create API**
 2. Chọn **HTTP API** (recommended) hoặc REST API

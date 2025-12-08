@@ -8,151 +8,36 @@ pre : " <b> 5.4. </b> "
 
 #### Overview
 
-In this section, you will build a web interface for a **Serverless Student Management System** using **AWS Amplify**, **AppSync (GraphQL)**, and **Realtime Subscription**.
+In this section, you will build a web interface for the **Serverless Student Management System** using **AWS Amplify**, **CLOUDFRONT**, **WAF**, and **ROUTE53**.
 
 Frontend provides the following functions:
 
-- Login with Amazon Cognito
-- Realtime Dashboard
-- Realtime Chat
-- CRUD Student/Classes
-- Send event interactions to the backend
-
-Overall Architecture:
+Overall architecture:
 
 ![Amplify Architecture](/images/5-Workshop/5.4-Frontend/architecture.png)
 
 ---
 
-# 1. Initialize the Frontend project with AWS Amplify
+## 1. AMPLIFY (Frontend)
 
-### **1.1 Install Amplify CLI**
-```bash
-npm install -g @aws-amplify/cli
-amplify configure
-```
-### **1.2 Initialize the React project**
-```bash
-npx create-react-app student-portal
-cd student-portal
-amplify init
-```
-Options:
+### 1.1 Method 1: Amplify Console (Recommended)
 
-- Hosting: Amplify Hosting
-- Auth: Cognito User Pool
-- API: AppSync GraphQL
+1. Go to **AWS Console → Amplify → Create new app**
+2. Select **Host web app**
+3. Connect repository:
+- GitHub/GitLab/Bitbucket
+- ​​Authorize and select repo
 
-# 2. Create GraphQL API with AppSync
-Run command:
-```bash
-amplify add api
-```
-Select:
-- GraphQL API
-- Authorization: Cognito User Pool
-- Conflict detection: Auto merge
-- Realtime subscription: Enable
+4. Build configuration:
 
-### **2.1 GraphQL schema definition**
-
-File: amplify/backend/api/studentapi/schema.graphql
-```graphql
-type Student @model @auth(rules: [{ allow: owner }]) {
-  id: ID!
-  name: String!
-  email: String!
-  classId: ID
-}
-
-type Message
-  @model
-  @auth(rules: [{ allow: owner }, { allow: private }])
-  @aws_subscribe(mutations: ["sendMessage"]) {
-  id: ID!
-  sender: String!
-  content: String!
-  createdAt: AWSDateTime!
-}
-
-input SendMessageInput {
-  sender: String!
-  content: String!
-}
-
-type Mutation {
-  sendMessage(input: SendMessageInput!): Message
-    @function(name: "chatHandler-${env}")
-}
-```
-### **2.2 Deploy API**
-```bash
-amplifier push
-```
-# 3. Integrate Cognito Authentication
-
-Amplify creates its own Auth configuration:
-```bash
-amplify add auth
-```
-Select:
-- Email sign-in
-- No MFA (or optional)
-- Import into React:
-
-```javascript
-import { Auth } from 'aws-amplify';
-const user = await Auth.signIn(email, password);
-console.log("Logged in:", user);
-```
-
-# 4. Realtime Subscription (Chat)
-## **4.1 Sending a message**
-```javascript
-import { API, graphqlOperation } from 'aws-amplify';
-import { sendMessage } from './graphql/mutations';
-
-await API.graphql(
-  graphqlOperation(sendMessage, {
-    input: { sender, content }
-  })
-);
-```
-## **4.2 Receive realtime messages**
-```javascript
-import { onCreateMessage } from './graphql/subscriptions';
-
-useEffect(() => { 
-const sub = API.graphql( 
-graphqlOperation(onCreateMessage) 
-).subscribe({ 
-next: ({ value }) => { 
-const msg = value.data.onCreateMessage; 
-setMessages(prev => [...prev, msg]); 
-} 
-}); 
-
-return () => sub.unsubscribe();
-}, []);
-```
-
-# 5. Hosting Frontend on Amplify Hosting
-## **5.1 Connect GitHub repository**
-In AWS Amplify Console:
-- Select New App → Host Web App
-- Connect GitHub Repository
-- Amplify self-build + deploy via CI/CD
-
-## **5.2 Build configuration**
-
-File amplify.yml:
-```yml
+**amplify.yml** (already in the project):
+```yaml
 version: 1
 frontend:
   phases:
     preBuild:
       commands:
-        - npm install
+        - npm ci
     build:
       commands:
         - npm run build
@@ -164,33 +49,128 @@ frontend:
     paths:
       - node_modules/**/*
 ```
-# 6. Connect Realtime Dashboard
 
-Example using GraphQL subscription to update the number of online students:
-```graphql
-type OnlineEvent @model @aws_subscribe(mutations: ["updateOnline"]) {
-  id: ID!
-  userId: String!
-  time: AWSDateTime!
-}
+5. **Environment Variables:** 
+- `VITE_API_BASE_URL`: API Gateway URL 
+- `VITE_COGNITO_USER_POOL_ID`: User Pool ID 
+- `VITE_COGNITO_CLIENT_ID`: Client ID 
+- `VITE_COGNITO_REGION`: ap-southeast-1
+
+6. Deploy and get Amplify URL
+
+### 1.2 Method 2: Amplify CLI
+
+```bash
+# Setting
+npm install -g @aws-amplify/cli
+
+# Configure AWS credentials
+amplifier configure
+
+# Initialize in project
+cd serverless-student-management-system-front-end
+amplify init
+
+# Add hosting
+amplify add hosting
+# Choose: Hosting with Amplify Console
+# Select: Manual deployment.deployment
+
+# Deploy
+amplify publish
 ```
 
-React subscription:
-```javascript
-API.graphql(graphqlOperation(onUpdateOnline)).subscribe({
-  next: ({ value }) => {
-    const e = value.data.onUpdateOnline;
-    setOnlineList(prev => [...prev, e]);
-  }
-});
-```
-# 7. Summary
+---
 
-The "Building a Frontend: Amplify, AppSync, Realtime Chat" page has a complete guide:
+## 2. CLOUDFRONT + WAF
+
+### 2.1 Create WAF Web ACL
+
+1. Go to **AWS Console → WAF & Shield → Create web ACL**
+2. Configuration: 
+- Name: `student-management-waf`
+   - Resource type: CloudFront distributions
+   - Region: Global (CloudFront)
+
+3. Add rules:
+   - **AWS Managed Rules:**
+     - `AWSManagedRulesCommonRuleSet` (Core rule set)
+     - `AWSManagedRulesKnownBadInputsRuleSet`
+     - `AWSManagedRulesSQLiRuleSet` (SQL injection)
+   
+   - **Rate limiting:**
+     - Name: `RateLimitRule`
+     - Rate limit: 2000 requests per 5 minutes per IP
+
+- **Rate limiting:** 
+- Name: `RateLimitRule` 
+- Rate limit: 2000 requests per 5 minutes per IP
+
+### 2.2 Create CloudFront Distribution
+
+1. Go to **AWS Console → CloudFront → Create distribution**
+
+2. **Origin Settings:**
+   - Origin domain: Amplify app URL (xxx.amplifyapp.com)
+   - Protocol: HTTPS only
+
+3. **Default Cache Behavior:**
+   - Viewer protocol policy: Redirect HTTP to HTTPS
+   - Allowed HTTP methods: GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE
+   - Cache policy: CachingOptimized
+   - Origin request policy: AllViewer
+
+4. **Settings:**
+   - Price class: Use all edge locations
+   - WAF web ACL: Chọn ACL đã tạo
+   - SSL certificate: Default CloudFront certificate (hoặc custom)
+
+5. **Thêm Origin cho API Gateway:**
+   - Add origin: API Gateway URL
+   - Create behavior: `/api/*` → API Gateway origin
+
+---
+
+## 3. ROUTE53 (Custom Domain)
+
+### 3.1 Create Hosted Zone
+
+1. Go to **AWS Console → Route53 → Create hosted zone**
+2. Domain name: `yourdomain.com`
+3. Type: Public hosted zone
+
+### 3.2 Configure DNS Records
+
+**A Record for CloudFront:**
+```
+Record name: (empty or www)
+Record type: A
+Alias: Yes
+Route traffic to: CloudFront distribution
+```
+
+**CNAME for Amplify (if not using CloudFront):**
+```
+Record name: app
+Record type: CNAME
+Value: xxx.amplifyapp.com
+```
+
+### 3.3 SSL Certificate (ACM)
+
+1. Go to **AWS Console → Certificate Manager**
+2. Request certificate (must be in region us-east-1 for CloudFront)
+3. Domain: `yourdomain.com`, `*.yourdomain.com`
+4. Validation: DNS validation
+5. Add CNAME records to Route53
+
+---
+
+# 4. Summary
+
+Page "Building a Frontend: Amplify, ROUTE53, CloudFront, WAF" full guide:
 - Create a React project with Amplify
 - Use Cognito for frontend authentication
-- AppSync GraphQL API
-- Realtime subscription for chat
 - Hosting CI/CD via Amplify
 
-Frontend connects directly to the serverless backend system, creating a smooth and secure realtime experience.
+Frontend connects directly to the serverless backend system, creating a smooth and secure real-time experience.

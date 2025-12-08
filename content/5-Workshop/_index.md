@@ -10,9 +10,9 @@ pre: " <b> 5. </b> "
 
 #### Overview
 
-**Serverless Student Management Platform** is a cloud-based student management solution, optimized for cost and scalable flexibility by using **AWS Serverless** services (Lambda, DynamoDB, AppSync, EventBridge, etc.). The solution provides a real-time dashboard, assignment chat, machine learning-based ranking analysis, automated notifications, and operates entirely on event-driven architecture.
+**Serverless Student Management Platform** is a cloud-based student management solution, cost-effective and flexible scalability thanks to the use of **AWS Serverless** services (Lambda, DynamoDB, API gateway...). The platform supports up to 50-100 students initially, with the ability to flexibly expand to 500–1000 students without major infrastructure changes.
 
-Core services: API Gateway (REST), Lambda for business logic, DynamoDB for data storage, AppSync (GraphQL) & Amplify (React frontend), Cognito (user authentication), SES (email sending), Personalize (ML ranking), EventBridge (event orchestration), CloudWatch (monitoring), combined with modern DevOps CI/CD workflows.
+Core services: API Gateway (REST), Lambda handles business logic, DynamoDB stores data, Amplify (frontend React), Cognito (user authentication), CloudWatch (monitoring), combined with modern DevOps CI/CD processes.
 
 #### Contents
 
@@ -20,13 +20,12 @@ Core services: API Gateway (REST), Lambda for business logic, DynamoDB for data 
 2. [Environment Preparation & AWS Account Setup](5.2-Prerequiste/)
 3. [Backend Deployment: DynamoDB, Lambda, API Gateway, Cognito](5.3-Backend/)
 4. [Frontend Development: Amplify, AppSync, Realtime Chat](5.4-Frontend/)
-5. [Event-driven, Email Notification & ML Ranking](5.5-Event-ML/)
-6. [Resource Cleanup](5.6-Cleanup/)
+5. [CI/CD_Pipeline](5.5-CI/CDPIPELINE/)
+6. [CloudWatch](5.6-CLOUDWATCH/)
 
 #### Experience Objectives
 
-+ Understand multi-layer serverless architecture operating on AWS.
-+ Learn permission models with Cognito, real-time processing with AppSync.
-+ Directly build CRUD, chat, student ranking, send email notifications via events.
-+ Practice automated DevOps pipeline from code to deployment.
-
+- Understand and implement multi-tier serverless architecture on AWS, operate with key services.
+- Master authorization and user authentication with Cognito.
+- Practice building CRUD functions.
+- Experience modern DevOps process: automate build, test, deploy through CI/CD pipeline.

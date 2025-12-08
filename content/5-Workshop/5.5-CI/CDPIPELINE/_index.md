@@ -1,5 +1,5 @@
 ---
-title : "Event-driven, Email Notification & ML Ranking"
+title : "CI/CD_Pipeline"
 date: "2025-12-07"  
 weight : 5
 chapter : false

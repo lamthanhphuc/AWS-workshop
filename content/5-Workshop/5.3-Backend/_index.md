@@ -9,6 +9,12 @@ pre : "<b> 5.3. </b>"
 
 ---
 
+#### Overview
+This section guides you through the backend implementation of a serverless student management system on AWS. You will use core services such as DynamoDB for data storage, Lambda for business logic, API Gateway to connect the frontend and backend, and Cognito for user authentication. The implementation process includes designing the data table, configuring authentication, building the backend application with Java Spring Boot, packaging and deploying to Lambda, as well as configuring API Gateway to serve student management tasks in a secure, automated, and scalable way.
+
+![Amplify Architecture](/images/5-Workshop/5.3-Backend/architecture.png)
+---
+
 # 1. Amazon DynamoDB
 
 DynamoDB is a serverless NoSQL database that stores all system data:
@@ -17,205 +23,219 @@ DynamoDB is a serverless NoSQL database that stores all system data:
 - Classes, subjects
 - Lecturers
 - Scores
-- Chat history, system events
-- ML data for recommendations (Personalize)
 
 Spring Boot backend system interacts with DynamoDB via:
 
 - AWS SDK for Java 17
 - Spring Data DynamoDB or repository written by the team
 - Presigned URL (upload documents, profiles)
-- EventBridge (generate academic events → process via Lambda)
 
 ---
 
-## **DynamoDB Table Design (Single-Table Design)**
+## **DynamoDB table design (Single-Table Design)**
 
-**Table:** `Student-Management-Database`
+### 1.1 Create Tables
 
-| Components | Meaning |
-|-----------|---------|
-| PK | USER#, CLASS#, SUBJECT#, TEACHER#, GRADE# |
-| SK | PROFILE, INFO, STUDENT#, SUBJECT#, CLASS# |
-| GSI1PK | ROLE#, TYPE#, EMAIL#, CLASS# |
-| GSI1SK | NAME#, CREATED_AT#, SUBJECT# |
+**Table 1: Users**
+```
+Table name: student-management-users
+Partition key: id (String)
+Sort key: email (String)
+```
+**Table 2: Classes**
+```
+Table name: student-management-classes
+Partition key: id (String)
+```
 
-**Billing mode:** On-Demand → suitable for workshops (no capacity configuration required).
+**Table 3: Subjects**
+```
+Table name: student-management-subjects
+Partition key: id (String)
+```
 
-![DynamoDB](/images/5-Workshop/5.2-Prerequisite/DynamoDB.png)
+**Table 4: Notifications**
+```
+Table name: student-management-notifications
+Partition key: id (Number)
+Sort key: sent_at (String)
+```
+### 1.2 Global Secondary Index (GSI) Configuration
+
+For the Users table, add GSI:
+- Index name: `role-index`
+- Partition key: `role` (String)
 
 ---
 
-## **Deploy DynamoDB via AWS CLI**
+### 2.1 Create User Pool
 
-### Create table
+1. Go to **AWS Console → Cognito → Create user pool**
+2. Configuration: 
+- Sign-in: Email 
+- Password policy: Minimum 8 characters 
+- MFA: Optional 
+- Email: Send email with Cognito
 
-```bash
-aws dynamodb create-table \
-  --table-name Student-Management-Database \
-  --attribute-definitions \
-      AttributeName=PK,AttributeType=S \
-      AttributeName=SK,AttributeType=S \
-  --key-schema \
-      AttributeName=PK,KeyType=HASH \
-      AttributeName=SK,KeyType=RANGE \
-  --billing-mode PAY_PER_REQUEST
+3. Create App Clients: 
+- App client name: `student-management-app` 
+- Generate client secret: No 
+- Auth flows: `ALLOW_USER_SRP_AUTH`, `ALLOW_REFRESH_TOKEN_AUTH`
+
+### 2.2 Save information
+
+```env
+VITE_COGNITO_USER_POOL_ID=ap-southeast-1_XXXXXXXX
+VITE_COGNITO_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxx
+VITE_COGNITO_REGION=ap-southeast-1
 ```
-#2. Amazon Cognito
 
-Cognito offers:
+---
 
-- Account management
-
-- Login with email
-
-- JWT Authentication uses Spring Security
-
-- Decentralize rights by Group (student, tutor, admin)
-
-- Backend Spring Boot uses:
-
-- Cognito JWT Filter
-
-- Spring Security @PreAuthorize("hasRole('ADMIN')")
-
-## **Deploy Cognito via AWS CLI**
-
-### Create User Pool
-```bash
-aws cognito-idp create-user-pool \
-  --pool-name Student-App-Pool \
-  --auto-verified-attributes email
-```
-### Create App Client
-```bash
-aws cognito-idp create-user-pool-client \
-  --user-pool-id <UserPoolId> \
-  --client-name StudentAppClient \
-  --no-generate-secret
-  ```
 
 # 3. Amazon S3
 S3 is used for:
 
-- Save student avatars
+- Save student avatar
 
-- Class materials
+- Classroom materials
 
 - Build artifacts (React/Vite)
 
 - Deploy website via S3 + CloudFront
 
-- Log & learning assets
+- Log & learning material assets
 
-## Deploy S3 via AWS CLI
-### Create Bucket
-```bash
-aws s3api create-bucket \
-  --bucket aws-sam-cli-managed-default-samclisourcebucket-qsrwrbr9usyq \
-  --region ap-southeast-1 \
-  --create-bucket-configuration LocationConstraint=ap-southeast-1
-  ```
+## 4. LAMBDA + GATEWAY API (Backend)
 
-# 4. Amazon API Gateway + Lambda
-API Gateway plays the role of:
+### 4.1 Prepare Java Spring for Lambda
 
-- API Gateway for the entire system
+**Add dependencies to pom.xml:**
+```xml
+<dependencies>
+    <!-- AWS Lambda -->
+    <dependency>
+        <groupId>com.amazonaws.serverless</groupId>
+        <artifactId>aws-serverless-java-container-springboot3</artifactId>
+        <version>2.0.0</version>
+    </dependency>
+    
+    <!-- AWS SDK -->
+    <dependency>
+        <groupId>software.amazon.awssdk</groupId>
+        <artifactId>dynamodb</artifactId>
+        <version>2.21.0</version>
+    </dependency>
+</dependencies>
 
-- Cognito Authorizer authentication
-
-- Route to Lambda to process business
-
-- CloudWatch logging
-
-- CORS integration
-
-- Backend deployed via:
-
-- Lambda (Java 17, Maven build)
-
-- API Gateway REST API
-
-- Lambda Function URL (internal)
-
-## Deploy Lambda & API Gateway using AWS SAM
-
-AWS SAM makes it easier to deploy serverless backends by:
-
-- Manage Lambda, API Gateway, IAM Role in a template.yaml file
-
-- Build Java using Maven automatically (sam build)
-
-- Deploy full stack with one command (sam deploy --guided)
-### File template.yaml (SAM)
-Create files:
-```yaml
-
-AWSTemplateFormatVersion: '2010-09-09'
-Transform: AWS::Serverless-2016-10-31
-Description: Student Management System - Backend (Lambda + API Gateway)
-
-Globals:
-  Function:
-    Timeout: 15
-    MemorySize: 512
-    Runtime: java17
-
-Resources:
-
-  StudentServiceFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: com.example.Handler::handleRequest
-      CodeUri: ./
-      Policies:
-        - AWSLambdaBasicExecutionRole
-        - AmazonDynamoDBFullAccess
-      Events:
-        GetStudents:
-          Type: Api
-          Properties:
-            Path: /students
-            Method: GET
-            Auth:
-              Authorizer: CognitoAuthorizer
-    CognitoAuthorizer:
-        Type: AWS::Serverless::Api
-        Properties:
-        StageName: prod
-        Auth:
-            Authorizers:
-            CognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:<region>:<account-id>:userpool/<UserPoolId>
-```
-### Build Lambda using SAM
-
-SAM runs Maven itself, packages the JAR itself:
-```bash
-sam build
-```
-### Deploy using SAM
-```bash
-sam deploy --guided
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.5.0</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals><goal>shade</goal></goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 ```
 
-The first time you enter:
+**Create Lambda Handler:**
+```java
+// src/main/java/com/example/StreamLambdaHandler.java
+package com.example;
 
-- Stack Name: student-management-backend
+import com.amazonaws.serverless.exceptions.ContainerInitializationException;
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
+import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
+import com.amazonaws.serverless.proxy.spring.SpringBootLambdaContainerHandler;
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 
-- Region: ap-southeast-1
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
-- Allow SAM to create IAM roles? → Y
+public class StreamLambdaHandler implements RequestStreamHandler {
+    private static SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
+    
+    static {
+        try {
+            handler = SpringBootLambdaContainerHandler.getAwsProxyHandler(Application.class);
+        } catch (ContainerInitializationException e) {
+            throw new RuntimeException("Could not initialize Spring Boot application", e);
+        }
+    }
 
-- Save arguments? → Y
+    @Override
+    public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context)
+            throws IOException {
+        handler.proxyStream(inputStream, outputStream, context);
+    }
+}
+```
+### 4.2 Build JAR
 
-After successful deployment, SAM will return:
+```bash
+cd backend-project
+mvn clean package -DskipTests
+# Output: target/your-app.jar
+```
 
-- API Endpoint
+### 4.3 Create Lambda Function
 
-- Lambda ARN
+1. Go to **AWS Console → Lambda → Create function**
+2. Configuration: 
+- Function name: `student-management-api` 
+- Runtime: Java 17 
+- Architecture: x86_64 
+- Memory: 512 MB (or 1024 MB for better performance) 
+- Timeout: 30 seconds
 
-- CloudFormation Stack
+3. Upload JAR file or from S3
+
+4. Handler: `com.example.StreamLambdaHandler::handleRequest`
+
+### 4.4 Configure IAM Role for Lambda
+
+Attach policies:
+- `AmazonDynamoDBFullAccess`
+- `AWSLambdaBasicExecutionRole`
+- `AmazonCognitoPowerUser`
+
+### 4.5 Create API Gateway
+
+1. Go to **AWS Console → API Gateway → Create API**
+2. Select **HTTP API** (recommended) or REST API
+3. Configuration: 
+- API name: `student-management-api` 
+- Integration: Lambda function 
+- Route: `ANY /{proxy+}`
+
+4. **Enable CORS:** 
+- Access-Control-Allow-Origin: `*` (or specific domain) 
+- Access-Control-Allow-Methods: `GET, POST, PUT, PATCH, DELETE, OPTIONS` 
+- Access-Control-Allow-Headers: `Content-Type, Authorization`
+
+5. **Deploy API:** 
+- Create stage: `prod`
+- Save Invoke URL: `https://xxxxxxxx.execute-api.ap-southeast-1.amazonaws.com/prod`
+
+---
+
 # Summary
+This section guides you through the implementation of a backend for a serverless student management system on AWS, using key services such as DynamoDB, Lambda, API Gateway, and Cognito. You have practiced:
 
-These components create the foundation for building a Serverless – Realtime – Event-Driven system for Student Management System.
+- Designing and creating DynamoDB tables to store student, class, subject, and notification data, and configuring GSI to optimize queries.
+- Setting up Cognito User Pool to authenticate and authorize users.
+- Using S3 to store avatars, class materials, and build artifacts.
+- Building a backend with Java Spring Boot, packaging the application into a JAR, and deploying it to Lambda.
+- Configuring IAM Roles for Lambda to ensure necessary service access.
+- Create and configure API Gateway to connect frontend with backend, fully support HTTP methods and CORS security.
+
+This process helps you build a modern, automated, scalable and secure backend, fully meeting student management tasks on AWS platform.

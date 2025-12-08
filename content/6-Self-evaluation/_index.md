@@ -45,7 +45,4 @@ Regarding work ethic, I always strive to complete assigned tasks, comply with re
 - Improve **discipline**, better compliance with rules and time management.
 - Enhance **analytical & problem-solving thinking** in a more systematic way.
 - Practice **communication skills**, present more clearly in reports and work discussions.
-- Nâng cao **tính kỷ luật**, tuân thủ tốt hơn quy định và thời gian.
-- Cải thiện **tư duy phân tích & giải quyết vấn đề** theo hướng có hệ thống.
-- Rèn luyện **kỹ năng giao tiếp**, trình bày rõ ràng hơn trong báo cáo và khi thảo luận công việc.
 
