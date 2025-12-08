@@ -23,8 +23,7 @@ Các dịch vụ core: API Gateway (REST), Lambda xử lý logic nghiệp vụ, 
 3. [Triển khai Backend: DynamoDB, Lambda, API Gateway, Cognito](5.3-Backend/)
 4. [Xây dựng Frontend: Amplify, AppSync, Realtime Chat](5.4-Frontend/)
 5. [Event-driven, Email Notification & ML Ranking](5.5-Event-ML/)
-6. [Giám sát, cảnh báo, tối ưu chi phí](5.6-Monitoring/)
-7. [Dọn dẹp tài nguyên](5.7-Cleanup/)
+6. [Dọn dẹp tài nguyên](5.6-Cleanup/)
 
 #### Mục tiêu trải nghiệm
 

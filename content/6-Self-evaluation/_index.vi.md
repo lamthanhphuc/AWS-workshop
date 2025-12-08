@@ -11,7 +11,7 @@ pre: " <b> 6. </b> "
 
 Trong suốt thời gian thực tập tại **AWS** từ **08/09/2025** đến **09/12/2025**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng các kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.  
 
-Tôi tham gia dự án **Serverless Student Management System**, qua đó phát triển và cải thiện các kỹ năng như **lập trình, phân tích yêu cầu, xây dựng kiến trúc, xử lý sự kiện, viết báo cáo và giao tiếp kỹ thuật với đội ngũ**.
+Tôi tham gia dự án **Serverless Student Management System** với vai trò là Back End của dự án, qua đó phát triển và cải thiện các kỹ năng như **lập trình, phân tích yêu cầu, xây dựng kiến trúc, xử lý sự kiện, viết báo cáo và giao tiếp kỹ thuật với đội ngũ**.
 
 Về tác phong làm việc, tôi luôn cố gắng hoàn thành nhiệm vụ được giao, tuân thủ nội quy, chủ động trao đổi với đồng nghiệp nhằm nâng cao hiệu quả công việc.
 

@@ -1,59 +1,60 @@
 ---
-title : "Xây dựng Frontend: Amplify, AppSync, Realtime Chat"
-date: "2025-12-07" 
-weight : 4 
+title : "Frontend Development: Amplify, AppSync, Realtime Chat"
+date: "2025-12-07"
+weight : 4
 chapter : false
 pre : " <b> 5.4. </b> "
 ---
 
-#### Tổng quan
+#### Overview
 
-Trong phần này, bạn sẽ xây dựng giao diện web cho hệ thống **Serverless Student Management System** bằng **AWS Amplify**, **AppSync (GraphQL)** và **Realtime Subscription**.  
-Frontend cung cấp các chức năng:
+In this section, you will build a web interface for a **Serverless Student Management System** using **AWS Amplify**, **AppSync (GraphQL)**, and **Realtime Subscription**.
 
-- Đăng nhập bằng Amazon Cognito  
-- Dashboard realtime  
-- Chat thời gian thực  
-- CRUD Student/Classes  
-- Gửi tương tác sự kiện để backend xử lý  
+Frontend provides the following functions:
 
-Kiến trúc tổng quát:
+- Login with Amazon Cognito
+- Realtime Dashboard
+- Realtime Chat
+- CRUD Student/Classes
+- Send event interactions to the backend
+
+Overall Architecture:
 
 ![Amplify Architecture](/images/5-Workshop/5.4-Frontend/architecture.png)
 
 ---
 
-# 1. Khởi tạo dự án Frontend với AWS Amplify
+# 1. Initialize the Frontend project with AWS Amplify
 
-### **1.1 Cài đặt Amplify CLI**
+### **1.1 Install Amplify CLI**
 ```bash
 npm install -g @aws-amplify/cli
 amplify configure
 ```
-### **1.2 Khởi tạo project React**
+### **1.2 Initialize the React project**
 ```bash
 npx create-react-app student-portal
 cd student-portal
 amplify init
 ```
-Lựa chọn:
+Options:
 
 - Hosting: Amplify Hosting
 - Auth: Cognito User Pool
 - API: AppSync GraphQL
 
-# 2. Tạo GraphQL API với AppSync
-Chạy lệnh:
+# 2. Create GraphQL API with AppSync
+Run command:
 ```bash
 amplify add api
 ```
-Chọn:
+Select:
 - GraphQL API
 - Authorization: Cognito User Pool
 - Conflict detection: Auto merge
 - Realtime subscription: Enable
 
-### **2.1 Định nghĩa schema GraphQL**
+### **2.1 GraphQL schema definition**
 
 File: amplify/backend/api/studentapi/schema.graphql
 ```graphql
@@ -86,18 +87,19 @@ type Mutation {
 ```
 ### **2.2 Deploy API**
 ```bash
-amplify push
+amplifier push
 ```
-# 3. Tích hợp Cognito Authentication
+# 3. Integrate Cognito Authentication
 
-Amplify tự tạo cấu hình Auth:
+Amplify creates its own Auth configuration:
 ```bash
 amplify add auth
 ```
-Chọn:
+Select:
 - Email sign-in
-- No MFA (hoặc optional)
-- Import vào React:
+- No MFA (or optional)
+- Import into React:
+
 ```javascript
 import { Auth } from 'aws-amplify';
 const user = await Auth.signIn(email, password);
@@ -105,7 +107,7 @@ console.log("Logged in:", user);
 ```
 
 # 4. Realtime Subscription (Chat)
-## **4.1 Gửi tin nhắn**
+## **4.1 Sending a message**
 ```javascript
 import { API, graphqlOperation } from 'aws-amplify';
 import { sendMessage } from './graphql/mutations';
@@ -116,32 +118,32 @@ await API.graphql(
   })
 );
 ```
-## **4.2 Nhận tin nhắn realtime**
+## **4.2 Receive realtime messages**
 ```javascript
 import { onCreateMessage } from './graphql/subscriptions';
 
-useEffect(() => {
-  const sub = API.graphql(
-    graphqlOperation(onCreateMessage)
-  ).subscribe({
-    next: ({ value }) => {
-      const msg = value.data.onCreateMessage;
-      setMessages(prev => [...prev, msg]);
-    }
-  });
+useEffect(() => { 
+const sub = API.graphql( 
+graphqlOperation(onCreateMessage) 
+).subscribe({ 
+next: ({ value }) => { 
+const msg = value.data.onCreateMessage; 
+setMessages(prev => [...prev, msg]); 
+} 
+}); 
 
-  return () => sub.unsubscribe();
+return () => sub.unsubscribe();
 }, []);
 ```
 
-# 5. Hosting Frontend trên Amplify Hosting
-## **5.1 Kết nối repo GitHub**
-Trong AWS Amplify Console:
-- Chọn New App → Host Web App
-- Kết nối GitHub Repository
-- Amplify tự build + deploy qua CI/CD
+# 5. Hosting Frontend on Amplify Hosting
+## **5.1 Connect GitHub repository**
+In AWS Amplify Console:
+- Select New App → Host Web App
+- Connect GitHub Repository
+- Amplify self-build + deploy via CI/CD
 
-## **5.2 Cấu hình build**
+## **5.2 Build configuration**
 
 File amplify.yml:
 ```yml
@@ -162,9 +164,9 @@ frontend:
     paths:
       - node_modules/**/*
 ```
-# 6. Kết nối Realtime Dashboard
+# 6. Connect Realtime Dashboard
 
-Ví dụ sử dụng GraphQL subscription để cập nhật số lượng sinh viên online:
+Example using GraphQL subscription to update the number of online students:
 ```graphql
 type OnlineEvent @model @aws_subscribe(mutations: ["updateOnline"]) {
   id: ID!
@@ -182,13 +184,13 @@ API.graphql(graphqlOperation(onUpdateOnline)).subscribe({
   }
 });
 ```
-# 7. Tổng kết
+# 7. Summary
 
-Trang "Xây dựng Frontend: Amplify, AppSync, Realtime Chat" hướng dẫn đầy đủ:
-- Tạo project React với Amplify
-- Dùng Cognito để xác thực frontend
+The "Building a Frontend: Amplify, AppSync, Realtime Chat" page has a complete guide:
+- Create a React project with Amplify
+- Use Cognito for frontend authentication
 - AppSync GraphQL API
-- Realtime subscription cho chat
-- Hosting CI/CD qua Amplify
+- Realtime subscription for chat
+- Hosting CI/CD via Amplify
 
-Frontend kết nối trực tiếp với hệ thống serverless backend, tạo trải nghiệm realtime mượt mà và bảo mật.
+Frontend connects directly to the serverless backend system, creating a smooth and secure realtime experience.

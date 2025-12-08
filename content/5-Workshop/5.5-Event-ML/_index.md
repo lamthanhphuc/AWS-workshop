@@ -6,43 +6,43 @@ chapter : false
 pre : " <b> 5.5. </b> "
 ---
 
-#### Tổng quan
+#### Overview
 
-Trong phần này, bạn sẽ xây dựng cơ chế **event-driven** cho hệ thống Serverless Student Management System bằng cách sử dụng **Amazon EventBridge**, **AWS Lambda**, **Amazon SES**, và **Amazon Personalize**.  
+In this section, you will build an **event-driven** mechanism for a Serverless Student Management System using **Amazon EventBridge**, **AWS Lambda**, **Amazon SES**, and **Amazon Personalize**.
 
-Hệ thống có khả năng:
+The system is capable of:
 
-- Phát sinh sự kiện khi sinh viên đăng ký lớp, nộp bài, hoặc nhận thông báo  
-- Gửi email tự động qua Amazon SES  
-- Huấn luyện mô hình ML bằng Amazon Personalize  
-- Tạo ranking sinh viên hoặc gợi ý khóa học cá nhân hóa  
-- Xử lý luồng sự kiện phi đồng bộ và mở rộng vô hạn  
+- Emitting events when students register for classes, submit assignments, or receive notifications
+- Sending automated emails via Amazon SES
+- Training ML models using Amazon Personalize
+- Generating student rankings or personalized course recommendations
+- Processing asynchronous event streams and scaling infinitely
 
-Sơ đồ tổng quan:
+Overview diagram:
 
 ![Event-driven Architecture](/images/5-Workshop/5.5-EventDriven/architecture.png)
 
 ---
 
-# 1. Event-driven với Amazon EventBridge
+# 1. Event-driven with Amazon EventBridge
 
-### **1.1 Tạo Event Bus**
+### **1.1 Creating an Event Bus**
 
-Trong EventBridge Console:
+In EventBridge Console:
 
-- Create → Event Bus  
-Tên: `student-event-bus`
+- Create → Event Bus
+Name: `student-event-bus`
 
-### **1.2 Các loại sự kiện hệ thống**
+### **1.2 Types of system events**
 
 | Event Type | Source | Detail Example |
-|------------|--------|----------------|
+|------------|-------|----------------|
 | `student.enrolled` | api.student | `{ "studentId": "1", "classId": "A1" }` |
 | `student.submitAssignment` | api.assignment | `{ "studentId": "1", "fileUrl": "..." }` |
 | `teacher.sendAnnouncement` | api.teacher | `{ "teacherId": "T1", "content": "..." }` |
 | `ranking.requestUpdate` | api.ranking | `{ "trigger": "nightly" }` |
 
-### **1.3 Publish sự kiện từ Lambda**
+### **1.3 Publish events from Lambda**
 
 ```javascript
 import { EventBridgeClient, PutEventsCommand } from "@aws-sdk/client-eventbridge";
@@ -69,14 +69,14 @@ export const handler = async (event) => {
   return { status: "OK" };
 };
 ```
-# 2. Email Notification bằng Amazon SES
-### **2.1 Cấu hình SES**
+# 2. Email Notification using Amazon SES
+### **2.1 SES Configuration**
 - Verify domain
 - Verify email sender
-- Request production access (hoặc dùng sandbox với chế độ test)
+- Request production access (or use sandbox with test mode)
 
-## **2.2 Lambda gửi email**
-Lambda được trigger bởi EventBridge rule:
+## **2.2 Lambda sending email**
+Lambda triggered by EventBridge rule:
 
 ```javascript
 
@@ -105,44 +105,44 @@ export const handler = async (event) => {
   return { status: "EMAIL_SENT" };
 };
 ```
-## **2.3 Rule: gửi email khi đăng ký lớp**
+## **2.3 Rule: send email when registering for class**
 ```css
 Event Pattern:
 {
   "detail-type": ["student.enrolled"]
 }
 ```
-# 3. ML Ranking với Amazon Personalize
-## **3.1 Mục tiêu**
-Sử dụng Personalize để:
-- Gợi ý môn học phù hợp
-- Ranking sinh viên theo độ tương tác
-- Gợi ý tài liệu, quiz
-## **3.2 Chuẩn bị dữ liệu DynamoDB**
-Bảng cần có:
+# 3. ML Ranking with Amazon Personalize
+## **3.1 Objectives**
+Use Personalize to:
+- Suggest suitable subjects
+- Rank students by interaction
+- Suggest documents, quiz
+## **3.2 Prepare DynamoDB data**
+Required tables:
 - Interactions
 - Students
 - ClassActivity
 
-Sử dụng Glue crawler → S3 để tạo dataset import.
+Use Glue crawler → S3 to create dataset import.
 
-## **3.3 Tạo dataset trong Personalize**
+## **3.3 Create dataset in Personalize**
 Dataset Group: student-ranking
 
 Dataset Type: Interactions, Items, Users
 
-Schema JSON theo định dạng Personalize
+JSON Schema in Personalize format
 
-## **3.4 Training mô hình**
-Chọn recipe:
-- aws-user-personalization (gợi ý cá nhân hóa)
-- Hoặc aws-personalized-ranking (ranking theo activity)
-## **3.5 Tạo Campaign**
+## **3.4 Training model**
+Choose recipe:
+- aws-user-personalization (personalized recommendations)
+- Or aws-personalized-ranking (ranking by activity)
+## **3.5 Create Campaign**
 Output:
-- ARN của campaign
-- API endpoint để request recommendation
-# 4. Tích hợp Personalize vào Backend
-## **4.1 Lambda gọi Personalize**
+- Campaign ARN
+- API endpoint to request recommendation
+# 4. Integrate Personalize into Backend
+## **4.1 Lambda calls Personalize**
 ```javascript
 import {
   PersonalizeRuntimeClient,
@@ -164,34 +164,34 @@ export const handler = async (event) => {
   return { recommendations: response.itemList };
 };
 ```
-## **4.2 Expose qua API Gateway**
-Method	Endpoint	Lambda
-GET	/ranking/{userId}	ranking.getRecommendation
+## **4.2 Expose via API Gateway**
+Method Endpoint Lambda
+GET /ranking/{userId} ranking.getRecommendation
 
-# 5. Tích hợp Event-driven với ML (Nightly Auto Update)
+# 5. Integrate Event-driven with ML (Nightly Auto Update)
 EventBridge Scheduler:
-- Thời gian: 0 2 * * * (2 giờ sáng hàng ngày)
+- Time: 0 2 * * * (2 AM daily)
 - Trigger: Lambda ranking.generateTrainingData
 
 Flow:
 
-1. Lambda export dữ liệu mới từ DynamoDB → S3
+1. Lambda exports new data from DynamoDB → S3
 
 2. Update dataset
 
-3. Re-train model hoặc incremental import
+3. Re-train model or incremental import
 
 4. Update campaign
 
-# 6. Tổng kết
-Trang “Event-driven, Email Notification & ML Ranking” cung cấp:
+# 6. Summary
+The “Event-driven, Email Notification & ML Ranking” page provides:
 
-- Cách tạo hệ thống event-driven hoàn chỉnh bằng EventBridge
+- How to create a complete event-driven system using EventBridge
 
-- Gửi email tự động với SES
+- Send automatic emails with SES
 
-- Tích hợp Machine Learning để gợi ý và ranking sinh viên
+- Integrate Machine Learning to recommend and rank students
 
-- Tự động hóa training bằng event scheduler
+- Automate training with event scheduler
 
-Kết hợp các service này giúp hệ thống hoạt động mượt, realtime và thông minh hơn — mang lại trải nghiệm học tập cá nhân hóa cho người dùng.
+Combining these services helps the system operate Smooth, real-time, and smarter — delivering personalized learning experiences to users.

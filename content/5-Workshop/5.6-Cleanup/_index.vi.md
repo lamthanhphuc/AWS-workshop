@@ -187,7 +187,7 @@ Xóa các role:
 
 ---
 
-# 15. Tổng kết
+# 13. Tổng kết
 
 Trang **“Dọn dẹp tài nguyên”** giúp bạn:
 

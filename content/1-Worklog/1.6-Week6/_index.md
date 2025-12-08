@@ -1,59 +1,51 @@
 ---
 title: "Week 6 Worklog"
-date: "2006-01-02"
-weight: 1
+date: "2025-10-13"
+weight: 6
 chapter: false
 pre: " <b> 1.6. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 6 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Study the theory of EC2 Auto Scaling, EFS/FSx, Lightsail, MGN.
+* Practice AWS Backup to backup and restore EC2.
+* Deploy AWS Storage Gateway.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+### Tasks to be implemented this week:
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | --------- | ------------ | --------------- | -------------- |
+| 2   | - Study Theory Module 03-02: <br>&emsp; + EC2 Auto Scaling <br>&emsp; + Amazon EFS and FSx <br>&emsp; + Amazon Lightsail <br>&emsp; + AWS Migration Hub (MGN) | 13/10/2025 | 13/10/2025 | <https://www.youtube.com/@AWSStudyGroup> |
+| 3   | - **Practice Lab13:** AWS Backup <br>&emsp; + Introduction to AWS Backup <br>&emsp; + Deploy infrastructure <br>&emsp; + Create Backup plan | 14/10/2025 | 14/10/2025 | <https://www.youtube.com/@AWSStudyGroup> |
+| 4   | - **Practice Lab13 (cont.):** <br>&emsp; + Test Restore from backup <br>&emsp; + Clean up resources | 15/10/2025 | 15/10/2025 | <https://www.youtube.com/@AWSStudyGroup> |
+| 5   | - **Practice Lab24:** AWS Storage Gateway <br>&emsp; + Create S3 Bucket <br>&emsp; + Create EC2 for Storage Gateway <br>&emsp; + Create Storage Gateway <br>&emsp; + Create File Shares | 16/10/2025 | 16/10/2025 | <https://www.youtube.com/@AWSStudyGroup> |
+| 6   | - **Practice Lab57:** S3 Static Website <br>&emsp; + Create S3 bucket <br>&emsp; + Load data <br>&emsp; + Enable static website feature <br>&emsp; + Configure public access | 17/10/2025 | 17/10/2025 | <https://www.youtube.com/@AWSStudyGroup> |
 
 ### Week 6 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Mastered the theory of additional Compute services:
+  * EC2 Auto Scaling: Launch configurations, Auto Scaling Groups
+  * Amazon EFS: Shared file storage for EC2
+  * Amazon FSx: Managed file systems (Windows, Lustre, NetApp, OpenZFS)
+  * Amazon Lightsail: Simplified compute service
+  * AWS MGN: Application migration service
 
-* Successfully created and configured an AWS Free Tier account.
+* Successfully practiced AWS Backup:
+  * Created Backup plan with schedule
+  * Performed on-demand backup
+  * Restored EC2 from backup
+  * Understood retention policies
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* Deployed AWS Storage Gateway:
+  * Created File Gateway on EC2
+  * Configured File Shares connected to S3
+  * Mounted file shares on-premises
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Deployed S3 Static Website:
+  * Configured S3 bucket for static hosting
+  * Configured public access policies
+  * Tested website accessibility
 
-* Used AWS CLI to perform basic operations such as:
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
 
 

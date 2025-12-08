@@ -1,32 +1,32 @@
 ---
 title: "Workshop"
-date: "2006-01-02"
+date: "2025-12-07"
 weight: 5
 chapter: false
-pre: " <b> 5 </b> "
+pre: " <b> 5. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Secure Hybrid Access to S3 using VPC Endpoints
+# Serverless Student Management System on AWS
 
 #### Overview
 
-**AWS PrivateLink** provides private connectivity to AWS services from VPCs and your on-premises networks, without exposing your traffic to the Public Internet.
+**Serverless Student Management Platform** is a cloud-based student management solution, optimized for cost and scalable flexibility by using **AWS Serverless** services (Lambda, DynamoDB, AppSync, EventBridge, etc.). The solution provides a real-time dashboard, assignment chat, machine learning-based ranking analysis, automated notifications, and operates entirely on event-driven architecture.
 
-In this lab, you will learn how to create, configure, and test VPC endpoints that enable your workloads to reach AWS services without traversing the Public Internet.
+Core services: API Gateway (REST), Lambda for business logic, DynamoDB for data storage, AppSync (GraphQL) & Amplify (React frontend), Cognito (user authentication), SES (email sending), Personalize (ML ranking), EventBridge (event orchestration), CloudWatch (monitoring), combined with modern DevOps CI/CD workflows.
 
-You will create two types of endpoints to access Amazon S3: a Gateway VPC endpoint, and an Interface VPC endpoint. These two types of VPC endpoints offer different benefits depending on if you are accessing Amazon S3 from the cloud or your on-premises location
-+ **Gateway** - Create a gateway endpoint to send traffic to Amazon S3 or DynamoDB using private IP addresses.You route traffic from your VPC to the gateway endpoint using route tables.
-+ **Interface** - Create an interface endpoint to send traffic to endpoint services that use a Network Load Balancer to distribute traffic. Traffic destined for the endpoint service is resolved using DNS.
+#### Contents
 
-#### Content
+1. [System Overview and Architecture](5.1-Overview/)
+2. [Environment Preparation & AWS Account Setup](5.2-Prerequiste/)
+3. [Backend Deployment: DynamoDB, Lambda, API Gateway, Cognito](5.3-Backend/)
+4. [Frontend Development: Amplify, AppSync, Realtime Chat](5.4-Frontend/)
+5. [Event-driven, Email Notification & ML Ranking](5.5-Event-ML/)
+6. [Resource Cleanup](5.6-Cleanup/)
 
-1. [Workshop overview](5.1-Workshop-overview)
-2. [Prerequiste](5.2-Prerequiste/)
-3. [Access S3 from VPC](5.3-S3-vpc/)
-4. [Access S3 from On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (Bonus)](5.5-Policy/)
-6. [Clean up](5.6-Cleanup/)
+#### Experience Objectives
+
++ Understand multi-layer serverless architecture operating on AWS.
++ Learn permission models with Cognito, real-time processing with AppSync.
++ Directly build CRUD, chat, student ranking, send email notifications via events.
++ Practice automated DevOps pipeline from code to deployment.
 

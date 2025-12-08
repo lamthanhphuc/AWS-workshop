@@ -1,128 +1,262 @@
 ---
-title: "Blog 2"
-date: "2006-01-02"
-weight: 1
+title: "Blog 2 - Transfer data from Amazon S3 to IoT Edge device"
+date: "2025-06-28"
+weight: 2
 chapter: false
 pre: " <b> 3.2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Getting Started with Healthcare Data Lakes: Using Microservices
+# Transferring Data from Amazon S3 to IoT Edge Device
 
-Data lakes can help hospitals and healthcare facilities turn data into business insights, maintain business continuity, and protect patient privacy. A **data lake** is a centralized, managed, and secure repository to store all your data, both in its raw and processed forms for analysis. Data lakes allow you to break down data silos and combine different types of analytics to gain insights and make better business decisions.
+Written by Rashmi Varshney, Nilo Bustani, and Tamil Jayakumar | June 28, 2025 | in [AWS IoT Core](https://aws.amazon.com/blogs/iot/category/internet-of-things/aws-iot-platform/), [AWS IoT Greengrass](https://aws.amazon.com/blogs/iot/category/internet-of-things/aws-greengrass/), [Learning Levels](https://aws.amazon.com/blogs/iot/category/learning-levels/), [Technical How-to](https://aws.amazon.com/blogs/iot/category/post-types/technical-how-to/) | [Permalink](https://aws.amazon.com/blogs/iot/transfer-data-from-amazon-s3-to-iot-edge-device/) | [Share](https://aws.amazon.com/vi/blogs/iot/transfer-data-from-amazon-s3-to-iot-edge-device/#)
 
-This blog post is part of a larger series on getting started with setting up a healthcare data lake. In my final post of the series, *“Getting Started with Healthcare Data Lakes: Diving into Amazon Cognito”*, I focused on the specifics of using Amazon Cognito and Attribute Based Access Control (ABAC) to authenticate and authorize users in the healthcare data lake solution. In this blog, I detail how the solution evolved at a foundational level, including the design decisions I made and the additional features used. You can access the code samples for the solution in this Git repo for reference.
+Seamless data transfer between the cloud and edge devices is critical for IoT applications in many industries such as healthcare, manufacturing, autonomous vehicles, and aerospace. For example, it [enables aircraft operators to seamlessly transfer software updates](https://aws.amazon.com/blogs/industries/aws-and-safran-passenger-innovations/) to the entire fleet without manual physical storage devices. By leveraging [AWS IoT](https://aws.amazon.com/iot/) and [Amazon Simple Storage Service (Amazon S3)](https://aws.amazon.com/pm/serv-s3/?gclid=CjwKCAjw1K-zBhBIEiwAWeCOF4sL-QIlVtb-xKGajtiSz2t9K29QR4JX6KAWojyIO5LzC3g-sQu2VxoCH3oQAvD_BwE&trk=20e04791-939c-4db9-8964-ee54c41bc6ad&sc_channel=ps&ef_id=CjwKCAjw1K-zBhBIEiwAWeCOF4sL-QIlVtb-xKGajtiSz2t9K29QR4JX6KAWojyIO5LzC3g-sQu2VxoCH3oQAvD_BwE:G:s&s_kwcid=AL!4422!3!651751060962!e!!g!!amazon%20s3!19852662362!145019251177), you can set up a data transfer mechanism that enables real-time and historical data exchange between the cloud and edge devices.
 
----
+# Introduction
 
-## Architecture Guidance
+This article guides you step-by-step on how to transfer data as files from Amazon S3 to your IoT Edge device.
 
-The main change since the last presentation of the overall architecture is the decomposition of a single service into a set of smaller services to improve maintainability and flexibility. Integrating a large volume of diverse healthcare data often requires specialized connectors for each format; by keeping them encapsulated separately as microservices, we can add, remove, and modify each connector without affecting the others. The microservices are loosely coupled via publish/subscribe messaging centered in what I call the “pub/sub hub.”
+We will use [AWS IoT Greengrass](https://aws.amazon.com/greengrass/), an open-source edge runtime and cloud service to build, remotely deploy, and manage device software on millions of devices. IoT Greengrass provides built-in components for common use cases, allowing you to discover, import, configure, and deploy applications and services at the edge without needing to understand different device protocols, manage credentials, or interact with external APIs. You can also create custom components based on your IoT use case.
 
-This solution represents what I would consider another reasonable sprint iteration from my last post. The scope is still limited to the ingestion and basic parsing of **HL7v2 messages** formatted in **Encoding Rules 7 (ER7)** through a REST interface.
+In this article, we will build and deploy a custom IoT Greengrass component leveraging the capabilities of [Amazon S3 Transfer Manager](https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/examples-s3-transfermanager.html). This IoT Greengrass component performs actions such as downloading via [IoT Jobs](https://docs.aws.amazon.com/iot/latest/developerguide/jobs-what-is.html) topics. The parameters set in IoT Jobs define these actions.
 
-**The solution architecture is now as follows:**
+S3 Transfer Manager uses multipart upload APIs and byte-range fetches to transfer files from Amazon S3 to edge devices. You can read more about S3 Transfer Manager capabilities in the [original blog](https://aws.amazon.com/blogs/developer/introducing-crt-based-s3-client-and-the-s3-transfer-manager-in-the-aws-sdk-for-java-2-x/).
 
-> *Figure 1. Overall architecture; colored boxes represent distinct services.*
+# **Prerequisites**
 
----
+To simulate an edge device, we will use an EC2 instance. Before proceeding with the steps to transfer files from Amazon S3 to your instance, ensure you have the following:
 
-While the term *microservices* has some inherent ambiguity, certain traits are common:  
-- Small, autonomous, loosely coupled  
-- Reusable, communicating through well-defined interfaces  
-- Specialized to do one thing well  
-- Often implemented in an **event-driven architecture**
+1. An [AWS account](https://console.aws.amazon.com/) with permissions to create and access Amazon EC2 instances, [AWS Systems Manager (SSM)](https://aws.amazon.com/systems-manager/), [AWS CloudFormation](https://aws.amazon.com/cloudformation/) stacks, [AWS IAM](https://aws.amazon.com/iam) Roles and Policies, [Amazon S3](https://aws.amazon.com/s3/), [AWS IoT Core](https://aws.amazon.com/iot-core/).
+2. [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html) installed and configured on your machine, along with the [SSM Manager Plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html).
+3. Follow the steps in the [Visual Studio Code on EC2 for Prototyping](https://github.com/aws-samples/vscode-on-ec2-for-prototyping/blob/main/README.md) repository to deploy an EC2 instance. Use the browser-based VS Code IDE to edit files and execute instructions.
 
-When determining where to draw boundaries between microservices, consider:  
-- **Intrinsic**: technology used, performance, reliability, scalability  
-- **Extrinsic**: dependent functionality, rate of change, reusability  
-- **Human**: team ownership, managing *cognitive load*
+*When deploying, the EC2 instance will be attached to an IAM Role that allows unrestricted access to all AWS resources. We recommend reviewing the role attached to the EC2 instance and editing it to restrict permissions to only SSM, S3, IoT Core, and IoT Greengrass.*
 
 ---
 
-## Technology Choices and Communication Scope
+# **Solution Overview**
+Transferring files from Amazon S3 to an edge device involves creating a custom IoT Greengrass component called “Download Manager.” This component is responsible for downloading files from Amazon S3 to the edge device, in this case, an EC2 instance simulating an edge device. The process can be broken down into the following steps:
 
-| Communication scope                       | Technologies / patterns to consider                                                        |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------ |
-| Within a single microservice              | Amazon Simple Queue Service (Amazon SQS), AWS Step Functions                               |
-| Between microservices in a single service | AWS CloudFormation cross-stack references, Amazon Simple Notification Service (Amazon SNS) |
-| Between services                          | Amazon EventBridge, AWS Cloud Map, Amazon API Gateway                                      |
+* Step 1: Develop and package the custom IoT Greengrass Download Manager Component, which handles file transfer logic. After packaging, upload this component to the designated Component and Content Bucket on Amazon S3.
+* Step 3: Upload the files to be transferred to the ‘Component and Content Bucket’ on Amazon S3.
+* Step 4: The Download Manager Component on the edge device (EC2) will download files from the Amazon S3 bucket and save them to the file system on the edge device.
 
----
+![iotb-727-hla](/images/3-BlogsTranslated/3.2-Blog2/iotb-727-hla.jpeg)
 
-## The Pub/Sub Hub
+*Figure 1 – Transferring files from Amazon S3 to an EC2 instance simulating an edge device*
 
-Using a **hub-and-spoke** architecture (or message broker) works well with a small number of tightly related microservices.  
-- Each microservice depends only on the *hub*  
-- Inter-microservice connections are limited to the contents of the published message  
-- Reduces the number of synchronous calls since pub/sub is a one-way asynchronous *push*
+## **Step 1: Develop and Package the Custom IoT Greengrass Download Manager Component**
 
-Drawback: **coordination and monitoring** are needed to avoid microservices processing the wrong message.
-
----
-
-## Core Microservice
-
-Provides foundational data and communication layer, including:  
-- **Amazon S3** bucket for data  
-- **Amazon DynamoDB** for data catalog  
-- **AWS Lambda** to write messages into the data lake and catalog  
-- **Amazon SNS** topic as the *hub*  
-- **Amazon S3** bucket for artifacts such as Lambda code
-
-> Only allow indirect write access to the data lake through a Lambda function → ensures consistency.
-
----
-
-## Front Door Microservice
-
-- Provides an API Gateway for external REST interaction  
-- Authentication & authorization based on **OIDC** via **Amazon Cognito**  
-- Self-managed *deduplication* mechanism using DynamoDB instead of SNS FIFO because:  
-  1. SNS deduplication TTL is only 5 minutes  
-  2. SNS FIFO requires SQS FIFO  
-  3. Ability to proactively notify the sender that the message is a duplicate  
-
----
-
-## Staging ER7 Microservice
-
-- Lambda “trigger” subscribed to the pub/sub hub, filtering messages by attribute  
-- Step Functions Express Workflow to convert ER7 → JSON  
-- Two Lambdas:  
-  1. Fix ER7 formatting (newline, carriage return)  
-  2. Parsing logic  
-- Result or error is pushed back into the pub/sub hub  
-
----
-
-## New Features in the Solution
-
-### 1. AWS CloudFormation Cross-Stack References
-Example *outputs* in the core microservice:
-```yaml
-Outputs:
-  Bucket:
-    Value: !Ref Bucket
-    Export:
-      Name: !Sub ${AWS::StackName}-Bucket
-  ArtifactBucket:
-    Value: !Ref ArtifactBucket
-    Export:
-      Name: !Sub ${AWS::StackName}-ArtifactBucket
-  Topic:
-    Value: !Ref Topic
-    Export:
-      Name: !Sub ${AWS::StackName}-Topic
-  Catalog:
-    Value: !Ref Catalog
-    Export:
-      Name: !Sub ${AWS::StackName}-Catalog
-  CatalogArn:
-    Value: !GetAtt Catalog.Arn
-    Export:
-      Name: !Sub ${AWS::StackName}-CatalogArn
+1.1 Clone the custom IoT Greengrass component from the [aws-samples repository](https://github.com/aws-samples/sample-asset-transfer-manager-for-edge-iot)
+```bash
+git clone https://github.com/aws-samples/sample-asset-transfer-manager-for-edge-iot.git
+cd download-manager
+```
+1.2 Follow the [instructions](https://github.com/aws-samples/sample-asset-transfer-manager-for-edge-iot?tab=readme-ov-file#aws-iot-greengrass-core-device-setup) to configure the EC2 instance as an IoT Greengrass core device.  
+1.3 The IoT Greengrass Development Kit Command-Line Interface (GDK CLI) reads from the gdk-config.json configuration file to build and publish the component. Update the gdk-config.json file, replace us-west-2 with the region you are deploying to, and update gdk_version to match your GDK CLI version:
+```json
+{
+  "component": {
+    "com.example.DownloadManager": {
+      "author": "Amazon",
+      "build": {
+        "build_system": "zip",
+        "options": {
+          "zip_name": ""
+        }
+      },
+      "publish": {
+        "bucket": "greengrass-artifacts",
+        "region": "us-west-2"
+      }
+    }
+  },
+  "gdk_version": "1.3.0"
+}
+```
 
 
+## **Bước 2: Xây dựng, công bố và triển khai component Download Manager**
+
+ 2.1 Bạn có thể [build](https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-development-kit-cli-component.html#greengrass-development-kit-cli-component-build) và [publish](https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-development-kit-cli-component.html#greengrass-development-kit-cli-component-publish) Download Manager Component lên Amazon S3 bucket theo [instructions here](https://github.com/aws-samples/sample-asset-transfer-manager-for-edge-iot/blob/main/README.md#build-and-publish-the-component). 
+
+Bước này sẽ tự động tạo một Amazon S3 bucket tên greengrass-artifacts-YOUR\_REGION-YOUR\_AWS\_ACCOUNT\_ID. Các thành phần được xây dựng được lưu trữ dưới dạng các đối tượng trong Amazon S3 bucket này. Chúng tôi sẽ sử dụng Amazon S3 bucket này để xuất bản thành phần Download Manager tùy chỉnh và cũng sử dụng thành phần này để lưu trữ các tài sản sẽ được tải xuống EC2 instance.
+
+ 2.2 Thực hiện theo hướng dẫn được đề cập [here](https://docs.aws.amazon.com/greengrass/v2/developerguide/device-service-role.html#device-service-role-access-s3-bucket) để cho phép thiết bị IoT Greengrass core  truy cập vào Amazon S3 bucket.
+
+ 2.3 Sau khi xuất bản thành công thành phần Download Manager, bạn có thể tìm thấy nó trong AWS Management Console → AWS IoT Core → Greengrass Devices → Components → My Components.
+
+![IOTB-727-GGComponents](/images/3-BlogsTranslated/3.2-Blog2/IOTB-727-GGComponents.jpg)*Hình 2 – Danh sách các thành phần Greengrass của AWS IoTCore*
+
+ 2.4 Để cho phép chuyển tệp từ Amazon S3 bucket sang thiết bị biên, chúng tôi sẽ triển khai thành phần Download Manager lên thiết bị Greengrass mô phỏng đang chạy trên EC2 instance. Từ danh sách thành phần ở trên, nhấp vào thành phần có tiêu đề com.example. DownloadManager và nhấn Deploy, chọn Create new deployment và nhấn Next.
+
+ 2.5 Nhập tên triển khai là "My Deployment" và "Deployment Target" là "Core Device". Nhập tên thiết bị lõi có thể tìm thấy trong AWS Management Console → AWS IoT Core → Greengrass Devices → Core devices, rồi nhấn "Next".
+
+ 2.6 Chọn thành phần: Cùng với thành phần tùy chỉnh, chúng tôi cũng sẽ triển khai các thành phần công khai được cung cấp bởi AWS được liệt kê dưới đây:
+
+* aws.greengrass.Nucleus – Thành phần hạt nhân IoT Greengrass là thành phần bắt buộc và là yêu cầu tối thiểu để chạy phần mềm IoT Greengrass Core trên thiết bị biên.  
+* aws.greengrass.Cli – Thành phần IoT Greengrass CLI cung cấp giao diện dòng lệnh cục bộ mà bạn có thể sử dụng trên thiết bị biên để phát triển và gỡ lỗi các thành phần cục bộ. IoT Greengrass CLI cho phép bạn tạo các triển khai cục bộ và khởi động lại các thành phần trên thiết bị biên.  
+* aws.greengrass.TokenExchangeService – Dịch vụ trao đổi mã thông báo cung cấp thông tin xác thực AWS có thể được sử dụng để tương tác với các dịch vụ AWS từ các thành phần tùy chỉnh. Điều này rất cần thiết để thư viện boto3 tải xuống các tệp từ Amazon S3 bucket xuống thiết bị biên.
+
+![IOTB-727-DMComponent](/images/3-BlogsTranslated/3.2-Blog2/IOTB-727-DMComponent.jpg)
+
+*Hình 3 – Chọn các thành phần để triển khai*
+
+ 2.7 Cấu hình Thành phần: Từ danh sách các thành phần Công khai, hãy cấu hình [Nucleus component](https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html#greengrass-nucleus-component-configuration-interpolate-component-configuration) và bật cờ \`interpolateComponentConfiguration\` thành true. Nên đặt tùy chọn này thành true để thiết bị biên có thể chạy các thành phần IoT Greengrass bằng các [recipe variables](https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html) từ cấu hình. Thao tác này cũng sẽ tham chiếu đến thingName trong cơ sở mã từ biến môi trường AWS\_IOT\_THING\_NAME và không cần phải mã hóa cứng thingName.
+
+Trong danh sách Cấu hình thành phần, hãy chọn thành phần Nucleus và nhấn Configure Component. Cập nhật phần Configuration để Merge như sau và nhấn Xác nhận.
+```json
+{
+  "interpolateComponentConfiguration": true
+}
+```
+![IOTB-727-configureNucleus](/images/3-BlogsTranslated/3.2-Blog2/IOTB-727-configureNucleus.jpg)
+
+*Hình 4 – Cấu hình aws.greengrass.Nucleus*
+
+ 2.8 Giữ nguyên cấu hình triển khai mặc định và tiếp tục đến trang Xem lại và nhấp vào Triển khai.
+
+ 2.9 Bạn có thể theo dõi quá trình bằng cách xem tệp IoT Greengrass log trên thiết bị IoT Greengrass được mô phỏng đang chạy trên EC2 instance. Bạn sẽ thấy "status=SUCCEEDED" trong log.
+
+sudo tail -f /greengrass/v2/logs/greengrass.log
+
+ 2.10 Sau khi triển khai thành công, bạn có thể theo dõi nhật ký cho thành phần Download Manager tùy chỉnh trên thiết bị IoT Greengrass mô phỏng đang chạy trên EC2 instance như hiển thị bên dưới. Bạn sẽ thấy currentState=RUNNING trong nhật ký.
+
+sudo tail -f /greengrass/v2/logs/com.example.DownloadManager.log
+
+ 2.11 Thư mục tải xuống được cấu hình thành /opt/downloads khi triển khai Download Manager component Tải xuống tùy chỉnh. Giám sát quá trình tải xuống bằng cách mở cửa sổ terminal trong IDE bằng lệnh sau:
+```bash
+sudo su
+cd /opt/downloads
+ls
+```
+
+ 
+
+## **Bước 3: Upload tệp cần tải về thiết bị edge**
+
+Thành phần Download Manager hỗ trợ việc truyền tệp từ Amazon S3 đến thiết bị biên của bạn. AWS IoT Jobs đóng vai trò quan trọng trong quá trình này bằng cách cho phép bạn xác định và thực hiện các thao tác từ xa trên các thiết bị được kết nối. Với AWS IoT Jobs, bạn có thể tạo một tác vụ hướng dẫn thiết bị biên tải xuống tệp từ một vị trí Amazon S3 bucket được chỉ định. Tác vụ này đóng vai trò như một tập hợp các hướng dẫn, chỉ dẫn thành phần Download Manager tìm kiếm tệp mong muốn trong Amazon S3 bucket. Sau khi tác vụ được tạo và gửi đến thiết bị biên, thành phần Download Manager sẽ bắt đầu quá trình tải xuống, truyền liền mạch các tệp được chỉ định từ Amazon S3 đến bộ nhớ cục bộ của thiết bị biên.
+
+ 3.1 Tạo một thư mục có tên là uploads trong Amazon S3 bucket (greengrass-artifacts-YOUR\_REGION-YOUR\_AWS\_ACCOUNT\_ID) đã tạo ở Bước 2.1. Tải hình ảnh được tạo bởi GenAI bên dưới có tên là owl.png vào thư mục uploads trên Amazon S3 bucket.
+
+![IOTB-727-DownloadImage.jpg](/images/3-BlogsTranslated/3.2-Blog2/IOTB-727-DownloadImage.jpg)
+
+*Hình 5 – Hình ảnh được tạo bởi GenAI – owl.png*
+
+Để đơn giản hóa, chúng tôi đang sử dụng lại cùng một Amazon S3 bucket<span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">(greengrass-artifacts-YOUR\_REGION-YOUR\_AWS\_ACCOUNT\_ID)</span>. Tuy nhiên, tốt nhất là nên tạo 2 thùng riêng biệt cho các thành phần IoT Greengrass và các tệp cần tải xuống biên.
+
+3.2 Sau khi tệp đã được tải lên Amazon S3 bucket, hãy sao chép S3 URI của hình ảnh này để sử dụng trong bước tiếp theo. S3 URI sẽ là <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">s3://greengrass-artifacts-REGION-ACCOUNT\_ID/uploads/owl\_logo.png</span>.
+
+### 
+
+## **Bước 4: Viết script Python để đồng bộ dữ liệu**
+
+4.1 Tạo AWS IoT Job Document
+
+4.1.1 Từ AWS Management Console, điều hướng đến AWS IoT Core → Remote actions→ Jobs and click Create job.
+
+4.1.2 Chọn tạo công việc tùy chỉnh
+
+4.1.3 Đặt tên công việc, ví dụ: Test-1 và tùy chọn cung cấp mô tả, sau đó nhấp vào Tiếp theo.
+
+4.1.4 Đối với Job Target, hãy chọn thiết bị lõi được chỉ định bởi tên thiết bị< <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;"> YOUR GREENGRASS DEVICE NAME</span> >. Bạn có thể để Thing group trống ngay bây giờ.
+
+4.1.5 Chọn Job document From từ mẫu và chọn AWS-Download-File từ Mẫu.
+
+4.1.6 Dán S3 URI vào phần downloadUrl. S3 URI phải bắt đầu bằng <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">s3://greengrass-artifacts-REGION-ACCOUNT\_ID/uploads/owl\_logo.png</span>
+
+4.1.7 Đối với tệp Path, hãy nhập thư mục con nơi bạn muốn tệp sẽ được tải xuống. Với blog này, chúng ta sẽ tạo một thư mục có tên là images và nhấp vào Next. Không thêm dấu /vào đường dẫn vì thành phần sẽ tự động thêm tiền tố đường dẫn.
+
+4.1.8 Để cấu hình tác vụ và loại chạy, chọn Snapshot và nhấp vào Submit.
+
+4.2 Theo dõi nhật ký thành phần trên EC2 instance để xem thư mục tải xuống đang được tạo và hình ảnh có tên owl.png đang được tải xuống.
+
+<span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">sudo tail \-f /greengrass/v2/logs/com.example.DownloadManager.log</span>
+
+4.3 Theo dõi Tiến trình Tác vụ: Mỗi tài liệu Tác vụ cũng hỗ trợ cập nhật trạng thái thực thi từ cấp độ tác vụ và cấp độ sự vật. Từ AWS Management Console → Jobs → Test-1→ Job executions.
+
+![IOTB-727-TrackJobExecution](/images/3-BlogsTranslated/3.2-Blog2/IOTB-727-TrackJobExecution.jpg)
+
+*Hình 6 – Theo dõi việc thực hiện công việc*
+
+4.4 Để xem trạng thái thực hiện từ thiết bị biên, hãy nhấp vào hộp kiểm cho thiết bị lõi trong phần Thực hiện công việc.  
+![IOTB-727-ExecutionStatus](/images/3-BlogsTranslated/3.2-Blog2/IOTB-727-ExecutionStatus.jpg)
+*Hình 7 – Xem chi tiết trạng thái thực hiện công việc*  
+4.5 Sau khi tệp đã được tải xuống EC2 instance, bạn có thể tìm thấy tệp đó trong thư mục <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">/opt/downloads/images</span> trong thiết bị lõi.
+```bash
+sudo su
+# cd /opt/downloads/images/
+# ls -alh
+total 1.1M
+drwxrwxr-x 2 ggc_user ggc_group 4.0K Jun 13 17:10 .
+drwx------ 3 ggc_user root      4.0K Jun 13 17:10 ..
+-rw-rw-r-- 1 ggc_user ggc_group 1.1M Jun 13 17:10 owl_logo.png
+```
+# **Dọn dẹp**
+
+Để đảm bảo hiệu quả chi phí, blog này sử dụng AWS Free Tier cho tất cả các dịch vụ, ngoại trừ phiên bản EC2 và ổ đĩa EBS được gắn vào phiên bản này. EC2 instance được sử dụng trong ví dụ này yêu cầu On-Demand t3.medium instance theo yêu cầu để chứa cả môi trường phát triển và thiết bị biên được mô phỏng trong cùng một phiên bản EC2 cơ sở. Để biết thêm thông tin, vui lòng tham khảo chi tiết về [pricing](https://aws.amazon.com/ec2/pricing/on-demand/). Sau khi hoàn thành hướng dẫn này, hãy nhớ truy cập AWS Console và xóa các tài nguyên đã tạo trong quá trình này bằng cách làm theo hướng dẫn được cung cấp. Bước này rất quan trọng để tránh phát sinh bất kỳ khoản phí ngoài ý muốn nào trong tương lai.
+
+Hướng dẫn dọn dẹp:
+
+1. Mở S3 từ AWS console và xóa nội dung của Amazon S3 bucket có tên greengrass-artifacts-YOUR\_REGION-YOUR\_AWS\_ACCOUNT\_ID và Amazon S3 bucket.  
+2. Mở IoT Core từ AWS console và xóa tất cả các tác vụ khỏi IoT Jobs Manager Dashboard.  
+3. Mở IoT Greengrass từ bảng điều khiển AWS và xóa IoT thing Group, Vật, Chứng chỉ, Chính sách và Vai trò được liên kết với MyGreengrassCore.  
+4. Làm theo hướng dẫn [cleanup](https://github.com/aws-samples/vscode-on-ec2-for-prototyping/blob/main/README.md#cleanup) trong kho lưu trữ aws-samples [VS Code on EC2 repository](https://github.com/aws-samples/vscode-on-ec2-for-prototyping/blob/main/README.md).  
+   
+
+# **Tài liệu tham khảo của khách hàng**
+
+[AWS customers](https://aws.amazon.com/blogs/industries/aws-and-safran-passenger-innovations/) đang sử dụng phương pháp này để chuyển tệp từ Amazon S3 sang thiết bị biên.
+
+# **Kết luận**
+
+Bài đăng trên blog này minh họa cách khách hàng AWS có thể di chuyển dữ liệu hiệu quả từ Amazon S3 sang các thiết bị biên của họ. Các bước được trình bày chi tiết cho phép tải xuống liền mạch các bản cập nhật phần mềm, cập nhật chương trình cơ sở, nội dung và các tệp thiết yếu khác. Khả năng giám sát theo thời gian thực cung cấp khả năng hiển thị và kiểm soát toàn diện mọi hoạt động truyền tệp. Bạn có thể tối ưu hóa hơn nữa hoạt động của mình bằng cách triển khai chức năng [pause and resume](https://aws.amazon.com/blogs/developer/pausing-and-resuming-transfers-using-transfer-manager/) được đề cập trong blog. Ngoài ra, bạn có thể sử dụng AWS IoT Greengrass và Amazon S3 Transfer Manager để triển khai luồng dữ liệu ngược từ các thiết bị biên sang Amazon S3. Hơn nữa, thông qua thành phần IoT Greengrass tùy chỉnh, bạn có thể tạo điều kiện thuận lợi cho việc tải lên nhật ký và dữ liệu đo từ xa, mở ra những cơ hội mạnh mẽ cho bảo trì dự đoán, phân tích thời gian thực và thông tin chi tiết dựa trên dữ liệu.
+
+# **Về các tác giả**
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td style="width: 120px; vertical-align: top;">
+<img src="/images/3-BlogsTranslated/3.2-Blog2/Tamil_resized.jpg" alt="Dave Jaskie" style="width: 100px; border-radius: 5px;">
+</td>
+<td style="padding-left: 20px; vertical-align: top;">
+
+**Tamil Jayakumar** Tamil Jayakumar là Kiến trúc sư Giải pháp Chuyên biệt & Kỹ sư Nguyên mẫu tại Amazon Web Services. Anh có hơn 14 năm kinh nghiệm trong lĩnh vực phát triển phần mềm, phát triển Proof of Concept, tạo ra các Sản phẩm Khả thi Tối thiểu (MVP) bằng cách sử dụng kỹ năng phát triển ứng dụng và kiến ​​trúc sư giải pháp toàn diện. Anh là một chuyên gia công nghệ thực hành, đam mê giải quyết các thách thức công nghệ bằng các giải pháp sáng tạo cả về phần mềm và phần cứng, kết hợp nhu cầu kinh doanh với năng lực CNTT.
+
+</td>
+</tr>
+</table>
+
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td style="width: 120px; vertical-align: top;">
+<img src="/images/3-BlogsTranslated/3.2-Blog2/Rashmi_resized-1.jpg" alt="Dave Jaskie" style="width: 100px; border-radius: 5px;">
+</td>
+<td style="padding-left: 20px; vertical-align: top;">
+
+**Rashmi Varshney** Rashmi Varshney là Kiến trúc sư Giải pháp Cấp cao tại Amazon Web Services, có trụ sở tại Austin. Cô có hơn 20 năm kinh nghiệm, chủ yếu trong lĩnh vực phân tích. Cô đam mê và thích hỗ trợ khách hàng xây dựng chiến lược áp dụng đám mây, thiết kế các giải pháp sáng tạo và thúc đẩy sự xuất sắc trong vận hành. Là thành viên của Cộng đồng Kỹ thuật Phân tích tại AWS, cô tích cực đóng góp vào các nỗ lực hợp tác trong ngành.
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+<table>
+<tr>
+<td style="width: 120px; vertical-align: top;">
+<img src="/images/3-BlogsTranslated/3.2-Blog2/Nilo_resized-1.jpg" alt="Dave Jaskie" style="width: 100px; border-radius: 5px;">
+</td>
+<td style="padding-left: 20px; vertical-align: top;">
+
+**Nilo Bustani** Nilo Bustani là Kiến trúc sư Giải pháp Cao cấp tại AWS với hơn 20 năm kinh nghiệm trong lĩnh vực phát triển ứng dụng, kiến ​​trúc đám mây và lãnh đạo kỹ thuật. Cô chuyên hỗ trợ khách hàng xây dựng các chiến lược quan sát và thực hành quản trị mạnh mẽ trên các môi trường đám mây lai và đa đám mây. Cô tận tâm cung cấp cho các tổ chức các công cụ và thực hành cần thiết để thành công trong hành trình chuyển đổi sang đám mây và AI.
+</td>
+</tr>
+</table>

@@ -1,41 +1,51 @@
 ---
-title: "Self-Assessment"
-date: "2006-01-02"
+title: "Self-evaluation"
+date: "2025-12-07"
 weight: 6
 chapter: false
-pre: " <b> 6 </b> "
+pre: " <b> 6. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
+During my internship at **AWS** from **09/08/2025** to **12/09/2025**, I had the opportunity to learn, practice, and apply the knowledge I acquired at university in a real working environment.  
 
-During my internship at **[Company/Organization Name]** from **[start date]** to **[end date]**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
-I participated in **[briefly describe the main project or task]**, through which I improved my skills in **[list skills: programming, analysis, reporting, communication, etc.]**.  
+I participated in the **Serverless Student Management System** project as the Back End developer, through which I developed and improved skills such as **programming, requirements analysis, architecture design, event handling, report writing, and technical communication with the team**.
 
-In terms of work ethic, I always strived to complete tasks well, complied with workplace regulations, and actively engaged with colleagues to improve work efficiency.
+Regarding work ethic, I always strive to complete assigned tasks, comply with regulations, and proactively communicate with colleagues to improve work efficiency.
 
-To objectively reflect on my internship period, I would like to evaluate myself based on the following criteria:
+## Achievements
+
+- Gained an understanding of **multi-layer serverless architecture** operating on AWS.  
+- Understood the **Cognito authorization model**, and real-time processing via **AppSync WebSocket**.  
+- Directly developed modules for **CRUD, chat, student ranking, and event-based email sending**.  
+- Practiced **DevOps CI/CD pipeline** automating the build → test → deploy process.
+
+---
+
+## Self-Evaluation Table
 
 | No. | Criteria                            | Description                                                                                      | Good | Fair | Average |
 | --- | ----------------------------------- | ------------------------------------------------------------------------------------------------ | ---- | ---- | ------- |
-| 1   | **Professional knowledge & skills** | Understanding of the field, applying knowledge in practice, proficiency with tools, work quality | ✅    | ☐    | ☐       |
-| 2   | **Ability to learn**                | Ability to absorb new knowledge and learn quickly                                                | ☐    | ✅    | ☐       |
-| 3   | **Proactiveness**                   | Taking initiative, seeking out tasks without waiting for instructions                            | ✅    | ☐    | ☐       |
-| 4   | **Sense of responsibility**         | Completing tasks on time and ensuring quality                                                    | ✅    | ☐    | ☐       |
-| 5   | **Discipline**                      | Adhering to schedules, rules, and work processes                                                 | ☐    | ☐    | ✅       |
-| 6   | **Progressive mindset**             | Willingness to receive feedback and improve oneself                                              | ☐    | ✅    | ☐       |
-| 7   | **Communication**                   | Presenting ideas and reporting work clearly                                                      | ☐    | ✅    | ☐       |
-| 8   | **Teamwork**                        | Working effectively with colleagues and participating in teams                                   | ✅    | ☐    | ☐       |
-| 9   | **Professional conduct**            | Respecting colleagues, partners, and the work environment                                        | ✅    | ☐    | ☐       |
-| 10  | **Problem-solving skills**          | Identifying problems, proposing solutions, and showing creativity                                | ☐    | ✅    | ☐       |
-| 11  | **Contribution to project/team**    | Work effectiveness, innovative ideas, recognition from the team                                  | ✅    | ☐    | ☐       |
-| 12  | **Overall**                         | General evaluation of the entire internship period                                               | ✅    | ☐    | ☐       |
+| 1   | **Professional knowledge & skills** | Understanding of the field, applying knowledge in practice, work quality                        | ☐    | ✅   | ☐       |
+| 2   | **Ability to learn**                | Quickly absorb new knowledge, self-improvement                                                  | ☐    | ✅   | ☐       |
+| 3   | **Proactiveness**                   | Self-learning, taking on tasks without being asked                                              | ☐    | ✅   | ☐       |
+| 4   | **Sense of responsibility**         | Completing work on time, ensuring quality                                                       | ✅   | ☐    | ☐       |
+| 5   | **Discipline**                      | Compliance with time, processes, company regulations                                            | ☐    | ✅   | ☐       |
+| 6   | **Progressiveness**                 | Receiving feedback and continuously improving                                                   | ☐    | ☐    | ✅      |
+| 7   | **Communication**                   | Reporting work, presenting ideas                                                               | ☐    | ☐    | ✅      |
+| 8   | **Teamwork**                        | Working effectively with the team, proactively supporting                                       | ✅   | ☐    | ☐       |
+| 9   | **Professional conduct**            | Serious attitude, respect for colleagues, professionalism                                      | ✅   | ☐    | ☐       |
+| 10  | **Problem-solving thinking**        | Identifying problems, proposing solutions                                                      | ☐    | ☐    | ✅      |
+| 11  | **Contribution to project/org**     | Work results, level of contribution, improvements                                              | ☐    | ✅   | ☐       |
+| 12  | **Overall**                         | Overall evaluation of the entire internship process                                            | ☐    | ✅   | ☐       |
 
-### Needs Improvement
+---
 
-* Strengthen discipline and strictly comply with the rules and regulations of the company or any organization  
-* Improve problem-solving thinking  
-* Enhance communication skills in both daily interactions and professional contexts, including handling situations effectively
+### Areas for Improvement
 
+- Improve **discipline**, better compliance with rules and time management.
+- Enhance **analytical & problem-solving thinking** in a more systematic way.
+- Practice **communication skills**, present more clearly in reports and work discussions.
+- Nâng cao **tính kỷ luật**, tuân thủ tốt hơn quy định và thời gian.
+- Cải thiện **tư duy phân tích & giải quyết vấn đề** theo hướng có hệ thống.
+- Rèn luyện **kỹ năng giao tiếp**, trình bày rõ ràng hơn trong báo cáo và khi thảo luận công việc.
 

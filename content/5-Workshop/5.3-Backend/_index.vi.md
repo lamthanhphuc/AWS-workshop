@@ -83,14 +83,12 @@ Cognito cung cấp:
 
 ### Tạo User Pool
 ```bash
-Sao chép mã
 aws cognito-idp create-user-pool \
   --pool-name Student-App-Pool \
   --auto-verified-attributes email
 ```
 ### Tạo App Client
 ```bash
-Sao chép mã
 aws cognito-idp create-user-pool-client \
   --user-pool-id <UserPoolId> \
   --client-name StudentAppClient \
@@ -115,7 +113,6 @@ S3 được dùng cho:
 ## Triển khai S3 qua AWS CLI
 ### Tạo Bucket
 ```bash
-Sao chép mã
 aws s3api create-bucket \
   --bucket aws-sam-cli-managed-default-samclisourcebucket-qsrwrbr9usyq \
   --region ap-southeast-1 \

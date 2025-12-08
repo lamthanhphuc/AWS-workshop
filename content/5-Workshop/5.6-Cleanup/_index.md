@@ -1,218 +1,202 @@
 ---
-title : "Access S3 from on-premises"
-date: "2006-01-02"
-weight : 4
-chapter : false
-pre : " <b> 5.4. </b> "
----
-
-#### Overview
-
-+ In this section, you will create an Interface endpoint to access Amazon S3 from a simulated on-premises environment. The Interface endpoint will allow you to route to Amazon S3 over a VPN connection from your simulated on-premises environment.
-
-+ Why using **Interface endpoint**: 
-    + Gateway endpoints only work with resources running in the VPC where they are created. Interface endpoints work with resources running in VPC, and also resources running in on-premises environments. Connectivty from your on-premises environment to the cloud can be provided by AWS Site-to-Site VPN or AWS Direct Connect.
-    + Interface endpoints allow you to connect to services powered by AWS PrivateLink. These services include some AWS services, services hosted by other AWS customers and partners in their own VPCs (referred to as PrivateLink Endpoint Services), and supported AWS Marketplace Partner services. For this workshop, we will focus on connecting to Amazon S3.
-
-![Interface endpoin---
-title : "Dọn dẹp tài nguyên"
-date: "2025-12-07"  
-weight : 5
+title : "Resource Cleanup"
+date: "2025-12-07"
+weight : 6
 chapter : false
 pre : " <b> 5.6. </b> "
 ---
 
-#### Tổng quan
+#### Overview
 
-Trong phần này, bạn sẽ xây dựng cơ chế **event-driven** cho hệ thống Serverless Student Management System bằng cách sử dụng **Amazon EventBridge**, **AWS Lambda**, **Amazon SES**, và **Amazon Personalize**.  
+After completing the **Serverless Student Management System** workshop, the final step is to **clean up all AWS resources** to avoid unexpected costs.
 
-Hệ thống có khả năng:
-
-- Phát sinh sự kiện khi sinh viên đăng ký lớp, nộp bài, hoặc nhận thông báo  
-- Gửi email tự động qua Amazon SES  
-- Huấn luyện mô hình ML bằng Amazon Personalize  
-- Tạo ranking sinh viên hoặc gợi ý khóa học cá nhân hóa  
-- Xử lý luồng sự kiện phi đồng bộ và mở rộng vô hạn  
-
-Sơ đồ tổng quan:
-
-![Event-driven Architecture](/images/5-Workshop/5.5-EventDriven/architecture.png)
+This page guides you through deleting the services you created:
+**DynamoDB, Lambda, API Gateway, Cognito, S3, EventBridge, SES, AppSync, Amplify, CloudWatch Logs**, and other resources.
 
 ---
 
-# 1. Event-driven với Amazon EventBridge
+# 1. Delete DynamoDB Table
 
-### **1.1 Tạo Event Bus**
+Go to **DynamoDB Console → Tables**:
 
-Trong EventBridge Console:
+- Select table:
 
-- Create → Event Bus  
-Tên: `student-event-bus`
+- `Student-Management-Database`
+- Actions → **Delete Table**
+- Confirm
 
-### **1.2 Các loại sự kiện hệ thống**
+> ⚠️ Note: Deleting a table is irreversible.
 
-| Event Type | Source | Detail Example |
-|------------|--------|----------------|
-| `student.enrolled` | api.student | `{ "studentId": "1", "classId": "A1" }` |
-| `student.submitAssignment` | api.assignment | `{ "studentId": "1", "fileUrl": "..." }` |
-| `teacher.sendAnnouncement` | api.teacher | `{ "teacherId": "T1", "content": "..." }` |
-| `ranking.requestUpdate` | api.ranking | `{ "trigger": "nightly" }` |
+---
 
-### **1.3 Publish sự kiện từ Lambda**
+# 2. Delete Lambda Functions
 
-```javascript
-import { EventBridgeClient, PutEventsCommand } from "@aws-sdk/client-eventbridge";
+Go to **AWS Lambda Console → Functions** and delete:
 
-const client = new EventBridgeClient();
+- Backend API functions (auth, student, lecturer, admin)
+- Event-driven functions
+- Email sending function (SES Handler)
+- ML function (Personalize Integration)
+- AppSync resolver function (if any)
 
-export const handler = async (event) => {
-  await client.send(
-    new PutEventsCommand({
-      Entries: [
-        {
-          EventBusName: "student-event-bus",
-          Source: "api.student",
-          DetailType: "student.enrolled",
-          Detail: JSON.stringify({
-            studentId: event.studentId,
-            classId: event.classId
-          })
-        }
-      ]
-    })
-  );
+> If using Lambda Layers → delete the entire Layer.
 
-  return { status: "OK" };
-};
-```
-# 2. Email Notification bằng Amazon SES
-### **2.1 Cấu hình SES**
-- Verify domain
-- Verify email sender
-- Request production access (hoặc dùng sandbox với chế độ test)
+---
 
-## **2.2 Lambda gửi email**
-Lambda được trigger bởi EventBridge rule:
+# 3. Delete API Gateway
 
-```javascript
+### For REST API
 
-import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
+Go to **API Gateway Console → APIs → REST APIs**:
 
-const ses = new SESClient({});
+- Select main backend API
 
-export const handler = async (event) => {
-  const detail = event.detail;
+- Actions → **Delete**
 
-  const params = {
-    Destination: {
-      ToAddresses: [detail.email]
-    },
-    Message: {
-      Body: {
-        Text: { Data: `Bạn vừa đăng ký lớp ${detail.classId}.` }
-      },
-      Subject: { Data: "Xác nhận đăng ký lớp" }
-    },
-    Source: "noreply@student-system.com"
-  };
+### For WebSocket / Realtime (if using AppSync Chat)
 
-  await ses.send(new SendEmailCommand(params));
+- Delete WebSocket APIs (if deployed)
 
-  return { status: "EMAIL_SENT" };
-};
-```
-## **2.3 Rule: gửi email khi đăng ký lớp**
-```css
-Event Pattern:
-{
-  "detail-type": ["student.enrolled"]
-}
-```
-# 3. ML Ranking với Amazon Personalize
-## **3.1 Mục tiêu**
-Sử dụng Personalize để:
-- Gợi ý môn học phù hợp
-- Ranking sinh viên theo độ tương tác
-- Gợi ý tài liệu, quiz
-## **3.2 Chuẩn bị dữ liệu DynamoDB**
-Bảng cần có:
-- Interactions
-- Students
-- ClassActivity
+---
 
-Sử dụng Glue crawler → S3 để tạo dataset import.
+# 4. Delete Cognito User Pool
 
-## **3.3 Tạo dataset trong Personalize**
-Dataset Group: student-ranking
+Go to **Cognito Console → User Pools**:
 
-Dataset Type: Interactions, Items, Users
+- Select User Pool (e.g. `StudentUserPool`)
+- Delete
 
-Schema JSON theo định dạng Personalize
+Don't forget to delete:
 
-## **3.4 Training mô hình**
-Chọn recipe:
-- aws-user-personalization (gợi ý cá nhân hóa)
-- Hoặc aws-personalized-ranking (ranking theo activity)
-## **3.5 Tạo Campaign**
-Output:
-- ARN của campaign
-- API endpoint để request recommendation
-# 4. Tích hợp Personalize vào Backend
-## **4.1 Lambda gọi Personalize**
-```javascript
-import {
-  PersonalizeRuntimeClient,
-  GetRecommendationsCommand
-} from "@aws-sdk/client-personalize-runtime";
+- App Client
+- Cognito Domain (if you have a custom domain)
 
-const client = new PersonalizeRuntimeClient();
+---
 
-export const handler = async (event) => {
-  const { userId } = event;
+# 5. Delete S3 Buckets
 
-  const response = await client.send(
-    new GetRecommendationsCommand({
-      campaignArn: process.env.CAMPAIGN_ARN,
-      userId
-    })
-  );
+Includes the following buckets:
 
-  return { recommendations: response.itemList };
-};
-```
-## **4.2 Expose qua API Gateway**
-Method	Endpoint	Lambda
-GET	/ranking/{userId}	ranking.getRecommendation
+- Bucket containing frontend build files (Amplify/S3 website)
+- Bucket storing student images
+- Bucket storing assignment submissions
+- Bucket storing training dataset of Personalize (if available)
 
-# 5. Tích hợp Event-driven với ML (Nightly Auto Update)
-EventBridge Scheduler:
-- Thời gian: 0 2 * * * (2 giờ sáng hàng ngày)
-- Trigger: Lambda ranking.generateTrainingData
+Do:
 
-Flow:
+1. Empty Bucket
+2. Delete Bucket
 
-1. Lambda export dữ liệu mới từ DynamoDB → S3
+> S3 does not allow deleting bucket if there are files.
 
-2. Update dataset
+---
 
-3. Re-train model hoặc incremental import
+# 6. Delete Amplify Project (Frontend)
 
-4. Update campaign
+Go to **Amplify Console → Apps**:
 
-# 6. Tổng kết
-Trang “Event-driven, Email Notification & ML Ranking” cung cấp:
+- Select App Frontend
+- Actions → **Delete App**
 
-- Cách tạo hệ thống event-driven hoàn chỉnh bằng EventBridge
+Automatically delete:
 
-- Gửi email tự động với SES
+- Backend Environment
+- Branch configs
+- Build logs
+- Hosting resources
 
-- Tích hợp Machine Learning để gợi ý và ranking sinh viên
+---
 
-- Tự động hóa training bằng event scheduler
+# 7. Delete AppSync (if using Realtime Chat)
 
-Kết hợp các service này giúp hệ thống hoạt động mượt, realtime và thông minh hơn — mang lại trải nghiệm học tập cá nhân hóa cho người dùng.t architecture](/images/5-Workshop/5.4-S3-onprem/diagram3.png)
+Go to **AppSync Console → APIs**:
 
+- Select `StudentChatAPI` (or your name)
+- Delete API
 
+---
 
+# 8. Delete EventBridge
 
+### Delete Event Bus
 
+EventBridge Console → Event Buses:
+
+- Delete `student-event-bus`
+
+### Delete Rules
+
+- Delete email rule
+- Delete ML training rule
+- Delete nightly update scheduler
+
+---
+
+# 9. Delete SES configuration
+
+In **SES Console**:
+
+- Delete verified identity (email or domain)
+- Delete custom MAIL FROM domain (if any)
+- Delete configuration sets (if created)
+- Check email sending queue
+
+> SES in sandbox is free but must be cleaned to avoid future errors.
+
+---
+
+# 10. Delete Personalize (ML Ranking)
+
+In **Amazon Personalize Console**:
+
+- Delete:
+- Dataset Group
+- Datasets
+- Solutions
+- Campaigns
+- Event Tracker
+- Batch Inference Jobs
+
+> Personalize resources are very expensive, need to be cleaned.
+
+---
+
+#11. Delete CloudWatch Logs
+
+Go to **CloudWatch Logs → Log Groups**:
+
+Erase:
+
+- `/aws/lambda/...`
+- `/aws/appsync/...`
+- `/aws/events/...`
+- `/aws/api-gateway/...`
+
+---
+
+#12. Delete self-created IAM Roles & Policies
+
+Delete roles:
+
+- Lambda Execution Roles
+- AppSync role
+- SES sending role
+- Personalize import job role
+- DynamoDB access roles
+- Amplify service role
+
+> ⚠️ Do not delete AWS-managed roles.
+
+---
+
+# 13. Summary
+
+The **“Cleanup Resources”** page helps you:
+
+- Delete all services used in the workshop
+- Prevent unwanted costs
+- Clean up the environment to prepare for the next workshop
+
+This is the final step of the **Serverless Student Management System** Workshop.
+
+---

@@ -1,5 +1,5 @@
 ---
-title : "Triển khai Backend: DynamoDB, Lambda, API Gateway, Cognito"
+title : "Backend Deployment: DynamoDB, Lambda, API Gateway, Cognito"
 date: "2025-12-07"
 weight : 3
 chapter : false
@@ -11,44 +11,44 @@ pre : "<b> 5.3. </b>"
 
 # 1. Amazon DynamoDB
 
-DynamoDB là cơ sở dữ liệu NoSQL serverless, lưu trữ tất cả dữ liệu của hệ thống:
+DynamoDB is a serverless NoSQL database that stores all system data:
 
-- Thông tin sinh viên  
-- Lớp học, môn học  
-- Giảng viên  
-- Điểm số  
-- Lịch sử chat, sự kiện hệ thống  
-- Dữ liệu ML phục vụ gợi ý (Personalize)  
+- Student information
+- Classes, subjects
+- Lecturers
+- Scores
+- Chat history, system events
+- ML data for recommendations (Personalize)
 
-Hệ thống backend Spring Boot tương tác DynamoDB qua:
+Spring Boot backend system interacts with DynamoDB via:
 
-- AWS SDK for Java 17  
-- Spring Data DynamoDB hoặc repository do team tự viết  
-- Presigned URL (upload tài liệu, hồ sơ)  
-- EventBridge (phát sinh sự kiện academic event → xử lý qua Lambda)
+- AWS SDK for Java 17
+- Spring Data DynamoDB or repository written by the team
+- Presigned URL (upload documents, profiles)
+- EventBridge (generate academic events → process via Lambda)
 
 ---
 
-##  **Thiết kế bảng DynamoDB (Single-Table Design)**
+## **DynamoDB Table Design (Single-Table Design)**
 
-**Bảng:** `Student-Management-Database`
+**Table:** `Student-Management-Database`
 
-| Thành phần | Ý nghĩa |
+| Components | Meaning |
 |-----------|---------|
-| PK        | USER#, CLASS#, SUBJECT#, TEACHER#, GRADE# |
-| SK        | PROFILE, INFO, STUDENT#, SUBJECT#, CLASS# |
-| GSI1PK    | ROLE#, TYPE#, EMAIL#, CLASS# |
-| GSI1SK    | NAME#, CREATED_AT#, SUBJECT# |
+| PK | USER#, CLASS#, SUBJECT#, TEACHER#, GRADE# |
+| SK | PROFILE, INFO, STUDENT#, SUBJECT#, CLASS# |
+| GSI1PK | ROLE#, TYPE#, EMAIL#, CLASS# |
+| GSI1SK | NAME#, CREATED_AT#, SUBJECT# |
 
-**Billing mode:** On-Demand → phù hợp workshop (không cần cấu hình capacity).
+**Billing mode:** On-Demand → suitable for workshops (no capacity configuration required).
 
 ![DynamoDB](/images/5-Workshop/5.2-Prerequisite/DynamoDB.png)
 
 ---
 
-##  **Triển khai DynamoDB qua AWS CLI**
+## **Deploy DynamoDB via AWS CLI**
 
-###  Tạo bảng
+### Create table
 
 ```bash
 aws dynamodb create-table \
@@ -61,36 +61,34 @@ aws dynamodb create-table \
       AttributeName=SK,KeyType=RANGE \
   --billing-mode PAY_PER_REQUEST
 ```
-# 2. Amazon Cognito
+#2. Amazon Cognito
 
-Cognito cung cấp:
+Cognito offers:
 
-- Quản lý tài khoản
+- Account management
 
-- Đăng nhập bằng email
+- Login with email
 
-- JWT Authentication dùng Spring Security
+- JWT Authentication uses Spring Security
 
-- Phân quyền theo Group (student, lecturer, admin)
+- Decentralize rights by Group (student, tutor, admin)
 
-- Backend Spring Boot dùng:
+- Backend Spring Boot uses:
 
 - Cognito JWT Filter
 
 - Spring Security @PreAuthorize("hasRole('ADMIN')")
 
-##  **Triển khai Cognito qua AWS CLI**
+## **Deploy Cognito via AWS CLI**
 
-### Tạo User Pool
+### Create User Pool
 ```bash
-Sao chép mã
 aws cognito-idp create-user-pool \
   --pool-name Student-App-Pool \
   --auto-verified-attributes email
 ```
-### Tạo App Client
+### Create App Client
 ```bash
-Sao chép mã
 aws cognito-idp create-user-pool-client \
   --user-pool-id <UserPoolId> \
   --client-name StudentAppClient \
@@ -98,24 +96,21 @@ aws cognito-idp create-user-pool-client \
   ```
 
 # 3. Amazon S3
-S3 được dùng cho:
+S3 is used for:
 
-- Lưu avatar sinh viên
+- Save student avatars
 
-- Tài liệu lớp học
+- Class materials
 
 - Build artifacts (React/Vite)
 
-- Deploy website qua S3 + CloudFront
+- Deploy website via S3 + CloudFront
 
-- Log & asset học liệu
+- Log & learning assets
 
-
-
-## Triển khai S3 qua AWS CLI
-### Tạo Bucket
+## Deploy S3 via AWS CLI
+### Create Bucket
 ```bash
-Sao chép mã
 aws s3api create-bucket \
   --bucket aws-sam-cli-managed-default-samclisourcebucket-qsrwrbr9usyq \
   --region ap-southeast-1 \
@@ -123,39 +118,37 @@ aws s3api create-bucket \
   ```
 
 # 4. Amazon API Gateway + Lambda
-API Gateway đóng vai trò:
+API Gateway plays the role of:
 
-- Cổng API cho toàn hệ thống
+- API Gateway for the entire system
 
-- Xác thực Cognito Authorizer
+- Cognito Authorizer authentication
 
-- Route đến Lambda để xử lý nghiệp vụ
+- Route to Lambda to process business
 
-- Logging CloudWatch
+- CloudWatch logging
 
-- Tích hợp CORS
+- CORS integration
 
-- Backend được triển khai qua:
+- Backend deployed via:
 
 - Lambda (Java 17, Maven build)
 
 - API Gateway REST API
 
-- Lambda Function URL (nội bộ)
+- Lambda Function URL (internal)
 
+## Deploy Lambda & API Gateway using AWS SAM
 
+AWS SAM makes it easier to deploy serverless backends by:
 
-##  Triển khai Lambda & API Gateway bằng AWS SAM
+- Manage Lambda, API Gateway, IAM Role in a template.yaml file
 
-AWS SAM giúp triển khai backend serverless dễ dàng hơn nhờ:
+- Build Java using Maven automatically (sam build)
 
-- Quản lý Lambda, API Gateway, IAM Role trong 1 file template.yaml
-
-- Build Java bằng Maven tự động (sam build)
-
-- Triển khai full stack bằng một lệnh (sam deploy --guided)
+- Deploy full stack with one command (sam deploy --guided)
 ### File template.yaml (SAM)
-Tạo file:
+Create files:
 ```yaml
 
 AWSTemplateFormatVersion: '2010-09-09'
@@ -195,18 +188,18 @@ Resources:
             CognitoAuthorizer:
                 UserPoolArn: arn:aws:cognito-idp:<region>:<account-id>:userpool/<UserPoolId>
 ```
-### Build Lambda bằng SAM
+### Build Lambda using SAM
 
-SAM tự chạy Maven, tự đóng gói JAR:
+SAM runs Maven itself, packages the JAR itself:
 ```bash
 sam build
 ```
-### Deploy bằng SAM
+### Deploy using SAM
 ```bash
 sam deploy --guided
 ```
 
-Lần đầu bạn nhập:
+The first time you enter:
 
 - Stack Name: student-management-backend
 
@@ -216,13 +209,13 @@ Lần đầu bạn nhập:
 
 - Save arguments? → Y
 
-Sau khi deploy thành công, SAM sẽ trả về:
+After successful deployment, SAM will return:
 
 - API Endpoint
 
 - Lambda ARN
 
 - CloudFormation Stack
-# Tổng kết
+# Summary
 
-Các thành phần này tạo nền tảng để xây dựng hệ thống Serverless – Realtime – Event-Driven cho Student Management System.
+These components create the foundation for building a Serverless – Realtime – Event-Driven system for Student Management System.

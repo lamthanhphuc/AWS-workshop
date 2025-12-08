@@ -1,59 +1,58 @@
 ---
 title: "Week 11 Worklog"
-date: "2006-01-02"
-weight: 2
+date: "2025-11-17"
+weight: 11
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 11 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Develop Post/Comment API for classroom interaction.
+* Integration Testing for all APIs.
+* Write API Documentation (OpenAPI/Swagger).
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+### Tasks to be implemented this week:
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | --------- | ------------ | --------------- | -------------- |
+| 2   | - Design Post/Comment schema: <br>&emsp; + DynamoDB table structure <br>&emsp; + Parent-child relationship for comments <br>&emsp; + Timestamp and ordering | 17/11/2025 | 17/11/2025 | [DynamoDB Hierarchical Data](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-adjacency-graphs.html) |
+| 3   | - Develop API Create Post: <br>&emsp; + `POST /classes/{class_id}/posts` <br>&emsp; + Lambda handler for lecturer posts <br>&emsp; + Content validation | 18/11/2025 | 18/11/2025 | [AWS Lambda Developer Guide](https://docs.aws.amazon.com/lambda/latest/dg/welcome.html) |
+| 4   | - Develop API Comment (if any): <br>&emsp; + Reply to post <br>&emsp; + Nested comments structure <br>&emsp; + Permission checking (Lecturer vs Student) | 19/11/2025 | 19/11/2025 | [Amazon Cognito Authorization](https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-user-groups.html) |
+| 5   | - Integration Testing: <br>&emsp; + Test all API endpoints <br>&emsp; + End-to-end testing <br>&emsp; + Performance testing <br>&emsp; + Fix bugs | 20/11/2025 | 20/11/2025 | [AWS SAM Testing](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-test-and-debug.html) |
+| 6   | - API Documentation: <br>&emsp; + OpenAPI/Swagger specification <br>&emsp; + Request/Response examples <br>&emsp; + Error codes documentation <br>&emsp; + Postman collection | 21/11/2025 | 21/11/2025 | [API Gateway Export](https://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-export-api.html) |
 
 ### Week 11 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Completed Post/Comment API:
+  ```
+  POST /classes/{class_id}/posts → Create Post (by Lecturer)
+  ```
 
-* Successfully created and configured an AWS Free Tier account.
+* Summary of all completed Backend APIs:
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+  | API | Method | Endpoint | Description |
+  |-----|--------|----------|-------------|
+  | Create Class | POST | `/lecturer/classes` | Create class (with limit) |
+  | List Classes | GET | `/lecturer/classes` | List classes |
+  | Edit Class | PUT | `/lecturer/classes/{id}` | Update class |
+  | Deactivate Class | DELETE | `/lecturer/classes/{id}` | Soft delete (status: 1→0) |
+  | List Students | GET | `/lecturer/students/{class_id}` | List students in class |
+  | Create Assignment | POST | `/lecturer/assignments` | Create assignment |
+  | List Assignments | GET | `/lecturer/classes/{class_id}/assignments` | List assignments |
+  | Edit Assignment | PUT | `/lecturer/assignments/{id}` | Update assignment |
+  | Delete Assignment | DELETE | `/lecturer/assignments/{id}` | Delete assignment |
+  | Update Grades | POST | `/lecturer/assignments/{assignment_id}/update-grades` | Grade/edit grades |
+  | Create Post | POST | `/classes/{class_id}/posts` | Create post |
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+* Integration Testing completed:
+  * Unit tests: 95% coverage
+  * Integration tests passed
+  * API Gateway + Lambda + DynamoDB working
 
-* Used AWS CLI to perform basic operations such as:
+* API Documentation:
+  * OpenAPI 3.0 specification
+  * Postman collection export
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
 
 

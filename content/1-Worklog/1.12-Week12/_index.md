@@ -1,59 +1,68 @@
 ---
 title: "Week 12 Worklog"
-date: "2006-01-02"
-weight: 2
+date: "2025-11-24"
+weight: 12
 chapter: false
-pre: " <b> 1.12. </b> "
+pre: " <b> 1.12 </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
-
 
 ### Week 12 Objectives:
 
-* Connect and get acquainted with members of First Cloud Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Deploy Backend to AWS (API Gateway + Lambda + DynamoDB).
+* Finalize Proposal document and Architecture diagrams.
+* Prepare Demo and Presentation.
 
-### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-
+### Tasks to be implemented this week:
+| Day | Task | Start Date | Completion Date | Reference Material |
+| --- | --------- | ------------ | --------------- | -------------- |
+| 2   | - Deploy Backend to AWS: <br>&emsp; + SAM deploy to AWS <br>&emsp; + Configure API Gateway stages <br>&emsp; + Setup Cognito User Pool <br>&emsp; + Environment variables | 24/11/2025 | 24/11/2025 | [AWS SAM Deploy](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-cli-command-reference-sam-deploy.html) |
+| 3   | - Configure Production: <br>&emsp; + Enable CloudWatch logging <br>&emsp; + Setup alarms and monitoring <br>&emsp; + API throttling and quotas <br>&emsp; + Security review | 25/11/2025 | 25/11/2025 | [CloudWatch Monitoring](https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/WhatIsCloudWatch.html) |
+| 4   | - Finalize Proposal document: <br>&emsp; + Update Architecture diagram <br>&emsp; + Estimate actual costs <br>&emsp; + Risk assessment <br>&emsp; + Implementation roadmap | 26/11/2025 | 26/11/2025 | [Proposal Document](../../2-Proposal/) |
+| 5   | - Prepare Demo: <br>&emsp; + Test all API endpoints <br>&emsp; + Prepare demo scenarios <br>&emsp; + Record demo video (if needed) <br>&emsp; + Troubleshoot issues | 27/11/2025 | 27/11/2025 | [Postman API Testing](https://www.postman.com/api-platform/api-testing/) |
+| 6   | - Prepare Presentation: <br>&emsp; + Slide deck <br>&emsp; + Technical deep-dive <br>&emsp; + Q&A preparation <br>&emsp; + Final review | 28/11/2025 | 28/11/2025 | [AWS Serverless Samples](https://github.com/aws-samples/serverless-patterns) |
 
 ### Week 12 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Successfully deployed to AWS:
+  * API Gateway endpoint: `https://xxx.execute-api.region.amazonaws.com/prod`
+  * Lambda functions deployed and running
+  * DynamoDB tables with data
+  * Cognito authentication integrated
 
-* Successfully created and configured an AWS Free Tier account.
+* Monitoring and Security:
+  * CloudWatch dashboards
+  * API Gateway throttling: 1000 req/sec
+  * Cognito JWT authentication
+  * IAM least privilege policies
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* **Summary of completed Backend APIs:**
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
+  | # | API | Method | Endpoint |
+  |---|-----|--------|----------|
+  | 1 | Create Class | POST | `/lecturer/classes` |
+  | 2 | List Classes | GET | `/lecturer/classes` |
+  | 3 | Edit Class | PUT | `/lecturer/classes/{id}` |
+  | 4 | Deactivate Class | DELETE | `/lecturer/classes/{id}` |
+  | 5 | List Students | GET | `/lecturer/students/{class_id}` |
+  | 6 | Create Assignment | POST | `/lecturer/assignments` |
+  | 7 | List Assignments | GET | `/lecturer/classes/{class_id}/assignments` |
+  | 8 | Edit Assignment | PUT | `/lecturer/assignments/{id}` |
+  | 9 | Delete Assignment | DELETE | `/lecturer/assignments/{id}` |
+  | 10 | Update Grades | POST | `/lecturer/assignments/{assignment_id}/update-grades` |
+  | 11 | Create Post | POST | `/classes/{class_id}/posts` |
 
-* Used AWS CLI to perform basic operations such as:
+* Proposal Document completed:
+  * Architecture diagram updated
+  * Estimated cost: ~$7-20/month
+  * 8 main risks assessed
+  * 14-week roadmap
 
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
+* **Summary of 12-week internship:**
+  * Tuần 1-7: Học AWS fundamentals (VPC, EC2, S3, IAM, RDS, Security)
+  * Tuần 8-12: Phát triển Backend APIs cho Serverless Student Management System
+  * Hoàn thành 11 REST APIs với Lambda + DynamoDB
+  * Deploy production-ready system trên AWS
 
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+
 
 
