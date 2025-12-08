@@ -123,7 +123,7 @@ amplify publish
 
 4. **Settings:**
    - Price class: Use all edge locations
-   - WAF web ACL: Chọn ACL đã tạo
+   - WAF web ACL: Choose the created ACL
    - SSL certificate: Default CloudFront certificate (hoặc custom)
 
 5. **Add Origin for API Gateway:**
