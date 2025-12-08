@@ -89,7 +89,7 @@ Dự án được triển khai trong **5 tuần** với 5 giai đoạn chính t�
 2. **Tuần 2 - Backend & Frontend Song Song (Parallel Development Phase 1)**
    - **Backend Team (Ngày 1-7)**:
      - Xây dựng 50+ Lambda functions cho: Students (CRUD, search, bulk import/export), Courses (CRUD, enrollment), Grades (CRUD, analytics, statistics), Assignments (CRUD, submissions), Auth (login, register, refresh token)
-     - Thiết lập API Gateway với 50+ REST endpoints: `/students/*` (10 endpoints), `/courses/*` (8 endpoints), `/grades/*` (12 endpoints), `/assignments/*` (8 endpoints), `/attendance/*` (6 endpoints)
+     - Thiết lập API Gateway với 50+ REST endpoints: `/students/*` (10 endpoints), `/courses/*` (8 endpoints), `/grades/*` (12 endpoints), `/assignments/*` (8 endpoints)
      - Unit testing với 80%+ coverage
    - **Frontend Team (Ngày 1-7)**:
      - Deploy Amplify hosting với React/TypeScript, setup routing (React Router)
@@ -124,7 +124,7 @@ Dự án được triển khai trong **5 tuần** với 5 giai đoạn chính t�
 
 #### Yêu cầu kỹ thuật
 
-**Hệ thống quản lý sinh viên**: Dashboard web đầy đủ với 5 modules chính (Students, Courses, Grades, Assignments, Attendance). Frontend React/TypeScript chạy trên Amplify Hosting với 15+ pages và 50+ components. Cognito xác thực và phân quyền cho tất cả người dùng, bao gồm 5-10 admin/giáo viên (với quyền cao như CRUD dữ liệu) và học sinh (với quyền giới hạn như xem điểm số,lớp học).
+**Hệ thống quản lý sinh viên**: Dashboard web đầy đủ với 5 modules chính (Students, Courses, Grades, Assignments). Frontend React/TypeScript chạy trên Amplify Hosting với 15+ pages và 50+ components. Cognito xác thực và phân quyền cho tất cả người dùng, bao gồm 5-10 admin/giáo viên (với quyền cao như CRUD dữ liệu) và học sinh (với quyền giới hạn như xem điểm số,lớp học).
 
 **Kiến trúc API toàn diện**: 50+ REST API endpoints qua API Gateway (CRUD operations, search, bulk actions). Backend được xây dựng song song với Frontend để tối ưu thời gian phát triển.
 

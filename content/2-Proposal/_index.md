@@ -87,7 +87,7 @@ The project was implemented in **5 weeks** with 5 main phases:
 2. **Week 2 - Backend & Frontend Parallel (Parallel Development Phase 1)**
 - **Backend Team (Day 1-7)**: 
 - Build 50+ Lambda functions for: Students (CRUD, search, bulk import/export), Courses (CRUD, enrollment), Grades (CRUD, analytics, statistics), Assignments (CRUD, submissions), Auth (login, registration, refresh token) 
-- Set up API Gateway with 50+ REST endpoints: `/students/*` (10 endpoints), `/courses/*` (8 endpoints), `/grades/*` (12 endpoints), `/assignments/*` (8 endpoints), `/attendance/*` (6 endpoints) 
+- Set up API Gateway with 50+ REST endpoints: `/students/*` (10 endpoints), `/courses/*` (8 endpoints), `/grades/*` (12 endpoints), `/assignments/*` (8 endpoints)
 - Unit testing with 80%+ coverage 
 - **Frontend Team (July 1)**: 
 - Deploy Amplify hosting with React/TypeScript, setup routing (React Router) 
@@ -119,7 +119,7 @@ The project was implemented in **5 weeks** with 5 main phases:
 
 #### Technical Requirements
 
-**Student Management System**: Full web dashboard with 5 main modules (Students, Courses, Grades, Assignments, Attendance). Frontend React/TypeScript running on Amplify Hosting with 15+ pages and 50+ components. Cognito authenticates and authorizes all users, including 5-10 admins/teachers (with high permissions like CRUD data) and students (with limited permissions like viewing scores, classes).
+**Student Management System**: Full web dashboard with 5 main modules (Students, Courses, Grades, Assignments). Frontend React/TypeScript running on Amplify Hosting with 15+ pages and 50+ components. Cognito authenticates and authorizes all users, including 5-10 admins/teachers (with high permissions like CRUD data) and students (with limited permissions like viewing scores, classes).
 
 **Comprehensive API architecture**: 50+ REST API endpoints via API Gateway (CRUD operations, search, bulk actions). Backend built in parallel with Frontend to optimize development time.
 
