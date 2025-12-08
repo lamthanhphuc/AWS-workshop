@@ -126,7 +126,7 @@ amplify publish
    - WAF web ACL: Chọn ACL đã tạo
    - SSL certificate: Default CloudFront certificate (hoặc custom)
 
-5. **Thêm Origin cho API Gateway:**
+5. **Add Origin for API Gateway:**
    - Add origin: API Gateway URL
    - Create behavior: `/api/*` → API Gateway origin
 
