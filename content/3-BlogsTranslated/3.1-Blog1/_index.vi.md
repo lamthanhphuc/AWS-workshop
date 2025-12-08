@@ -1,4 +1,3 @@
-
 ---
 title: "Blog 1 - AWS Fault Injection Service"
 date: "2025-06-30"

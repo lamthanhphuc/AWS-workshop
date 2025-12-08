@@ -3,7 +3,7 @@ title: "Workshop"
 date: "2006-01-02"
 weight: 5
 chapter: false
-pre: " <b> 5. </b> "
+pre: " <b> 5 </b> "
 ---
 {{% notice warning %}}
 ⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.

@@ -6,18 +6,14 @@ chapter: false
 pre: " <b> 4.1. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+# Bài thu hoạch “​AI/ML/GenAI on AWS”
 
 ### Mục Đích Của Sự Kiện
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+- Chia sẻ best practices trong thiết kế và hiện đại hóa ứng dụng sử dụng AI/ML/GenAI trên AWS
+- Giới thiệu các mô hình kiến trúc hiện đại như microservices và event-driven architecture
+- Hướng dẫn lựa chọn và tối ưu hóa compute services phù hợp cho từng lớp workload
+- Trình bày công cụ và giải pháp AI hỗ trợ vòng đời phát triển phần mềm (SDLC)
 
 ### Danh Sách Diễn Giả
 

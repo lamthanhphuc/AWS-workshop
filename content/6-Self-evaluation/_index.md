@@ -3,7 +3,7 @@ title: "Self-Assessment"
 date: "2006-01-02"
 weight: 6
 chapter: false
-pre: " <b> 6. </b> "
+pre: " <b> 6 </b> "
 ---
 
 {{% notice warning %}}
