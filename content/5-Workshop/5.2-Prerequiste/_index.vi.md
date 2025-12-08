@@ -33,16 +33,10 @@ Trang này hướng dẫn những bước thiết yếu trước khi bắt đầ
 - DynamoDB  
 - API Gateway  
 - Cognito  
-- AppSync  
-- EventBridge  
-- SES  
 - S3  
 - CloudWatch  
 - Amplify  
 - IAM (giới hạn ở PassRole và các thao tác tạo role phục vụ Lambda)
-
-![Permissions](/images/5-Workshop/5.2-Prerequisite/Permissions.png)  
-*Hình 2: Permissions mẫu.*
 
 Một ví dụ policy cấp quyền rộng cho mục đích workshop:
 
@@ -63,15 +57,6 @@ Một ví dụ policy cấp quyền rộng cho mục đích workshop:
         "apigateway:*",
         "cognito-idp:*",
         "cognito-identity:*",
-        "appsync:*",
-        "iam:CreateRole",
-        "iam:DeleteRole",
-        "iam:PutRolePolicy",
-        "iam:AttachRolePolicy",
-        "iam:DeleteRolePolicy",
-        "iam:PassRole",
-        "events:*",
-        "ses:*",
         "route53:*",
         "acm:*",
         "waf:*",

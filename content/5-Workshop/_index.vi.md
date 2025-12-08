@@ -11,24 +11,24 @@ pre: " <b> 5. </b> "
 
 #### Tổng quan
 
-**Serverless Student Management Platform** là giải pháp quản lý sinh viên dựa trên đám mây, tối ưu chi phí và mở rộng linh hoạt nhờ sử dụng các dịch vụ **AWS Serverless** (Lambda, DynamoDB, AppSync, EventBridge...). Giải pháp cung cấp dashboard realtime, chat bài tập, phân tích ranking bằng machine learning, gửi thông báo tự động, và vận hành hoàn toàn bằng kiến trúc sự kiện.
+**Serverless Student Management Platform** là giải pháp quản lý sinh viên dựa trên đám mây, tối ưu chi phí và mở rộng linh hoạt nhờ sử dụng các dịch vụ **AWS Serverless** (Lambda, DynamoDB, API gateway...). Nền tảng hỗ trợ tối đa 50-100 sinh viên ban đầu, với khả năng mở rộng linh hoạt lên đến 500–1000 sinh viên mà không cần thay đổi hạ tầng lớn.
 
-Các dịch vụ core: API Gateway (REST), Lambda xử lý logic nghiệp vụ, DynamoDB lưu dữ liệu, AppSync (GraphQL) & Amplify (frontend React), Cognito (xác thực người dùng), SES (gửi email), Personalize (ML ranking), EventBridge (điều phối sự kiện), CloudWatch (giám sát), kết hợp quy trình DevOps CI/CD hiện đại.
+Các dịch vụ core: API Gateway (REST), Lambda xử lý logic nghiệp vụ, DynamoDB lưu dữ liệu, Amplify (frontend React), Cognito (xác thực người dùng), CloudWatch (giám sát), kết hợp quy trình DevOps CI/CD hiện đại.
 
 
 #### Nội dung
 
-1. [Tổng quan và kiến trúc hệ thống](5.1-Overview/)
+1. [Tổng quan & kiến trúc hệ thống](5.1-Overview/)
 2. [Chuẩn bị môi trường & tài khoản AWS](5.2-Prerequiste/)
 3. [Triển khai Backend: DynamoDB, Lambda, API Gateway, Cognito](5.3-Backend/)
-4. [Xây dựng Frontend: Amplify, AppSync, Realtime Chat](5.4-Frontend/)
-5. [Event-driven, Email Notification & ML Ranking](5.5-Event-ML/)
-6. [Dọn dẹp tài nguyên](5.6-Cleanup/)
+4. [Xây dựng Frontend: Amplify, Route 53, CloudFront, WAF](5.4-Frontend/)
+5. [CI/CD_Pipeline](5.5-CI/CD PIPELINE/)
+6. [CloudWatch](5.6-CLOUDWATCH/)
 
 #### Mục tiêu trải nghiệm
 
-+ Nắm kiến trúc serverless đa lớp vận hành thực tế trên AWS.
-+ Hiểu mô hình phân quyền với Cognito, xử lý realtime với AppSync.
-+ Trực tiếp build CRUD, chat, ranking sinh viên, gửi thông báo email qua sự kiện.
-+ Thực hành pipeline DevOps tự động hóa từ code đến deploy.
+- Hiểu và triển khai kiến trúc serverless đa tầng trên AWS, vận hành thực tế với các dịch vụ chủ chốt.
+- Nắm vững cách phân quyền, xác thực người dùng với Cognito.
+- Thực hành xây dựng các chức năng CRUD.
+- Trải nghiệm quy trình DevOps hiện đại: tự động hóa build, test, deploy qua CI/CD pipeline.
 

@@ -6,7 +6,10 @@ chapter : false
 pre : "<b> 5.3. </b>"
 ---
 
+#### Tổng quan
+Phần này hướng dẫn triển khai backend cho hệ thống quản lý sinh viên serverless trên AWS. Bạn sẽ sử dụng các dịch vụ chủ lực như DynamoDB để lưu trữ dữ liệu, Lambda để xử lý logic nghiệp vụ, API Gateway để kết nối giữa frontend và backend, và Cognito để xác thực người dùng. Quy trình thực hiện bao gồm thiết kế bảng dữ liệu, cấu hình xác thực, xây dựng ứng dụng backend với Java Spring Boot, đóng gói và triển khai lên Lambda, cũng như cấu hình API Gateway để phục vụ các nghiệp vụ quản lý sinh viên một cách bảo mật, tự động hóa và dễ mở rộng.
 
+![Amplify Architecture](/images/5-Workshop/5.3-Backend/architecture.png)
 ---
 
 # 1. Amazon DynamoDB
@@ -17,83 +20,76 @@ DynamoDB là cơ sở dữ liệu NoSQL serverless, lưu trữ tất cả dữ l
 - Lớp học, môn học  
 - Giảng viên  
 - Điểm số  
-- Lịch sử chat, sự kiện hệ thống  
-- Dữ liệu ML phục vụ gợi ý (Personalize)  
 
 Hệ thống backend Spring Boot tương tác DynamoDB qua:
 
 - AWS SDK for Java 17  
 - Spring Data DynamoDB hoặc repository do team tự viết  
 - Presigned URL (upload tài liệu, hồ sơ)  
-- EventBridge (phát sinh sự kiện academic event → xử lý qua Lambda)
 
 ---
 
 ##  **Thiết kế bảng DynamoDB (Single-Table Design)**
 
-**Bảng:** `Student-Management-Database`
+### 1.1 Tạo Tables
 
-| Thành phần | Ý nghĩa |
-|-----------|---------|
-| PK        | USER#, CLASS#, SUBJECT#, TEACHER#, GRADE# |
-| SK        | PROFILE, INFO, STUDENT#, SUBJECT#, CLASS# |
-| GSI1PK    | ROLE#, TYPE#, EMAIL#, CLASS# |
-| GSI1SK    | NAME#, CREATED_AT#, SUBJECT# |
+**Table 1: Users**
+```
+Table name: student-management-users
+Partition key: id (String)
+Sort key: email (String)
+```
 
-**Billing mode:** On-Demand → phù hợp workshop (không cần cấu hình capacity).
+**Table 2: Classes**
+```
+Table name: student-management-classes
+Partition key: id (String)
+```
 
-![DynamoDB](/images/5-Workshop/5.2-Prerequisite/DynamoDB.png)
+**Table 3: Subjects**
+```
+Table name: student-management-subjects
+Partition key: id (String)
+```
+
+**Table 4: Notifications**
+```
+Table name: student-management-notifications
+Partition key: id (Number)
+Sort key: sent_at (String)
+```
+### 1.2 Cấu hình Global Secondary Index (GSI)
+
+Cho table Users, thêm GSI:
+- Index name: `role-index`
+- Partition key: `role` (String)
 
 ---
 
-##  **Triển khai DynamoDB qua AWS CLI**
+### 2.1 Tạo User Pool
 
-###  Tạo bảng
+1. Vào **AWS Console → Cognito → Create user pool**
+2. Cấu hình:
+   - Sign-in: Email
+   - Password policy: Minimum 8 characters
+   - MFA: Optional
+   - Email: Send email with Cognito
 
-```bash
-aws dynamodb create-table \
-  --table-name Student-Management-Database \
-  --attribute-definitions \
-      AttributeName=PK,AttributeType=S \
-      AttributeName=SK,AttributeType=S \
-  --key-schema \
-      AttributeName=PK,KeyType=HASH \
-      AttributeName=SK,KeyType=RANGE \
-  --billing-mode PAY_PER_REQUEST
+3. Tạo App Client:
+   - App client name: `student-management-app`
+   - Generate client secret: No
+   - Auth flows: `ALLOW_USER_SRP_AUTH`, `ALLOW_REFRESH_TOKEN_AUTH`
+
+### 2.2 Lưu thông tin
+
+```env
+VITE_COGNITO_USER_POOL_ID=ap-southeast-1_XXXXXXXX
+VITE_COGNITO_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxx
+VITE_COGNITO_REGION=ap-southeast-1
 ```
-# 2. Amazon Cognito
 
-Cognito cung cấp:
+---
 
-- Quản lý tài khoản
-
-- Đăng nhập bằng email
-
-- JWT Authentication dùng Spring Security
-
-- Phân quyền theo Group (student, lecturer, admin)
-
-- Backend Spring Boot dùng:
-
-- Cognito JWT Filter
-
-- Spring Security @PreAuthorize("hasRole('ADMIN')")
-
-##  **Triển khai Cognito qua AWS CLI**
-
-### Tạo User Pool
-```bash
-aws cognito-idp create-user-pool \
-  --pool-name Student-App-Pool \
-  --auto-verified-attributes email
-```
-### Tạo App Client
-```bash
-aws cognito-idp create-user-pool-client \
-  --user-pool-id <UserPoolId> \
-  --client-name StudentAppClient \
-  --no-generate-secret
-  ```
 
 # 3. Amazon S3
 S3 được dùng cho:
@@ -110,116 +106,138 @@ S3 được dùng cho:
 
 
 
-## Triển khai S3 qua AWS CLI
-### Tạo Bucket
-```bash
-aws s3api create-bucket \
-  --bucket aws-sam-cli-managed-default-samclisourcebucket-qsrwrbr9usyq \
-  --region ap-southeast-1 \
-  --create-bucket-configuration LocationConstraint=ap-southeast-1
-  ```
+## PHẦN 3: LAMBDA + API GATEWAY (Backend)
 
-# 4. Amazon API Gateway + Lambda
-API Gateway đóng vai trò:
+### 3.1 Chuẩn bị Java Spring cho Lambda
 
-- Cổng API cho toàn hệ thống
+**Thêm dependencies vào pom.xml:**
+```xml
+<dependencies>
+    <!-- AWS Lambda -->
+    <dependency>
+        <groupId>com.amazonaws.serverless</groupId>
+        <artifactId>aws-serverless-java-container-springboot3</artifactId>
+        <version>2.0.0</version>
+    </dependency>
+    
+    <!-- AWS SDK -->
+    <dependency>
+        <groupId>software.amazon.awssdk</groupId>
+        <artifactId>dynamodb</artifactId>
+        <version>2.21.0</version>
+    </dependency>
+</dependencies>
 
-- Xác thực Cognito Authorizer
-
-- Route đến Lambda để xử lý nghiệp vụ
-
-- Logging CloudWatch
-
-- Tích hợp CORS
-
-- Backend được triển khai qua:
-
-- Lambda (Java 17, Maven build)
-
-- API Gateway REST API
-
-- Lambda Function URL (nội bộ)
-
-
-
-##  Triển khai Lambda & API Gateway bằng AWS SAM
-
-AWS SAM giúp triển khai backend serverless dễ dàng hơn nhờ:
-
-- Quản lý Lambda, API Gateway, IAM Role trong 1 file template.yaml
-
-- Build Java bằng Maven tự động (sam build)
-
-- Triển khai full stack bằng một lệnh (sam deploy --guided)
-### File template.yaml (SAM)
-Tạo file:
-```yaml
-
-AWSTemplateFormatVersion: '2010-09-09'
-Transform: AWS::Serverless-2016-10-31
-Description: Student Management System - Backend (Lambda + API Gateway)
-
-Globals:
-  Function:
-    Timeout: 15
-    MemorySize: 512
-    Runtime: java17
-
-Resources:
-
-  StudentServiceFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: com.example.Handler::handleRequest
-      CodeUri: ./
-      Policies:
-        - AWSLambdaBasicExecutionRole
-        - AmazonDynamoDBFullAccess
-      Events:
-        GetStudents:
-          Type: Api
-          Properties:
-            Path: /students
-            Method: GET
-            Auth:
-              Authorizer: CognitoAuthorizer
-    CognitoAuthorizer:
-        Type: AWS::Serverless::Api
-        Properties:
-        StageName: prod
-        Auth:
-            Authorizers:
-            CognitoAuthorizer:
-                UserPoolArn: arn:aws:cognito-idp:<region>:<account-id>:userpool/<UserPoolId>
-```
-### Build Lambda bằng SAM
-
-SAM tự chạy Maven, tự đóng gói JAR:
-```bash
-sam build
-```
-### Deploy bằng SAM
-```bash
-sam deploy --guided
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.5.0</version>
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals><goal>shade</goal></goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
 ```
 
-Lần đầu bạn nhập:
+**Tạo Lambda Handler:**
+```java
+// src/main/java/com/example/StreamLambdaHandler.java
+package com.example;
 
-- Stack Name: student-management-backend
+import com.amazonaws.serverless.exceptions.ContainerInitializationException;
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
+import com.amazonaws.serverless.proxy.model.AwsProxyResponse;
+import com.amazonaws.serverless.proxy.spring.SpringBootLambdaContainerHandler;
+import com.amazonaws.services.lambda.runtime.Context;
+import com.amazonaws.services.lambda.runtime.RequestStreamHandler;
 
-- Region: ap-southeast-1
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
-- Allow SAM to create IAM roles? → Y
+public class StreamLambdaHandler implements RequestStreamHandler {
+    private static SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
+    
+    static {
+        try {
+            handler = SpringBootLambdaContainerHandler.getAwsProxyHandler(Application.class);
+        } catch (ContainerInitializationException e) {
+            throw new RuntimeException("Could not initialize Spring Boot application", e);
+        }
+    }
 
-- Save arguments? → Y
+    @Override
+    public void handleRequest(InputStream inputStream, OutputStream outputStream, Context context)
+            throws IOException {
+        handler.proxyStream(inputStream, outputStream, context);
+    }
+}
+```
 
-Sau khi deploy thành công, SAM sẽ trả về:
+### 3.2 Build JAR
 
-- API Endpoint
+```bash
+cd backend-project
+mvn clean package -DskipTests
+# Output: target/your-app.jar
+```
 
-- Lambda ARN
+### 3.3 Tạo Lambda Function
 
-- CloudFormation Stack
+1. Vào **AWS Console → Lambda → Create function**
+2. Cấu hình:
+   - Function name: `student-management-api`
+   - Runtime: Java 17
+   - Architecture: x86_64
+   - Memory: 512 MB (hoặc 1024 MB cho performance tốt hơn)
+   - Timeout: 30 seconds
+
+3. Upload JAR file hoặc từ S3
+
+4. Handler: `com.example.StreamLambdaHandler::handleRequest`
+
+### 3.4 Cấu hình IAM Role cho Lambda
+
+Attach policies:
+- `AmazonDynamoDBFullAccess`
+- `AWSLambdaBasicExecutionRole`
+- `AmazonCognitoPowerUser`
+
+### 3.5 Tạo API Gateway
+
+1. Vào **AWS Console → API Gateway → Create API**
+2. Chọn **HTTP API** (recommended) hoặc REST API
+3. Cấu hình:
+   - API name: `student-management-api`
+   - Integration: Lambda function
+   - Route: `ANY /{proxy+}`
+
+4. **Enable CORS:**
+   - Access-Control-Allow-Origin: `*` (hoặc domain cụ thể)
+   - Access-Control-Allow-Methods: `GET, POST, PUT, PATCH, DELETE, OPTIONS`
+   - Access-Control-Allow-Headers: `Content-Type, Authorization`
+
+5. **Deploy API:**
+   - Create stage: `prod`
+   - Lưu Invoke URL: `https://xxxxxxxx.execute-api.ap-southeast-1.amazonaws.com/prod`
+
+---
+
 # Tổng kết
+Phần này hướng dẫn triển khai backend cho hệ thống quản lý sinh viên serverless trên AWS, sử dụng các dịch vụ chủ chốt như DynamoDB, Lambda, API Gateway và Cognito. Bạn đã thực hành:
 
-Các thành phần này tạo nền tảng để xây dựng hệ thống Serverless – Realtime – Event-Driven cho Student Management System.
+- Thiết kế và tạo các bảng DynamoDB cho lưu trữ dữ liệu sinh viên, lớp học, môn học, thông báo, cùng cấu hình GSI để tối ưu truy vấn.
+- Thiết lập Cognito User Pool để xác thực và phân quyền người dùng.
+- Sử dụng S3 cho lưu trữ avatar, tài liệu lớp học và build artifacts.
+- Xây dựng backend với Java Spring Boot, đóng gói ứng dụng thành JAR và triển khai lên Lambda.
+- Cấu hình IAM Role cho Lambda đảm bảo quyền truy cập dịch vụ cần thiết.
+- Tạo và cấu hình API Gateway để kết nối frontend với backend, hỗ trợ đầy đủ các phương thức HTTP và bảo mật CORS.
+
+Quy trình này giúp bạn xây dựng một backend hiện đại, tự động hóa, dễ mở rộng và bảo mật, đáp ứng đầy đủ các nghiệp vụ quản lý sinh viên trên nền tảng AWS.
+

@@ -35,7 +35,6 @@ To fully deploy the project's serverless system, the IAM User needs permission t
 - Cognito
 - AppSync
 - EventBridge
-- SES
 - S3
 - CloudWatch
 - Amplify
@@ -71,7 +70,6 @@ To fully deploy the project's serverless system, the IAM User needs permission t
         "iam:DeleteRolePolicy",
         "iam:PassRole",
         "events:*",
-        "ses:*",
         "route53:*",
         "acm:*",
         "waf:*",

@@ -1,5 +1,5 @@
 ---
-title : "Xây dựng Frontend: Amplify, AppSync, Realtime Chat"
+title : "Xây dựng Frontend: Amplify, ROUTE53, CloudFront, WAF"
 date: "2025-12-07" 
 weight : 4 
 chapter : false
@@ -8,14 +8,8 @@ pre : " <b> 5.4. </b> "
 
 #### Tổng quan
 
-Trong phần này, bạn sẽ xây dựng giao diện web cho hệ thống **Serverless Student Management System** bằng **AWS Amplify**, **AppSync (GraphQL)** và **Realtime Subscription**.  
+Trong phần này, bạn sẽ xây dựng giao diện web cho hệ thống **Serverless Student Management System** bằng **AWS Amplify**, **CLOUDFRONT**, **WAF** và **ROUTE53**.  
 Frontend cung cấp các chức năng:
-
-- Đăng nhập bằng Amazon Cognito  
-- Dashboard realtime  
-- Chat thời gian thực  
-- CRUD Student/Classes  
-- Gửi tương tác sự kiện để backend xử lý  
 
 Kiến trúc tổng quát:
 
@@ -23,134 +17,26 @@ Kiến trúc tổng quát:
 
 ---
 
-# 1. Khởi tạo dự án Frontend với AWS Amplify
+## 1. AMPLIFY (Frontend)
 
-### **1.1 Cài đặt Amplify CLI**
-```bash
-npm install -g @aws-amplify/cli
-amplify configure
-```
-### **1.2 Khởi tạo project React**
-```bash
-npx create-react-app student-portal
-cd student-portal
-amplify init
-```
-Lựa chọn:
+### 1.1 Cách 1: Amplify Console (Recommended)
 
-- Hosting: Amplify Hosting
-- Auth: Cognito User Pool
-- API: AppSync GraphQL
+1. Vào **AWS Console → Amplify → Create new app**
+2. Chọn **Host web app**
+3. Connect repository:
+   - GitHub/GitLab/Bitbucket
+   - Authorize và chọn repo
 
-# 2. Tạo GraphQL API với AppSync
-Chạy lệnh:
-```bash
-amplify add api
-```
-Chọn:
-- GraphQL API
-- Authorization: Cognito User Pool
-- Conflict detection: Auto merge
-- Realtime subscription: Enable
+4. Cấu hình build:
 
-### **2.1 Định nghĩa schema GraphQL**
-
-File: amplify/backend/api/studentapi/schema.graphql
-```graphql
-type Student @model @auth(rules: [{ allow: owner }]) {
-  id: ID!
-  name: String!
-  email: String!
-  classId: ID
-}
-
-type Message
-  @model
-  @auth(rules: [{ allow: owner }, { allow: private }])
-  @aws_subscribe(mutations: ["sendMessage"]) {
-  id: ID!
-  sender: String!
-  content: String!
-  createdAt: AWSDateTime!
-}
-
-input SendMessageInput {
-  sender: String!
-  content: String!
-}
-
-type Mutation {
-  sendMessage(input: SendMessageInput!): Message
-    @function(name: "chatHandler-${env}")
-}
-```
-### **2.2 Deploy API**
-```bash
-amplify push
-```
-# 3. Tích hợp Cognito Authentication
-
-Amplify tự tạo cấu hình Auth:
-```bash
-amplify add auth
-```
-Chọn:
-- Email sign-in
-- No MFA (hoặc optional)
-- Import vào React:
-```javascript
-import { Auth } from 'aws-amplify';
-const user = await Auth.signIn(email, password);
-console.log("Logged in:", user);
-```
-
-# 4. Realtime Subscription (Chat)
-## **4.1 Gửi tin nhắn**
-```javascript
-import { API, graphqlOperation } from 'aws-amplify';
-import { sendMessage } from './graphql/mutations';
-
-await API.graphql(
-  graphqlOperation(sendMessage, {
-    input: { sender, content }
-  })
-);
-```
-## **4.2 Nhận tin nhắn realtime**
-```javascript
-import { onCreateMessage } from './graphql/subscriptions';
-
-useEffect(() => {
-  const sub = API.graphql(
-    graphqlOperation(onCreateMessage)
-  ).subscribe({
-    next: ({ value }) => {
-      const msg = value.data.onCreateMessage;
-      setMessages(prev => [...prev, msg]);
-    }
-  });
-
-  return () => sub.unsubscribe();
-}, []);
-```
-
-# 5. Hosting Frontend trên Amplify Hosting
-## **5.1 Kết nối repo GitHub**
-Trong AWS Amplify Console:
-- Chọn New App → Host Web App
-- Kết nối GitHub Repository
-- Amplify tự build + deploy qua CI/CD
-
-## **5.2 Cấu hình build**
-
-File amplify.yml:
-```yml
+**amplify.yml** (đã có trong project):
+```yaml
 version: 1
 frontend:
   phases:
     preBuild:
       commands:
-        - npm install
+        - npm ci
     build:
       commands:
         - npm run build
@@ -162,33 +48,124 @@ frontend:
     paths:
       - node_modules/**/*
 ```
-# 6. Kết nối Realtime Dashboard
 
-Ví dụ sử dụng GraphQL subscription để cập nhật số lượng sinh viên online:
-```graphql
-type OnlineEvent @model @aws_subscribe(mutations: ["updateOnline"]) {
-  id: ID!
-  userId: String!
-  time: AWSDateTime!
-}
+5. **Environment Variables:**
+   - `VITE_API_BASE_URL`: URL của API Gateway
+   - `VITE_COGNITO_USER_POOL_ID`: User Pool ID
+   - `VITE_COGNITO_CLIENT_ID`: Client ID
+   - `VITE_COGNITO_REGION`: ap-southeast-1
+
+6. Deploy và lấy Amplify URL
+
+### 1.2 Cách 2: Amplify CLI
+
+```bash
+# Cài đặt
+npm install -g @aws-amplify/cli
+
+# Cấu hình AWS credentials
+amplify configure
+
+# Khởi tạo trong project
+cd serverless-student-management-system-front-end
+amplify init
+
+# Thêm hosting
+amplify add hosting
+# Chọn: Hosting with Amplify Console
+# Chọn: Manual deployment
+
+# Deploy
+amplify publish
 ```
 
-React subscription:
-```javascript
-API.graphql(graphqlOperation(onUpdateOnline)).subscribe({
-  next: ({ value }) => {
-    const e = value.data.onUpdateOnline;
-    setOnlineList(prev => [...prev, e]);
-  }
-});
-```
-# 7. Tổng kết
+---
 
-Trang "Xây dựng Frontend: Amplify, AppSync, Realtime Chat" hướng dẫn đầy đủ:
+## 2. CLOUDFRONT + WAF
+
+### 2.1 Tạo WAF Web ACL
+
+1. Vào **AWS Console → WAF & Shield → Create web ACL**
+2. Cấu hình:
+   - Name: `student-management-waf`
+   - Resource type: CloudFront distributions
+   - Region: Global (CloudFront)
+
+3. Add rules:
+   - **AWS Managed Rules:**
+     - `AWSManagedRulesCommonRuleSet` (Core rule set)
+     - `AWSManagedRulesKnownBadInputsRuleSet`
+     - `AWSManagedRulesSQLiRuleSet` (SQL injection)
+   
+   - **Rate limiting:**
+     - Name: `RateLimitRule`
+     - Rate limit: 2000 requests per 5 minutes per IP
+
+### 2.2 Tạo CloudFront Distribution
+
+1. Vào **AWS Console → CloudFront → Create distribution**
+
+2. **Origin Settings:**
+   - Origin domain: Amplify app URL (xxx.amplifyapp.com)
+   - Protocol: HTTPS only
+
+3. **Default Cache Behavior:**
+   - Viewer protocol policy: Redirect HTTP to HTTPS
+   - Allowed HTTP methods: GET, HEAD, OPTIONS, PUT, POST, PATCH, DELETE
+   - Cache policy: CachingOptimized
+   - Origin request policy: AllViewer
+
+4. **Settings:**
+   - Price class: Use all edge locations
+   - WAF web ACL: Chọn ACL đã tạo
+   - SSL certificate: Default CloudFront certificate (hoặc custom)
+
+5. **Thêm Origin cho API Gateway:**
+   - Add origin: API Gateway URL
+   - Create behavior: `/api/*` → API Gateway origin
+
+---
+
+## 3. ROUTE53 (Custom Domain)
+
+### 3.1 Tạo Hosted Zone
+
+1. Vào **AWS Console → Route53 → Create hosted zone**
+2. Domain name: `yourdomain.com`
+3. Type: Public hosted zone
+
+### 3.2 Cấu hình DNS Records
+
+**A Record cho CloudFront:**
+```
+Record name: (empty hoặc www)
+Record type: A
+Alias: Yes
+Route traffic to: CloudFront distribution
+```
+
+**CNAME cho Amplify (nếu không dùng CloudFront):**
+```
+Record name: app
+Record type: CNAME
+Value: xxx.amplifyapp.com
+```
+
+### 3.3 SSL Certificate (ACM)
+
+1. Vào **AWS Console → Certificate Manager**
+2. Request certificate (phải ở region us-east-1 cho CloudFront)
+3. Domain: `yourdomain.com`, `*.yourdomain.com`
+4. Validation: DNS validation
+5. Add CNAME records to Route53
+
+---
+
+# 4. Tổng kết
+
+Trang "Xây dựng Frontend: Amplify, ROUTE53, CloudFront, WAF hướng dẫn đầy đủ:
 - Tạo project React với Amplify
 - Dùng Cognito để xác thực frontend
-- AppSync GraphQL API
-- Realtime subscription cho chat
 - Hosting CI/CD qua Amplify
 
 Frontend kết nối trực tiếp với hệ thống serverless backend, tạo trải nghiệm realtime mượt mà và bảo mật.
