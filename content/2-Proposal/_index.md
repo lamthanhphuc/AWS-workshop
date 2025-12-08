@@ -20,7 +20,7 @@ Current student management systems require manual data entry, which is difficult
 
 **Solution**
 
-The platform uses Amazon API Gateway to receive REST requests, AWS Lambda to handle business logic, Amazon DynamoDB to store student data and scores. AWS Amplify with React/Next.js provides the web interface, and Amazon Cognito ensures secure access. Similar to traditional LMS systems but at a lower cost, users can register new students and manage information, but the platform operates at a smaller scale and serves learning purposes.
+The platform uses Amazon API Gateway to receive REST requests, AWS Lambda to handle business logic, Amazon DynamoDB to store student data and scores. AWS Amplify with React/TypeScript provides the web interface, and Amazon Cognito ensures secure access. Similar to traditional LMS systems but at a lower cost, users can register new students and manage information, but the platform operates at a smaller scale and serves learning purposes.
 
 **Benefits and ROI**
 
@@ -44,7 +44,7 @@ The system is designed according to the AWS Well-Architected Framework architect
 | **AWS Amplify** | Frontend hosting and deployment with CI/CD | Build and deploy web applications quickly, integrate with Cognito/AppSync for user-friendly interface and real-time chat. |
 | **Amazon API Gateway** | Handle and route API requests from frontend to backend | Support REST/HTTP APIs, throttling, caching, and authorizer for increased performance and security. |
 | **Amazon Cognito** | Manage user authentication and authorization | Support MFA, JWT tokens, groups for permissions (teacher/admin vs. student), easy integration with AppSync/API Gateway. |
-| **AWS Lambda** | Execute backend logic and event handling | Serverless, auto-scaling, pay-per-use, CRUD processing, events from EventBridge and ML inference from Personalize. |
+| **AWS Lambda** | Execute backend logic and event handling | Serverless, auto-scaling, pay-per-use, CRUD processing. |
 | **Amazon DynamoDB** | NoSQL data storage for student information, chat, and assignments | Fast query, auto-scaling, Global Secondary Indexes (GSI) support for complex searches and low cost. |
 | **Amazon CloudWatch** | Monitor logs, metrics, and system alarms | Real-time monitoring, set alarms to detect problems early, integrate with Lambda/DynamoDB for optimization. |
 | **Amazon S3** | Store artifacts and builds from CI/CD | Cheap, highly sustainable static file hosting, integrated with CodePipeline to store deployed artifacts. |
@@ -81,16 +81,16 @@ The project was implemented in **5 weeks** with 5 main phases:
 
 1. **Week 1 - Foundation Setup**
 - **Days 1-2**: Set up AWS account, configure IAM roles/policies, set up billing alerts
-- **Days 3-4**: Create DynamoDB tables (Students, Courses, Grades, ChatMessages, Assignments, Attendance, Events) with GSI, configure Cognito User Pools with groups (Admin/Teacher/Student)
+- **Days 3-4**: Create DynamoDB tables (Students, Courses, Grades, Assignments) with GSI, configure Cognito User Pools with groups (Admin/Teacher/Student)
 - **Days 5-7**: Initialize IaC templates (AWS CDK/CloudFormation), research serverless patterns, design detailed architecture with sequence diagrams, setup Git repo structure for parallel development
 
 2. **Week 2 - Backend & Frontend Parallel (Parallel Development Phase 1)**
 - **Backend Team (Day 1-7)**: 
-- Build 50+ Lambda functions for: Students (CRUD, search, bulk import/export), Courses (CRUD, enrollment), Grades (CRUD, analytics, statistics), Assignments (CRUD, submissions), Attendance (CRUD, reports), Auth (login, registration, refresh token) 
+- Build 50+ Lambda functions for: Students (CRUD, search, bulk import/export), Courses (CRUD, enrollment), Grades (CRUD, analytics, statistics), Assignments (CRUD, submissions), Auth (login, registration, refresh token) 
 - Set up API Gateway with 50+ REST endpoints: `/students/*` (10 endpoints), `/courses/*` (8 endpoints), `/grades/*` (12 endpoints), `/assignments/*` (8 endpoints), `/attendance/*` (6 endpoints) 
 - Unit testing with 80%+ coverage 
 - **Frontend Team (July 1)**: 
-- Deploy Amplify hosting with React/Next.js, setup routing (React Router) 
+- Deploy Amplify hosting with React/TypeScript, setup routing (React Router) 
 - Build UI components: Layout (Header, Sidebar, Footer), Authentication (Login, Register), Dashboard (Overview, Stats cards) 
 - Setup API client (Axios/Fetch), state management (Redux/Zustand), form validation (React Hook Form)
 
@@ -100,7 +100,7 @@ The project was implemented in **5 weeks** with 5 main phases:
 - Integrate Lambda handlers for automated workflows 
 - Integration testing with Postman/SWAGGER 
 - **Frontend Team (July 1)**: 
-- Build 15+ pages: Student Management (List, Create, Edit, Detail, Import), Course Management (List, Create, Edit, Enrollment), Grade Management (List, Input, Analytics), Assignment (List, Submit, Review), Attendance (Tracker, Reports) 
+- Build 15+ pages: Student Management (List, Create, Edit, Detail, Import), Course Management (List, Create, Edit, Enrollment), Grade Management (List, Input, Analytics), Assignment (List, Submit, Review)
 - **Integration (Days 6-7)**: 
 - Connect CloudFront CDN with Route53, configure WAF rules (rate limiting, geo-blocking), SSL/TLS certificates 
 - End-to-end testing between Frontend and Backend
@@ -119,7 +119,7 @@ The project was implemented in **5 weeks** with 5 main phases:
 
 #### Technical Requirements
 
-**Student Management System**: Full web dashboard with 5 main modules (Students, Courses, Grades, Assignments, Attendance). Frontend React/Next.js running on Amplify Hosting with 15+ pages and 50+ components. Cognito authenticates and authorizes all users, including 5-10 admins/teachers (with high permissions like CRUD data) and students (with limited permissions like viewing scores, classes).
+**Student Management System**: Full web dashboard with 5 main modules (Students, Courses, Grades, Assignments, Attendance). Frontend React/TypeScript running on Amplify Hosting with 15+ pages and 50+ components. Cognito authenticates and authorizes all users, including 5-10 admins/teachers (with high permissions like CRUD data) and students (with limited permissions like viewing scores, classes).
 
 **Comprehensive API architecture**: 50+ REST API endpoints via API Gateway (CRUD operations, search, bulk actions). Backend built in parallel with Frontend to optimize development time.
 
@@ -132,7 +132,7 @@ To fit the internship time, the project is implemented in **5 weeks** with 5 mai
 | **Phase** | **Time** | **Main Objective** | **Deliverables** | **Success Criteria** |
 | --------------------------- | ------------- | --------------------------- | --------------------------------------------------------------------------- | ------------------------------------------ |
 | **1: Setting up the foundation** | Week 1 | Setting up the AWS environment | • AWS account with IAM setup<br>• 7 DynamoDB tables with GSI<br>• Cognito User Pool<br>• IaC templates (CDK/CloudFormation)<br>• Git repo structure | • Infrastructure as Code complete<br>• Security baseline up to standard<br>• Parallel dev environment ready |
-| **2: Backend & Frontend Parallel (Phase 1)** | Week 2 | Build core Backend + Frontend foundation | • 50+ Lambda functions<br>• API Gateway with 50+ REST endpoints<br>• React/Next.js app foundation<br>• 10+ UI components<br>• Unit tests (>80% coverage) | • 50+ active API endpoints<br>• API response time <500ms<br>• Frontend routing setup<br>• All backend tests passed |
+| **2: Backend & Frontend Parallel (Phase 1)** | Week 2 | Build core Backend + Frontend foundation | • 50+ Lambda functions<br>• API Gateway with 50+ REST endpoints<br>• React/TypeScript app foundation<br>• 10+ UI components<br>• Unit tests (>80% coverage) | • 50+ active API endpoints<br>• API response time <500ms<br>• Frontend routing setup<br>• All backend tests passed |
 | **3: Backend & Frontend Parallel (Phase 2)** | Week 3 | Integrating Lambda workflows & integration testing | • Integrating Lambda handlers for automated workflows<br>• Integration testing with Postman/SWAGGER<br>• 15+ complete pages<br>• CloudFront + Route53 + WAF<br>• Responsive design | • Automated workflows work well<br>• Integration tested with Postman/SWAGGER<br>• All pages integrated with backend<br>• SSL/HTTPS enabled<br>• Mobile responsive |
 | **4: CI/CD with CodeBuild, CodeDeploy, CodePipeline** | Week 4 | Set up and test automated CI/CD process | • Configure CodeBuild for frontend/backend<br>• Set up CodePipeline connecting GitLab, CodeBuild, CodeDeploy<br>• Test automated deployment for backend/frontend | • Build and deploy automation work well<br>• Artifacts stored correctly<br>• Pipeline optimized |
 | **5: Test & Demo** | Week 5 | Test and finalize | • Load test reports (50+ users)<br>• Performance optimization<br>• Complete documentation<br>• Demo video + slides | • System uptime ≥99%<br>• All features stable<br>• Documentation complete<br>• Demo ready |
@@ -180,7 +180,7 @@ Based on the NIST Risk Management Framework, the project team identified key ris
 | **R1 – Data Leakage** | Data exposure due to incorrect configuration | **High** | Apply Cognito auth, IAM least privilege, DynamoDB encryption |
 | **R2 – API Overload** | Too many requests causing slowness | **Medium** | Throttling API Gateway/AppSync, CloudWatch alarms |
 | **R3 – Lambda Cold Start** | Delay when invoking | **Medium** | Optimize code, Provisioned Concurrency if needed |
-| **R4 – Cost Overrun** | Unusual usage increase (chat, high emails) | **Medium** | AWS Budgets alerts, monitor Cost Explorer |
+| **R4 – Cost Overrun** | Unusual usage increase (high emails) | **Medium** | AWS Budgets alerts, monitor Cost Explorer |
 | **R5 – Service Downtime** | AWS Outage | **Low** | Multi-AZ config, backups DynamoDB |
 
 **Contingency Plan (Summary):**
@@ -196,7 +196,7 @@ Based on the NIST Risk Management Framework, the project team identified key ris
 - Complete a serverless student management system with an automated CI/CD process, ensuring fast and stable build, test, and deployment.
 - API fully supports student management functions, integrates Lambda workflows, integration testing with Postman/SWAGGER.
 
-- Modern frontend with React/Next.js, 15+ pages, 50+ UI components, realtime connection with backend.
+- Modern frontend with React/TypeScript, 15+ pages, 50+ UI components, realtime connection with backend.
 
 - Integrates key AWS services: API Gateway, Lambda, DynamoDB, Cognito, S3, Amplify, CloudWatch, Route53, CloudFront, WAF, CodePipeline, CodeBuild, CodeDeploy.
 

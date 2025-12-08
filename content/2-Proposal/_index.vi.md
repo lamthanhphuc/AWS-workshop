@@ -20,7 +20,7 @@ Các hệ thống quản lý sinh viên hiện tại yêu cầu nhập dữ li�
 
 **Giải pháp**
 
-Nền tảng sử dụng Amazon API Gateway để tiếp nhận yêu cầu REST, AWS Lambda xử lý logic nghiệp vụ, Amazon DynamoDB để lưu trữ dữ liệu sinh viên và điểm số. AWS Amplify với React/Next.js cung cấp giao diện web, và Amazon Cognito đảm bảo quyền truy cập an toàn. Tương tự như các hệ thống LMS truyền thống nhưng với chi phí thấp hơn, người dùng có thể đăng ký sinh viên mới và quản lý thông tin, nhưng nền tảng này hoạt động ở quy mô nhỏ hơn và phục vụ mục đích học tập.
+Nền tảng sử dụng Amazon API Gateway để tiếp nhận yêu cầu REST, AWS Lambda xử lý logic nghiệp vụ, Amazon DynamoDB để lưu trữ dữ liệu sinh viên và điểm số. AWS Amplify với React/TypeScript cung cấp giao diện web, và Amazon Cognito đảm bảo quyền truy cập an toàn. Tương tự như các hệ thống LMS truyền thống nhưng với chi phí thấp hơn, người dùng có thể đăng ký sinh viên mới và quản lý thông tin, nhưng nền tảng này hoạt động ở quy mô nhỏ hơn và phục vụ mục đích học tập.
 
 **Lợi ích và hoàn vốn đầu tư (ROI)**
 
@@ -42,11 +42,11 @@ Hệ thống được thiết kế theo kiến trúc AWS Well-Architected Framew
 | **Amazon Route 53**    | Quản lý DNS và routing traffic đến CloudFront                        | Thiết lập domain tùy chỉnh, health checks, geo-routing, tích hợp SSL để đảm bảo truy cập an toàn và nhanh chóng.                |
 | **Amazon CloudFront**  | Phân phối CDN cho nội dung tĩnh và tài nguyên frontend               | Giảm độ trễ toàn cầu, caching tại edge locations, hỗ trợ HTTPS, tích hợp WAF để bảo vệ và OAC cho S3.                           |
 | **AWS WAF**            | Firewall bảo vệ ứng dụng web khỏi các tấn công                       | Chặn request độc hại, rate limiting, lọc IP, tích hợp liền mạch với CloudFront để bảo mật traffic.                              |
-| **AWS Amplify**        | Hosting và triển khai frontend với CI/CD                             | Xây dựng và deploy ứng dụng web nhanh chóng, tích hợp với Cognito/AppSync cho giao diện thân thiện và chat real-time.           |
+| **AWS Amplify**        | Hosting và triển khai frontend với CI/CD                             | Xây dựng và deploy ứng dụng web nhanh chóng, tích hợp với Cognito/AppSync cho giao diện thân thiện.           |
 | **Amazon API Gateway** | Xử lý và routing yêu cầu API từ frontend đến backend                 |  Hỗ trợ REST/HTTP APIs, throttling, caching, và authorizer để tăng hiệu suất và bảo mật.                                        |
 | **Amazon Cognito**     | Quản lý xác thực và ủy quyền người dùng                              | Hỗ trợ MFA, JWT tokens, groups cho phân quyền (giáo viên/admin vs. học sinh), tích hợp dễ với AppSync/API Gateway.              |
-| **AWS Lambda**         | Thực thi logic backend và xử lý sự kiện                              | Serverless, tự động scale, pay-per-use, xử lý CRUD, events từ EventBridge và ML inference từ Personalize.                       |
-| **Amazon DynamoDB**    | Lưu trữ dữ liệu NoSQL cho thông tin sinh viên, chat và bài tập       | Query nhanh, tự động scale, hỗ trợ Global Secondary Indexes (GSI) cho tìm kiếm phức tạp và chi phí thấp.                        |
+| **AWS Lambda**         | Thực thi logic backend và xử lý sự kiện                              | Serverless, tự động scale, pay-per-use, xử lý CRUD.                       |
+| **Amazon DynamoDB**    | Lưu trữ dữ liệu NoSQL cho thông tin sinh viên, bài tập       | Query nhanh, tự động scale, hỗ trợ Global Secondary Indexes (GSI) cho tìm kiếm phức tạp và chi phí thấp.                        |
 | **Amazon CloudWatch**  | Giám sát logs, metrics và alarms hệ thống                            | Theo dõi real-time, thiết lập alarms để phát hiện vấn đề sớm, tích hợp với Lambda/DynamoDB để tối ưu hóa.                       |
 | **Amazon S3**          | Lưu trữ artifact và build từ CI/CD                                   | Hosting static files rẻ tiền, bền vững cao, tích hợp với CodePipeline để lưu artifact deploy.                                   |
 | **GitLab**             | Quản lý source code và trigger CI/CD pipeline                        | Version control (GitLab.com hoặc self-hosted), merge requests, issue tracking, webhook tích hợp với CodePipeline để automate deploy.                          |
@@ -59,7 +59,7 @@ Hệ thống được thiết kế theo kiến trúc AWS Well-Architected Framew
 | **Layer**            | **Thành phần chính**                            | **Chức năng**                          |
 | -------------------- | ----------------------------------------------- | -------------------------------------- |
 | **Edge Layer**       | Route53, CloudFront, WAF                        | DNS, CDN, bảo mật lớp ngoài            |
-| **Frontend Layer**   | Amplify, Cognito                       | Giao diện web, realtime chat, xác thực |
+| **Frontend Layer**   | Amplify, Cognito                       | Giao diện web, xác thực |
 | **Backend Layer**    | API Gateway, Lambda, DynamoDB                   | Xử lý logic, CRUD, lưu trữ dữ liệu     |
 | **Monitoring Layer** | CloudWatch                                      | Logs, metrics, alerts                  |
 | **CI/CD Layer**      | GitLab, CodePipeline, CodeBuild, CodeDeploy, S3 | Tự động hóa build & deploy             |
@@ -82,17 +82,17 @@ Dự án được triển khai trong **5 tuần** với 5 giai đoạn chính t�
 
 1. **Tuần 1 - Thiết lập nền tảng (Foundation Setup)**
    - **Ngày 1-2**: Thiết lập tài khoản AWS, cấu hình IAM roles/policies, thiết lập billing alerts
-   - **Ngày 3-4**: Tạo DynamoDB tables (Students, Courses, Grades, ChatMessages, Assignments, Attendance, Events) với GSI, cấu hình Cognito User Pools với groups (Admin/Teacher/Student)
+   - **Ngày 3-4**: Tạo DynamoDB tables (Students, Courses, Grades, Assignments) với GSI, cấu hình Cognito User Pools với groups (Admin/Teacher/Student)
    - **Ngày 5-7**: Khởi tạo IaC templates (AWS CDK/CloudFormation), nghiên cứu serverless patterns, thiết kế kiến trúc chi tiết với sequence diagrams, setup Git repo structure cho parallel development
 
 
 2. **Tuần 2 - Backend & Frontend Song Song (Parallel Development Phase 1)**
    - **Backend Team (Ngày 1-7)**:
-     - Xây dựng 50+ Lambda functions cho: Students (CRUD, search, bulk import/export), Courses (CRUD, enrollment), Grades (CRUD, analytics, statistics), Assignments (CRUD, submissions), Attendance (CRUD, reports), Auth (login, register, refresh token)
+     - Xây dựng 50+ Lambda functions cho: Students (CRUD, search, bulk import/export), Courses (CRUD, enrollment), Grades (CRUD, analytics, statistics), Assignments (CRUD, submissions), Auth (login, register, refresh token)
      - Thiết lập API Gateway với 50+ REST endpoints: `/students/*` (10 endpoints), `/courses/*` (8 endpoints), `/grades/*` (12 endpoints), `/assignments/*` (8 endpoints), `/attendance/*` (6 endpoints)
      - Unit testing với 80%+ coverage
    - **Frontend Team (Ngày 1-7)**:
-     - Deploy Amplify hosting với React/Next.js, setup routing (React Router)
+     - Deploy Amplify hosting với React/TypeScript, setup routing (React Router)
      - Xây dựng UI components: Layout (Header, Sidebar, Footer), Authentication (Login, Register), Dashboard (Overview, Stats cards)
      - Setup API client (Axios/Fetch), state management (Redux/Zustand), form validation (React Hook Form)
 
@@ -102,7 +102,7 @@ Dự án được triển khai trong **5 tuần** với 5 giai đoạn chính t�
      - Tích hợp Lambda handlers cho automated workflows
      - Integration testing với Postman/ SWAGGER
    - **Frontend Team (Ngày 1-7)**:
-     - Xây dựng 15+ pages: Student Management (List, Create, Edit, Detail, Import), Course Management (List, Create, Edit, Enrollment), Grade Management (List, Input, Analytics), Assignment (List, Submit, Review), Attendance (Tracker, Reports)
+     - Xây dựng 15+ pages: Student Management (List, Create, Edit, Detail, Import), Course Management (List, Create, Edit, Enrollment), Grade Management (List, Input, Analytics), Assignment (List, Submit, Review)
    - **Integration (Ngày 6-7)**:
      - Kết nối CloudFront CDN với Route53, cấu hình WAF rules (rate limiting, geo-blocking), SSL/TLS certificates
      - End-to-end testing giữa Frontend và Backend
@@ -124,7 +124,7 @@ Dự án được triển khai trong **5 tuần** với 5 giai đoạn chính t�
 
 #### Yêu cầu kỹ thuật
 
-**Hệ thống quản lý sinh viên**: Dashboard web đầy đủ với 5 modules chính (Students, Courses, Grades, Assignments, Attendance). Frontend React/Next.js chạy trên Amplify Hosting với 15+ pages và 50+ components. Cognito xác thực và phân quyền cho tất cả người dùng, bao gồm 5-10 admin/giáo viên (với quyền cao như CRUD dữ liệu) và học sinh (với quyền giới hạn như xem điểm số,lớp học).
+**Hệ thống quản lý sinh viên**: Dashboard web đầy đủ với 5 modules chính (Students, Courses, Grades, Assignments, Attendance). Frontend React/TypeScript chạy trên Amplify Hosting với 15+ pages và 50+ components. Cognito xác thực và phân quyền cho tất cả người dùng, bao gồm 5-10 admin/giáo viên (với quyền cao như CRUD dữ liệu) và học sinh (với quyền giới hạn như xem điểm số,lớp học).
 
 **Kiến trúc API toàn diện**: 50+ REST API endpoints qua API Gateway (CRUD operations, search, bulk actions). Backend được xây dựng song song với Frontend để tối ưu thời gian phát triển.
 
@@ -138,7 +138,7 @@ Dự án được triển khai trong **5 tuần** với 5 giai đoạn chính t�
 | **Giai đoạn**               | **Thời gian** | **Mục tiêu chính**          | **Sản phẩm đầu ra (Deliverables)**                                          | **Tiêu chí thành công (Success Criteria)** | 
 | --------------------------- | ------------- | --------------------------- | --------------------------------------------------------------------------- | ------------------------------------------ | 
 | **1: Thiết lập nền tảng**   | Tuần 1        | Thiết lập môi trường AWS    | • Tài khoản AWS với IAM setup<br>• 7 DynamoDB tables với GSI<br>• Cognito User Pool<br>• IaC templates (CDK/CloudFormation)<br>• Git repo structure | • Infrastructure as Code hoàn chỉnh<br>• Security baseline đạt chuẩn<br>• Parallel dev environment ready | 
-| **2: Backend & Frontend Parallel (Phase 1)** | Tuần 2 | Xây dựng core Backend + Frontend foundation | • 50+ Lambda functions<br>• API Gateway với 50+ REST endpoints<br>• React/Next.js app foundation<br>• 10+ UI components<br>• Unit tests (>80% coverage) | • 50+ API endpoints hoạt động<br>• API response time <500ms<br>• Frontend routing setup<br>• All backend tests passed | 
+| **2: Backend & Frontend Parallel (Phase 1)** | Tuần 2 | Xây dựng core Backend + Frontend foundation | • 50+ Lambda functions<br>• API Gateway với 50+ REST endpoints<br>• React/TypeScript app foundation<br>• 10+ UI components<br>• Unit tests (>80% coverage) | • 50+ API endpoints hoạt động<br>• API response time <500ms<br>• Frontend routing setup<br>• All backend tests passed | 
 | **3: Backend & Frontend Parallel (Phase 2)** | Tuần 3 | Tích hợp Lambda workflows & kiểm thử tích hợp | • Tích hợp Lambda handlers cho automated workflows<br>• Integration testing với Postman/SWAGGER<br>• 15+ complete pages<br>• CloudFront + Route53 + WAF<br>• Responsive design | • Automated workflows hoạt động ổn định<br>• Đã kiểm thử tích hợp với Postman/SWAGGER<br>• All pages integrated with backend<br>• SSL/HTTPS enabled<br>• Mobile responsive |
   | **4: CI/CD với CodeBuild, CodeDeploy, CodePipeline** | Tuần 4 | Thiết lập và kiểm thử quy trình CI/CD tự động | • Cấu hình CodeBuild cho frontend/backend<br>• Thiết lập CodePipeline kết nối GitLab, CodeBuild, CodeDeploy<br>• Kiểm thử deploy tự động cho backend/frontend | • Build và deploy tự động hoạt động ổn định<br>• Artifacts lưu trữ đúng chuẩn<br>• Pipeline tối ưu hóa |
 | **5: Kiểm thử & Demo**      | Tuần 5        | Kiểm thử và hoàn thiện      | • Load test reports (50+ users)<br>• Performance optimization<br>• Complete documentation<br>• Demo video + slides | • System uptime ≥99%<br>• All features stable<br>• Documentation complete<br>• Demo ready |
@@ -188,7 +188,7 @@ Dựa trên NIST Risk Management Framework, nhóm dự án xác định các r�
 | **R1 – Data Leakage**             | Lộ dữ liệu do config sai                 | **Cao**        | Áp dụng Cognito auth, IAM least privilege, DynamoDB encryption |
 | **R2 – API Overload**             | Quá nhiều requests gây chậm              | **Trung bình** | Throttling API Gateway/AppSync, alarms CloudWatch              |
 | **R3 – Lambda Cold Start**        | Delay khi invoke                         | **Trung bình** | Tối ưu code, Provisioned Concurrency nếu cần                   |
-| **R4 – Chi phí vượt**             | Usage tăng bất thường (chat, emails cao) | **Trung bình** | AWS Budgets alerts, monitor Cost Explorer                      |
+| **R4 – Chi phí vượt**             | Usage tăng bất thường (emails cao) | **Trung bình** | AWS Budgets alerts, monitor Cost Explorer                      |
 | **R5 – Service Downtime**         | Gián đoạn AWS                            | **Thấp**       | Multi-AZ config, backups DynamoDB                              |
 
 
@@ -204,7 +204,7 @@ Dựa trên NIST Risk Management Framework, nhóm dự án xác định các r�
 **Kết quả kỹ thuật:**
 - Hoàn thiện hệ thống quản lý sinh viên serverless với quy trình CI/CD tự động hóa, đảm bảo build, test, deploy nhanh chóng và ổn định.
 - API đáp ứng đầy đủ các chức năng quản lý sinh viên, tích hợp Lambda workflows, kiểm thử tích hợp với Postman/SWAGGER.
-- Frontend hiện đại với React/Next.js, 15+ trang, 50+ UI components, kết nối realtime với backend.
+- Frontend hiện đại với React/TypeScript, 15+ trang, 50+ UI components, kết nối realtime với backend.
 - Tích hợp các dịch vụ AWS trọng yếu: API Gateway, Lambda, DynamoDB, Cognito, S3, Amplify, CloudWatch, Route53, CloudFront, WAF, CodePipeline, CodeBuild, CodeDeploy.
 - Hiệu năng: API response <500ms, uptime ≥99%, quy trình CI/CD tối ưu hóa chi phí và thời gian triển khai.
 - Chi phí thực tế: $7-20/tháng, tổng ~$21-60 cho 3 tháng (có thể giảm xuống $15-30 với AWS Free Tier và Educate credits).
