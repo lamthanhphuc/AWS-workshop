@@ -1,7 +1,7 @@
 ---
 title: "Desktop and Application Streaming"
 date: "2025-06-26"
-weight: 1
+weight: 3
 chapter: false
 pre: " <b> 3.3. </b> "
 ---
@@ -83,13 +83,12 @@ Bạn cần cấu hình thư mục WorkSpaces để sử dụng VPC endpoint mà
 3. Chọn thư mục (**directory**) bạn muốn sử dụng.  
 4. Vào phần **VPC Endpoints section**, rồi chọn **Edit.**
 
-<!-- Hình ảnh minh hoạ: Thay thế bằng shortcode hoặc đường dẫn hình ảnh nếu có -->
-<!-- ![VPC Endpoint Section](path/to/image1.png) -->
+
+![VPC1-1](/images/3-BlogsTranslated/3.3-Blog3/VPC2.png)
 
 5. Trong **Edit VPC Endpoint dialog box**, dưới mục **Streaming Endpoint**, chọn VPC endpoint bạn đã tạo.
 
-<!-- Hình ảnh minh hoạ: Thay thế bằng shortcode hoặc đường dẫn hình ảnh nếu có -->
-<!-- ![Edit VPC Endpoint Dialog](path/to/image2.png) -->
+![VPC1-1](/images/3-BlogsTranslated/3.3-Blog3/VPC1-1.png)
 
 6. **Tuỳ chọn:** bạn có thể **bật Allow users with PCoIP WorkSpaces** có thể stream từ internet. Nếu bật, người dùng PCoIP WorkSpaces có thể stream qua Internet công cộng. Nếu không bật, các PCoIP WorkSpaces trong thư mục không dùng được khi không có internet vì PCoIP WorkSpaces không hỗ trợ streaming qua VPC endpoint.
 7. Chọn **Save**.  
