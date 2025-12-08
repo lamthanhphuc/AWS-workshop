@@ -22,4 +22,4 @@ Trong workshop này, bạn sẽ:
 - Trải nghiệm quy trình DevOps CI/CD tự động hóa từ GitLab lên AWS Pipeline, kiểm thử và demo live hệ thống.
 - Vận dụng kiến thức thực hành vào bài học thực tế hoặc các dự án tương tự, dễ dàng mở rộng sang môi trường mobile hoặc tích hợp AI nâng cao.
 
-![overview](/images/5-Workshop/5.1-Workshop-overview/Solution.drawio.png)
+![overview](/images/5-Workshop/5.1-Workshop-overview/solution.drawio.png)
