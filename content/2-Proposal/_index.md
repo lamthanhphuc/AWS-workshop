@@ -41,11 +41,11 @@ The system is designed according to the AWS Well-Architected Framework architect
 | **Amazon Route 53** | Manage DNS and route traffic to CloudFront | Set up custom domains, health checks, geo-routing, SSL integration to ensure secure and fast access. |
 | **Amazon CloudFront** | CDN delivery for static content and frontend resources | Global latency reduction, caching at edge locations, HTTPS support, WAF integration for protection and OAC for S3. |
 | **AWS WAF** | Firewall to protect web applications from attacks | Block malicious requests, rate limiting, IP filtering, seamless integration with CloudFront to secure traffic. |
-| **AWS Amplify** | Frontend hosting and deployment with CI/CD | Build and deploy web applications quickly, integrate with Cognito/AppSync for user-friendly interface and real-time chat. |
+| **AWS Amplify** | Frontend hosting and deployment with CI/CD | Build and deploy web applications quickly, integrate with Cognito/AppSync for user-friendly interface. |
 | **Amazon API Gateway** | Handle and route API requests from frontend to backend | Support REST/HTTP APIs, throttling, caching, and authorizer for increased performance and security. |
 | **Amazon Cognito** | Manage user authentication and authorization | Support MFA, JWT tokens, groups for permissions (teacher/admin vs. student), easy integration with AppSync/API Gateway. |
 | **AWS Lambda** | Execute backend logic and event handling | Serverless, auto-scaling, pay-per-use, CRUD processing. |
-| **Amazon DynamoDB** | NoSQL data storage for student information, chat, and assignments | Fast query, auto-scaling, Global Secondary Indexes (GSI) support for complex searches and low cost. |
+| **Amazon DynamoDB** | NoSQL data storage for student information and assignments | Fast query, auto-scaling, Global Secondary Indexes (GSI) support for complex searches and low cost. |
 | **Amazon CloudWatch** | Monitor logs, metrics, and system alarms | Real-time monitoring, set alarms to detect problems early, integrate with Lambda/DynamoDB for optimization. |
 | **Amazon S3** | Store artifacts and builds from CI/CD | Cheap, highly sustainable static file hosting, integrated with CodePipeline to store deployed artifacts. |
 | **GitLab** | Manage source code and trigger CI/CD pipeline | Version control (GitLab.com or self-hosted), merge requests, issue tracking, webhooks integrated with CodePipeline to automate deployment. |
@@ -58,7 +58,7 @@ The system is designed according to the AWS Well-Architected Framework architect
 | **Layer** | **Main Components** | **Functionality** |
 | -------------------- | -------------------------------------------------- | -------------------------------------- |
 | **Edge Layer** | Route53, CloudFront, WAF | DNS, CDN, security layer |
-| **Frontend Layer** | Amplify, Cognito | Web interface, realtime chat, authentication |
+| **Frontend Layer** | Amplify, Cognito | Web interface, authentication |
 | **Backend Layer** | API Gateway, Lambda, DynamoDB | Logic processing, CRUD, data storage |
 | **Monitoring Layer** | CloudWatch | Logs, metrics, alerts |
 | **CI/CD Layer** | GitLab, CodePipeline, CodeBuild, CodeDeploy, S3 | Build & deploy automation |
