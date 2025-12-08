@@ -11,7 +11,7 @@ pre : " <b> 5.1. </b> "
 Các thành phần serverless như Lambda, DynamoDB, API Gateway, Amplify, ROUTE53, CloudFront, WAF giúp hệ thống tự động mở rộng, tối ưu chi phí, duy trì độ tin cậy và bảo mật cao.
 
 + Người dùng thao tác qua giao diện web (React/Amplify), tương tác với dashboard, bài tập, bảng điểm .
-+ API backend (REST & GraphQL) đảm bảo truy cập dữ liệu sinh viên, quyền truy cập cá nhân hóa.
++ API backend (REST) đảm bảo truy cập dữ liệu sinh viên, quyền truy cập cá nhân hóa.
 + Không cần quản lý server truyền thống, toàn bộ quy trình triển khai vận hành – từ lưu trữ, xử lý, đến CI/CD – đều tích hợp và tự động hóa qua các dịch vụ AWS.
 
 

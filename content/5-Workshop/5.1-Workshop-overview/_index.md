@@ -10,7 +10,7 @@ pre : " <b> 5.1. </b> "
 Serverless components such as Lambda, DynamoDB, API Gateway, Amplify, ROUTE53, CloudFront, WAF help the system automatically scale, optimize costs, maintain high reliability and security.
 
 + Users operate through the web interface (React/Amplify), interact with dashboards, assignments, and scoreboards.
-+ API backend (REST & GraphQL) ensures access to student data, personalized access.
++ API backend (REST) ensures access to student data, personalized access.
 
 + No need to manage traditional servers, the entire deployment and operation process – from storage, processing, to CI/CD – is integrated and automated through AWS services.
 
