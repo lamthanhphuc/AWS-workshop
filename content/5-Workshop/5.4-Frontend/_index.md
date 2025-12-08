@@ -1,5 +1,5 @@
 ---
-title : "Frontend Development: Amplify, AppSync, Realtime Chat"
+title : "Frontend Development: Amplify, Route 53, CloudFront, WAF"
 date: "2025-12-07"
 weight : 4
 chapter : false

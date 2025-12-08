@@ -19,7 +19,7 @@ Core services: API Gateway (REST), Lambda handles business logic, DynamoDB store
 1. [System Overview and Architecture](5.1-Overview/)
 2. [Environment Preparation & AWS Account Setup](5.2-Prerequiste/)
 3. [Backend Deployment: DynamoDB, Lambda, API Gateway, Cognito](5.3-Backend/)
-4. [Frontend Development: Amplify, AppSync, Realtime Chat](5.4-Frontend/)
+4. [Frontend Development: Amplify, Route 53, CloudFront, WAF](5.4-Frontend/)
 5. [CI/CD_Pipeline](5.5-CI/CDPIPELINE/)
 6. [CloudWatch](5.6-CLOUDWATCH/)
 
