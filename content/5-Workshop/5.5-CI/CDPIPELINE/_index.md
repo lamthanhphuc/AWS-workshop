@@ -20,7 +20,7 @@ The system is capable of:
 
 Overview diagram:
 
-![Event-driven Architecture](/images/5-Workshop/5.5-EventDriven/architecture.png)
+![Event-driven Architecture](/images/5-Workshop/5.5-CICD_Pipeline/architecture.png)
 
 ---
 
