@@ -16,7 +16,7 @@ Sơ đồ tổng quan:
 
 ---
 
-### 1. Tạo S3 Bucket cho Artifacts
+## 1. Tạo S3 Bucket cho Artifacts
 
 ```
 Bucket name: student-management-artifacts-{account-id}
@@ -24,7 +24,7 @@ Region: ap-southeast-1
 Versioning: Enabled
 ```
 
-### 2. Tạo CodeBuild Project
+## 2. Tạo CodeBuild Project
 
 1. Vào **AWS Console → CodeBuild → Create build project**
 
@@ -96,7 +96,7 @@ cache:
     - '/root/.m2/**/*'
 ```
 
-### 3. Tạo CodePipeline
+## 3. Tạo CodePipeline
 
 1. Vào **AWS Console → CodePipeline → Create pipeline**
 

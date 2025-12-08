@@ -12,7 +12,7 @@ Phần này hướng dẫn bạn sử dụng Amazon CloudWatch để giám sát,
 
 ---
 
-## PHẦN 8: CLOUDWATCH (Monitoring)
+## CLOUDWATCH (Monitoring)
 
 ### 1. Tạo Log Groups
 

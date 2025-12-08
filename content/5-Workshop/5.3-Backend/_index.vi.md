@@ -10,6 +10,7 @@ pre : "<b> 5.3. </b>"
 Phần này hướng dẫn triển khai backend cho hệ thống quản lý sinh viên serverless trên AWS. Bạn sẽ sử dụng các dịch vụ chủ lực như DynamoDB để lưu trữ dữ liệu, Lambda để xử lý logic nghiệp vụ, API Gateway để kết nối giữa frontend và backend, và Cognito để xác thực người dùng. Quy trình thực hiện bao gồm thiết kế bảng dữ liệu, cấu hình xác thực, xây dựng ứng dụng backend với Java Spring Boot, đóng gói và triển khai lên Lambda, cũng như cấu hình API Gateway để phục vụ các nghiệp vụ quản lý sinh viên một cách bảo mật, tự động hóa và dễ mở rộng.
 
 ![Amplify Architecture](/images/5-Workshop/5.3-Backend/architecture.png)
+
 ---
 
 # 1. Amazon DynamoDB
@@ -29,9 +30,9 @@ Hệ thống backend Spring Boot tương tác DynamoDB qua:
 
 ---
 
-##  **Thiết kế bảng DynamoDB (Single-Table Design)**
+##  1.1  **Thiết kế bảng DynamoDB (Single-Table Design)**
 
-### 1.1 Tạo Tables
+### 1.1.1 Tạo Tables
 
 **Table 1: Users**
 ```
@@ -58,13 +59,15 @@ Table name: student-management-notifications
 Partition key: id (Number)
 Sort key: sent_at (String)
 ```
-### 1.2 Cấu hình Global Secondary Index (GSI)
+### 1.1.2 Cấu hình Global Secondary Index (GSI)
 
 Cho table Users, thêm GSI:
 - Index name: `role-index`
 - Partition key: `role` (String)
 
 ---
+
+# 2. Amazon Cognito
 
 ### 2.1 Tạo User Pool
 
@@ -229,7 +232,7 @@ Attach policies:
 
 ---
 
-# Tổng kết
+#### Tổng kết
 Phần này hướng dẫn triển khai backend cho hệ thống quản lý sinh viên serverless trên AWS, sử dụng các dịch vụ chủ chốt như DynamoDB, Lambda, API Gateway và Cognito. Bạn đã thực hành:
 
 - Thiết kế và tạo các bảng DynamoDB cho lưu trữ dữ liệu sinh viên, lớp học, môn học, thông báo, cùng cấu hình GSI để tối ưu truy vấn.

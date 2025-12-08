@@ -12,7 +12,7 @@ This section guides you through using Amazon CloudWatch to monitor, alert, and m
 
 ---
 
-## PART 8: CLOUDWATCH (Monitoring)
+## CLOUDWATCH (Monitoring)
 
 ### 1. Create Log Groups
 

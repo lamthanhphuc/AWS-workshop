@@ -32,9 +32,9 @@ Spring Boot backend system interacts with DynamoDB via:
 
 ---
 
-## **DynamoDB table design (Single-Table Design)**
+## 1.1 **DynamoDB table design (Single-Table Design)**
 
-### 1.1 Create Tables
+### 1.1.1 Create Tables
 
 **Table 1: Users**
 ```
@@ -60,13 +60,14 @@ Table name: student-management-notifications
 Partition key: id (Number)
 Sort key: sent_at (String)
 ```
-### 1.2 Global Secondary Index (GSI) Configuration
+### 1.1.2 Global Secondary Index (GSI) Configuration
 
 For the Users table, add GSI:
 - Index name: `role-index`
 - Partition key: `role` (String)
 
 ---
+# 2. Amazon Cognito 
 
 ### 2.1 Create User Pool
 
