@@ -15,8 +15,8 @@ Regarding work ethic, I always strive to complete assigned tasks, comply with re
 ## Achievements
 
 - Gained an understanding of **multi-layer serverless architecture** operating on AWS.  
-- Understood the **Cognito authorization model**, and real-time processing via **AppSync WebSocket**.  
-- Directly developed modules for **CRUD, chat, student ranking, and event-based email sending**.  
+- Understood the **Cognito authorization model**.  
+- Directly developed modules for **CRUD student, and event-based email sending**.  
 - Practiced **DevOps CI/CD pipeline** automating the build → test → deploy process.
 
 ---

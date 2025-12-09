@@ -18,8 +18,8 @@ Về tác phong làm việc, tôi luôn cố gắng hoàn thành nhiệm vụ đ
 ## Những nội dung đã đạt được
 
 - Nắm được kiến trúc **serverless đa tầng** vận hành thực tế trên AWS.  
-- Hiểu mô hình **phân quyền Cognito**, xử lý realtime qua **AppSync WebSocket**.  
-- Trực tiếp phát triển module **CRUD, chat, ranking sinh viên, gửi email theo sự kiện**.  
+- Hiểu mô hình **phân quyền Cognito**.  
+- Trực tiếp phát triển module **CRUD sinh viên, gửi email theo sự kiện**.  
 - Thực hành pipeline **DevOps CI/CD** tự động hóa quá trình build → test → deploy.
 
 ---
