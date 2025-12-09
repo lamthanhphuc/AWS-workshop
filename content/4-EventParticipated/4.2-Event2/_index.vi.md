@@ -6,58 +6,97 @@ chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+# Bài thu hoạch "AWS Cloud Mastery Series #2 - DevOps on AWS"
 
 ### Mục Đích Của Sự Kiện
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+- Chia sẻ văn hóa và nguyên tắc DevOps trên AWS
+- Hướng dẫn xây dựng CI/CD pipeline hoàn chỉnh
+- Giới thiệu Infrastructure as Code với CloudFormation và CDK
+- Thực hành triển khai container services và monitoring
+- Áp dụng DevOps best practices vào thực tế doanh nghiệp
 
-### Danh Sách Diễn Giả
-
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
 
 ### Nội Dung Nổi Bật
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+#### Phiên Sáng (8:30 AM – 12:00 PM)
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+**8:30 – 9:00 AM | Welcome & DevOps Mindset**
+- Văn hóa và nguyên tắc DevOps
+- Lợi ích và các chỉ số quan trọng (DORA, MTTR, deployment frequency)
+- Tầm quan trọng của collaboration giữa Dev và Ops
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+**9:00 – 10:30 AM | AWS DevOps Services – CI/CD Pipeline**
+- **Source Control**: AWS CodeCommit, Git strategies (GitFlow, Trunk-based)
+- **Build & Test**: CodeBuild configuration, testing pipelines
+- **Deployment**: CodeDeploy với Blue/Green, Canary, Rolling updates
+- **Orchestration**: CodePipeline automation
+- **Demo**: Full CI/CD pipeline walkthrough
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+**10:45 AM – 12:00 PM | Infrastructure as Code (IaC)**
+- **AWS CloudFormation**: Templates, stacks, drift detection
+- **AWS CDK**: Constructs, reusable patterns, language support
+- **Demo**: Deploying với CloudFormation và CDK
+- **Discussion**: Choosing between IaC tools
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
+#### Phiên Chiều (1:00 – 5:00 PM)
 
-#### Domain-Driven Design (DDD)
+**1:00 – 2:30 PM | Container Services on AWS**
+- **Docker Fundamentals**: Microservices và containerization
+- **Amazon ECR**: Image storage, scanning, lifecycle policies
+- **Amazon ECS & EKS**: Deployment strategies, scaling, orchestration
+- **AWS App Runner**: Simplified container deployment
+- **Demo & Case Study**: Microservices deployment comparison
 
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
+**2:45 – 4:00 PM | Monitoring & Observability**
+- **CloudWatch**: Metrics, logs, alarms, dashboards
+- **AWS X-Ray**: Distributed tracing và performance insights
+- **Demo**: Full-stack observability setup
+- **Best Practices**: Alerting, dashboards, on-call processes
 
-#### Event-Driven Architecture
+**4:00 – 4:45 PM | DevOps Best Practices & Case Studies**
+- **Deployment strategies**: Feature flags, A/B testing
+- **Automated testing** và CI/CD integration
+- **Incident management** và postmortems
+- **Case Studies**: Startups và enterprise DevOps transformations
 
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
+### Những Gì Học Được
 
-#### Compute Evolution
+#### DevOps Culture & Practices
 
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
+- **Collaboration mindset**: Phá vỡ rào cản giữa Dev và Ops teams
+- **Automation first**: Tự động hóa mọi khâu có thể từ build, test đến deployment
+- **Metrics-driven**: DORA metrics, MTTR, deployment frequency để đo lường hiệu quả
+- **Continuous improvement**: Feedback loops và iterative optimization
+
+#### CI/CD Pipeline Architecture
+
+- **Source control strategies**: GitFlow vs Trunk-based development
+- **Build automation**: CodeBuild configuration, testing frameworks integration
+- **Deployment patterns**: Blue/Green, Canary, Rolling updates - khi nào dùng pattern nào
+- **Pipeline orchestration**: CodePipeline automation với multi-stage approvals
+- **Security integration**: Security scanning trong CI/CD pipeline
+
+#### Infrastructure as Code
+
+- **CloudFormation fundamentals**: Templates, stacks, change sets, drift detection
+- **AWS CDK advantages**: Type-safe, reusable constructs, multiple language support
+- **IaC best practices**: Version control, testing, modularization
+- **State management**: Comparing CloudFormation vs Terraform approaches
+
+#### Container Orchestration
+
+- **Containerization benefits**: Portability, consistency, resource efficiency
+- **ECR features**: Image scanning, lifecycle policies, replication
+- **ECS vs EKS**: Trade-offs và use cases cho mỗi service
+- **App Runner simplicity**: Khi nào chọn App Runner thay vì ECS/EKS
+
+#### Observability & Monitoring
+
+- **CloudWatch deep dive**: Custom metrics, log insights, composite alarms
+- **Distributed tracing**: X-Ray for microservices debugging
+- **Dashboards design**: Creating actionable dashboards
+- **Alert management**: Reducing alert fatigue, on-call best practices
 
 #### Amazon Q Developer
 
@@ -119,9 +158,3 @@ Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải 
 - Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
 - Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
 - Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
-
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
-
-

@@ -6,122 +6,158 @@ chapter: false
 pre: " <b> 4.3. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
-# Bài thu hoạch “GenAI-powered App-DB Modernization workshop”
+# Bài thu hoạch "AWS Cloud Mastery Series #3 - Security on AWS (Well-Architected Security Pillar)"
 
 ### Mục Đích Của Sự Kiện
 
-- Chia sẻ best practices trong thiết kế ứng dụng hiện đại
-- Giới thiệu phương pháp DDD và event-driven architecture
-- Hướng dẫn lựa chọn compute services phù hợp
-- Giới thiệu công cụ AI hỗ trợ development lifecycle
+- Giới thiệu AWS Well-Architected Security Pillar và 5 trụ cột bảo mật
+- Chia sẻ best practices về Identity & Access Management (IAM)
+- Hướng dẫn triển khai Detection và Continuous Monitoring
+- Thực hành Infrastructure Protection và Data Protection
+- Xây dựng Incident Response playbook và automation
 
-### Danh Sách Diễn Giả
-
-- **Jignesh Shah** - Director, Open Source Databases
-- **Erica Liu** - Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** - Assc. Specialist SA, Serverless Amazon Web Services
 
 ### Nội Dung Nổi Bật
 
-#### Đưa ra các ảnh hưởng tiêu cực của kiến trúc ứng dụng cũ
+#### 8:30 – 8:50 AM | Opening & Security Foundation
 
-- Thời gian release sản phẩm lâu → Mất doanh thu/bỏ lỡ cơ hội
-- Hoạt động kém hiệu quả → Mất năng suất, tốn kém chi phí
-- Không tuân thủ các quy định về bảo mật → Mất an ninh, uy tín
+- Vai trò **Security Pillar** trong Well-Architected Framework
+- Nguyên tắc cốt lõi: **Least Privilege** – **Zero Trust** – **Defense in Depth**
+- **Shared Responsibility Model**: Phân định trách nhiệm giữa AWS và khách hàng
+- Top security threats trong môi trường cloud tại Việt Nam
 
-#### Chuyển đổi sang kiến trúc ứng dụng mới - Microservice Architecture
+#### Pillar 1 — Identity & Access Management (8:50 – 9:30 AM)
 
-Chuyển đổi thành hệ thống modular – từng chức năng là một **dịch vụ độc lập** giao tiếp với nhau qua **sự kiện** với 3 trụ cột cốt lõi:
+**Modern IAM Architecture**
+- **IAM fundamentals**: Users, Roles, Policies – tránh long-term credentials
+- **IAM Identity Center**: SSO implementation, permission sets
+- **SCP & permission boundaries**: Multi-account governance
+- **MFA, credential rotation, Access Analyzer**: Security best practices
+- **Mini Demo**: Validate IAM Policy + simulate access scenarios
 
-- **Queue Management**: Xử lý tác vụ bất đồng bộ
-- **Caching Strategy:** Tối ưu performance
-- **Message Handling:** Giao tiếp linh hoạt giữa services
+#### Pillar 2 — Detection (9:30 – 9:55 AM)
 
-#### Domain-Driven Design (DDD)
+**Detection & Continuous Monitoring**
+- **CloudTrail**: Organization-level audit logging
+- **GuardDuty**: Threat detection và intelligent monitoring
+- **Security Hub**: Centralized security posture management
+- **Logging strategy**: VPC Flow Logs, ALB logs, S3 access logs
+- **Alerting & automation**: EventBridge integration
+- **Detection-as-Code**: Infrastructure và security rules as code
 
-- **Phương pháp 4 bước**: Xác định domain events → sắp xếp timeline → identify actors → xác định bounded contexts
-- **Case study bookstore**: Minh họa cách áp dụng DDD thực tế
-- **Context mapping**: 7 patterns tích hợp bounded contexts
+#### Pillar 3 — Infrastructure Protection (10:10 – 10:40 AM)
 
-#### Event-Driven Architecture
+**Network & Workload Security**
+- **VPC segmentation**: Public vs private subnet placement strategies
+- **Security Groups vs NACLs**: Layered security model
+- **WAF + Shield + Network Firewall**: Protection against attacks
+- **Workload protection**: EC2, ECS/EKS security fundamentals
 
-- **3 patterns tích hợp**: Publish/Subscribe, Point-to-point, Streaming
-- **Lợi ích**: Loose coupling, scalability, resilience
-- **So sánh sync vs async**: Hiểu rõ trade-offs (sự đánh đổi)
+#### Pillar 4 — Data Protection (10:40 – 11:10 AM)
 
-#### Compute Evolution
+**Encryption, Keys & Secrets Management**
+- **AWS KMS**: Key policies, grants, automatic rotation
+- **Encryption strategies**: 
+  - At-rest: S3, EBS, RDS, DynamoDB
+  - In-transit: TLS/SSL, VPN, encryption in application layer
+- **Secrets Manager & Parameter Store**: Secrets rotation patterns
+- **Data classification & access guardrails**: Compliance requirements
 
-- **Shared Responsibility Model**: Từ EC2 → ECS → Fargate → Lambda
-- **Serverless benefits**: No server management, auto-scaling, pay-for-value
-- **Functions vs Containers**: Criteria lựa chọn phù hợp
+#### Pillar 5 — Incident Response (11:10 – 11:40 AM)
 
-#### Amazon Q Developer
-
-- **SDLC automation**: Từ planning đến maintenance
-- **Code transformation**: Java upgrade, .NET modernization
-- **AWS Transform agents**: VMware, Mainframe, .NET migration
+**IR Playbook & Automation**
+- **Incident Response lifecycle**: Preparation, Detection, Analysis, Containment, Eradication, Recovery
+- **Common IR playbooks**:
+  - Compromised IAM credentials
+  - S3 bucket public exposure
+  - EC2 malware detection
+- **Response automation**: Lambda/Step Functions for automated remediation
+- **Evidence collection**: Snapshot, isolation, forensics
 
 ### Những Gì Học Được
 
-#### Tư Duy Thiết Kế
+#### Security Foundation
 
-- **Business-first approach**: Luôn bắt đầu từ business domain, không phải technology
-- **Ubiquitous language**: Importance của common vocabulary giữa business và tech teams
-- **Bounded contexts**: Cách identify và manage complexity trong large systems
+- **Well-Architected Security Pillar**: Framework toàn diện cho cloud security
+- **Security principles**: Least Privilege, Zero Trust, Defense in Depth
+- **Shared Responsibility Model**: Hiểu rõ trách nhiệm của AWS và khách hàng
+- **Threat landscape**: Top security threats trong cloud environment
 
-#### Kiến Trúc Kỹ Thuật
+#### Identity & Access Management
 
-- **Event storming technique**: Phương pháp thực tế để mô hình hóa quy trình kinh doanh
-- Sử dụng **Event-driven communication** thay vì synchronous calls
-- **Integration patterns**: Hiểu khi nào dùng sync, async, pub/sub, streaming
-- **Compute spectrum**: Criteria chọn từ VM → containers → serverless
+- **IAM best practices**: Avoid long-term credentials, use roles
+- **IAM Identity Center**: Centralized SSO và permission management
+- **Multi-account governance**: SCPs và permission boundaries
+- **Access validation**: IAM Access Analyzer và policy simulation
 
-#### Chiến Lược Hiện Đại Hóa
+#### Detection & Monitoring
 
-- **Phased approach**: Không rush, phải có roadmap rõ ràng
-- **7Rs framework**: Nhiều con đường khác nhau tùy thuộc vào đặc điểm của mỗi ứng dụng
-- **ROI measurement**: Cost reduction + business agility
+- **Comprehensive logging**: CloudTrail, VPC Flow Logs, application logs
+- **Threat detection**: GuardDuty intelligent monitoring
+- **Centralized security**: Security Hub for posture management
+- **Automated response**: EventBridge integration với Lambda
+
+#### Infrastructure Protection
+
+- **Network segmentation**: Proper VPC architecture design
+- **Layered security**: Security Groups + NACLs + WAF/Shield
+- **Attack protection**: DDoS protection, web application firewall
+- **Workload security**: Container và compute security
+
+#### Data Protection
+
+- **Encryption everywhere**: At-rest và in-transit encryption
+- **Key management**: KMS best practices, rotation strategies
+- **Secrets management**: Automated rotation với Secrets Manager
+- **Data classification**: Compliance và access control
+
+#### Incident Response
+
+- **IR preparedness**: Playbooks và response procedures
+- **Automation**: Auto-remediation với serverless
+- **Forensics**: Evidence collection và analysis
+- **Continuous improvement**: Post-incident reviews
 
 ### Ứng Dụng Vào Công Việc
 
-- **Áp dụng DDD** cho project hiện tại: Event storming sessions với business team
-- **Refactor microservices**: Sử dụng bounded contexts để identify service boundaries
-- **Implement event-driven patterns**: Thay thế một số sync calls bằng async messaging
-- **Serverless adoption**: Pilot AWS Lambda cho một số use cases phù hợp
-- **Try Amazon Q Developer**: Integrate vào development workflow để boost productivity
+- **Implement IAM best practices**: Review và refactor IAM policies
+- **Enable comprehensive logging**: CloudTrail, GuardDuty, Security Hub
+- **Apply encryption**: Enable encryption for all data stores
+- **Develop IR playbooks**: Create response procedures cho common incidents
+- **Automate security**: Build automated security responses
+- **Security training**: Share knowledge với team về security best practices
 
 ### Trải nghiệm trong event
 
-Tham gia workshop **“GenAI-powered App-DB Modernization”** là một trải nghiệm rất bổ ích, giúp tôi có cái nhìn toàn diện về cách hiện đại hóa ứng dụng và cơ sở dữ liệu bằng các phương pháp và công cụ hiện đại. Một số trải nghiệm nổi bật:
+Tham gia workshop **"AWS Cloud Mastery Series #3 - Security on AWS"** là một buổi sáng tập trung và chuyên sâu về bảo mật cloud, giúp tôi hiểu rõ hơn về cách xây dựng một hệ thống an toàn trên AWS. Một số trải nghiệm nổi bật:
 
-#### Học hỏi từ các diễn giả có chuyên môn cao
-- Các diễn giả đến từ AWS và các tổ chức công nghệ lớn đã chia sẻ **best practices** trong thiết kế ứng dụng hiện đại.
-- Qua các case study thực tế, tôi hiểu rõ hơn cách áp dụng **Domain-Driven Design (DDD)** và **Event-Driven Architecture** vào các project lớn.
+#### Học hỏi từ các chuyên gia Security
+- Các diễn giả từ AWS đã chia sẻ **Well-Architected Security Pillar** với 5 trụ cột bảo mật quan trọng.
+- Qua các demo và case studies, tôi hiểu rõ hơn về **threat landscape** và các **security threats** phổ biến.
 
-#### Trải nghiệm kỹ thuật thực tế
-- Tham gia các phiên trình bày về **event storming** giúp tôi hình dung cách **mô hình hóa quy trình kinh doanh** thành các domain events.
-- Học cách **phân tách microservices** và xác định **bounded contexts** để quản lý sự phức tạp của hệ thống lớn.
-- Hiểu rõ trade-offs giữa **synchronous và asynchronous communication** cũng như các pattern tích hợp như **pub/sub, point-to-point, streaming**.
+#### Thực hành bảo mật toàn diện
+- Tham gia các phiên về **IAM** giúp tôi hiểu về modern identity management và **Zero Trust** approach.
+- Học cách triển khai **detection và monitoring** với CloudTrail, GuardDuty, Security Hub.
+- Thực hành **infrastructure protection** với VPC segmentation, WAF, Shield.
 
-#### Ứng dụng công cụ hiện đại
-- Trực tiếp tìm hiểu về **Amazon Q Developer**, công cụ AI hỗ trợ SDLC từ lập kế hoạch đến maintenance.
-- Học cách **tự động hóa code transformation** và pilot serverless với **AWS Lambda**, từ đó nâng cao năng suất phát triển.
+#### Data Protection và Encryption
+- Tìm hiểu sâu về **AWS KMS** và encryption strategies cho mọi tầng.
+- Học cách quản lý **secrets** và implement automatic rotation.
+- Hiểu được data classification và compliance requirements.
+
+#### Incident Response
+- Workshop cung cấp **IR playbooks** thực tế cho các scenarios phổ biến.
+- Học cách **automate response** với Lambda và Step Functions.
+- Hiểu được forensics process và evidence collection.
 
 #### Kết nối và trao đổi
-- Workshop tạo cơ hội trao đổi trực tiếp với các chuyên gia, đồng nghiệp và team business, giúp **nâng cao ngôn ngữ chung (ubiquitous language)** giữa business và tech.
-- Qua các ví dụ thực tế, tôi nhận ra tầm quan trọng của **business-first approach**, luôn bắt đầu từ nhu cầu kinh doanh thay vì chỉ tập trung vào công nghệ.
+- Trao đổi với security professionals về real-world security challenges.
+- Thảo luận về **security threats** đặc thù tại Việt Nam.
+- Networking với các security engineers và architects.
 
 #### Bài học rút ra
-- Việc áp dụng DDD và event-driven patterns giúp giảm **coupling**, tăng **scalability** và **resilience** cho hệ thống.
-- Chiến lược hiện đại hóa cần **phased approach** và đo lường **ROI**, không nên vội vàng chuyển đổi toàn bộ hệ thống.
-- Các công cụ AI như Amazon Q Developer có thể **boost productivity** nếu được tích hợp vào workflow phát triển hiện tại.
-
-#### Một số hình ảnh khi tham gia sự kiện
-* Thêm các hình ảnh của các bạn tại đây
-> Tổng thể, sự kiện không chỉ cung cấp kiến thức kỹ thuật mà còn giúp tôi thay đổi cách tư duy về thiết kế ứng dụng, hiện đại hóa hệ thống và phối hợp hiệu quả hơn giữa các team.
-
-
+- **Security is everyone's responsibility**: Không chỉ là việc của security team.
+- **Defense in depth**: Multiple layers of security controls.
+- **Automation is critical**: Automate detection và response.
+- **Continuous monitoring**: Security là continuous process, không phải one-time setup.
+- **Preparedness matters**: IR playbooks và automation giúp respond nhanh hơn.

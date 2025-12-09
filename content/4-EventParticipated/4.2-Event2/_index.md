@@ -6,48 +6,58 @@ chapter: false
 pre: " <b> 4.2. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy it verbatim** into your report, including this warning.
-{{% /notice %}}
-
-# Summary Report: “GenAI-powered App-DB Modernization workshop”
+# Summary Report: "AWS Cloud Mastery Series #2 - DevOps on AWS"
 
 ### Event Objectives
 
-- Share best practices in modern application design
-- Introduce Domain-Driven Design (DDD) and event-driven architecture
-- Provide guidance on selecting the right compute services
-- Present AI tools to support the development lifecycle
-
-### Speakers
-
-- **Jignesh Shah** – Director, Open Source Databases
-- **Erica Liu** – Sr. GTM Specialist, AppMod
-- **Fabrianne Effendi** – Assc. Specialist SA, Serverless Amazon Web Services
+- Share DevOps culture and principles on AWS
+- Guide on building complete CI/CD pipelines
+- Introduce Infrastructure as Code with CloudFormation and CDK
+- Practice deploying container services and monitoring
+- Apply DevOps best practices to enterprise environments
 
 ### Key Highlights
 
-#### Identifying the drawbacks of legacy application architecture
+#### Morning Session (8:30 AM – 12:00 PM)
 
-- Long product release cycles → Lost revenue/missed opportunities  
-- Inefficient operations → Reduced productivity, higher costs  
-- Non-compliance with security regulations → Security breaches, loss of reputation  
+**8:30 – 9:00 AM | Welcome & DevOps Mindset**
+- DevOps culture and principles
+- Benefits and key metrics (DORA, MTTR, deployment frequency)
+- Importance of collaboration between Dev and Ops
 
-#### Transitioning to modern application architecture – Microservices
+**9:00 – 10:30 AM | AWS DevOps Services – CI/CD Pipeline**
+- **Source Control**: AWS CodeCommit, Git strategies (GitFlow, Trunk-based)
+- **Build & Test**: CodeBuild configuration, testing pipelines
+- **Deployment**: CodeDeploy with Blue/Green, Canary, Rolling updates
+- **Orchestration**: CodePipeline automation
+- **Demo**: Full CI/CD pipeline walkthrough
 
-Migrating to a modular system — each function is an **independent service** communicating via **events**, built on three core pillars:
+**10:45 AM – 12:00 PM | Infrastructure as Code (IaC)**
+- **AWS CloudFormation**: Templates, stacks, drift detection
+- **AWS CDK**: Constructs, reusable patterns, language support
+- **Demo**: Deploying with CloudFormation and CDK
+- **Discussion**: Choosing between IaC tools
 
-- **Queue Management**: Handle asynchronous tasks  
-- **Caching Strategy**: Optimize performance  
-- **Message Handling**: Flexible inter-service communication  
+#### Afternoon Session (1:00 – 5:00 PM)
 
-#### Domain-Driven Design (DDD)
+**1:00 – 2:30 PM | Container Services on AWS**
+- **Docker Fundamentals**: Microservices and containerization
+- **Amazon ECR**: Image storage, scanning, lifecycle policies
+- **Amazon ECS & EKS**: Deployment strategies, scaling, orchestration
+- **AWS App Runner**: Simplified container deployment
+- **Demo & Case Study**: Microservices deployment comparison
 
-- **Four-step method**: Identify domain events → arrange timeline → identify actors → define bounded contexts  
-- **Bookstore case study**: Demonstrates real-world DDD application  
-- **Context mapping**: 7 patterns for integrating bounded contexts  
+**2:45 – 4:00 PM | Monitoring & Observability**
+- **CloudWatch**: Metrics, logs, alarms, dashboards
+- **AWS X-Ray**: Distributed tracing and performance insights
+- **Demo**: Full-stack observability setup
+- **Best Practices**: Alerting, dashboards, on-call processes
 
-#### Event-Driven Architecture
+**4:00 – 4:45 PM | DevOps Best Practices & Case Studies**
+- **Deployment strategies**: Feature flags, A/B testing
+- **Automated testing** and CI/CD integration
+- **Incident management** and postmortems
+- **Case Studies**: Startups and enterprise DevOps transformations
 
 - **3 integration patterns**: Publish/Subscribe, Point-to-point, Streaming  
 - **Benefits**: Loose coupling, scalability, resilience  
@@ -119,10 +129,3 @@ Attending the **“GenAI-powered App-DB Modernization”** workshop was extremel
 - Applying DDD and event-driven patterns reduces **coupling** while improving **scalability** and **resilience**.  
 - Modernization requires a **phased approach** with **ROI measurement**; rushing the process can be risky.  
 - AI tools like Amazon Q Developer can significantly **boost productivity** when integrated into the current workflow.  
-
-#### Some event photos
-*Add your event photos here*  
-
-> Overall, the event not only provided technical knowledge but also helped me reshape my thinking about application design, system modernization, and cross-team collaboration.
-
-
