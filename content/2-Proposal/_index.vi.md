@@ -8,7 +8,7 @@ pre: " <b> 2. </b> "
 
 # Serverless Student Management System
 
-Download [Proposal Template](/document/ProposalTemplate.docx) for detailed cost information.
+Đây là phiên bản DOCX của proposal. Tải xuống [Proposal](/document/ProposalTemplate.docx) để xem thêm chi tiết.
 
 ### 1. Tóm tắt điều hành
 

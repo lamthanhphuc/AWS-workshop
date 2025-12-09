@@ -8,7 +8,7 @@ pre: " <b> 2. </b> "
 
 # Serverless Student Management System
 
-Download [Proposal Template](/document/ProposalTemplate.docx) for detailed cost information.
+This is the DOCX version of the proposal. Download the [Proposal](/document/ProposalTemplate.docx) to view more details.
 
 ### 1. Executive Summary
 
