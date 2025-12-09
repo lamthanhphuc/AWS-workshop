@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<html lang="vi" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.152.2">
+    <meta
+  name="description"
+  content=""
+/>
+<meta name="author" content="thienlh@thienlu.com" />
+
+    <link rel="icon" href="../../../images/favicon.png" type="image/png">
+
+    <title>Desktop and Application Streaming :: Báo cáo thực tập</title>
+
+    
+    <link href="../../../css/nucleus.css?1765285412" rel="stylesheet">
+    <link href="../../../css/fontawesome-all.min.css?1765285412" rel="stylesheet">
+    <link href="../../../css/hybrid.css?1765285412" rel="stylesheet">
+    <link href="../../../css/featherlight.min.css?1765285412" rel="stylesheet">
+    <link href="../../../css/perfect-scrollbar.min.css?1765285412" rel="stylesheet">
+    <link href="../../../css/auto-complete.css?1765285412" rel="stylesheet">
+    <link href="../../../css/atom-one-dark-reasonable.css?1765285412" rel="stylesheet">
+    <link href="../../../css/theme.css?1765285412" rel="stylesheet">
+    <link href="../../../css/hugo-theme.css?1765285412" rel="stylesheet">
+    
+    <link href="../../../css/theme-workshop.css?1765285412" rel="stylesheet">
+    
+    
+
+    <script src="../../../js/jquery-3.3.1.min.js?1765285412"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+
+  </head>
+  <body class="" data-url="../../../vi/3-blogstranslated/3.3-blog3/">
+    <nav
+  id="sidebar"
+  class="showVisitedLinks"
+>
+   
+  <div id="header-wrapper">
+    <div id="header"><a id="logo" href="../../../">
+  <svg
+    id="Layer_1"
+    data-name="Layer 1"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 60 30"
+    width="30%"
+  >
+    <defs>
+      <style>
+        .cls-1 {
+          fill: #fff;
+        }
+        .cls-2 {
+          fill: #f90;
+          fill-rule: evenodd;
+        }
+      </style>
+    </defs>
+    <title>AWS-Logo_White-Color</title>
+    <path
+      class="cls-1"
+      d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"
+    ></path>
+    <path
+      class="cls-2"
+      d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"
+    ></path>
+    <path
+      class="cls-2"
+      d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"
+    ></path>
+  </svg>
+</a>
+</div>
+     <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="../../../js/lunr.min.js?1765285412"></script>
+<script type="text/javascript" src="../../../js/auto-complete.js?1765285412"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/thienluhoan.github.io\/workshop-template\/\/vi";
+    
+</script>
+<script type="text/javascript" src="../../../js/search.js?1765285412"></script>
+ 
+  </div>
+
+  <div class="highlightable">
+    <ul class="topics">
+               
+<li
+  data-nav-id="/vi/1-worklog/"
+  title="Nhật ký công việc"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/">
+     <b> 1. </b> Nhật ký công việc 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/1-worklog/1.1-week1/"
+  title="Worklog Tuần 1"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.1-week1/">
+     <b> 1.1. </b> Worklog Tuần 1 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.2-week2/"
+  title="Worklog Tuần 2"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.2-week2/">
+     <b> 1.2. </b> Worklog Tuần 2 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.3-week3/"
+  title="Worklog Tuần 3"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.3-week3/">
+     <b> 1.3. </b> Worklog Tuần 3 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.4-week4/"
+  title="Worklog Tuần 4"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.4-week4/">
+     <b> 1.4. </b> Worklog Tuần 4 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.5-week5/"
+  title="Worklog Tuần 5"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.5-week5/">
+     <b> 1.5. </b> Worklog Tuần 5 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.6-week6/"
+  title="Worklog Tuần 6"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.6-week6/">
+     <b> 1.6. </b> Worklog Tuần 6 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.7-week7/"
+  title="Worklog Tuần 7"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.7-week7/">
+     <b> 1.7. </b> Worklog Tuần 7 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.8-week8/"
+  title="Worklog Tuần 8"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.8-week8/">
+     <b> 1.8. </b> Worklog Tuần 8 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.9-week9/"
+  title="Worklog Tuần 9"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.9-week9/">
+     <b> 1.9. </b> Worklog Tuần 9 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.10-week10/"
+  title="Worklog Tuần 10"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.10-week10/">
+     <b> 1.10. </b> Worklog Tuần 10 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.11-week11/"
+  title="Worklog Tuần 11"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.11-week11/">
+     <b> 1.11. </b> Worklog Tuần 11 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.12-week12/"
+  title="Worklog Tuần 12"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.12-week12/">
+     <b> 1.12 </b> Worklog Tuần 12 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/vi/2-proposal/"
+  title="Bản đề xuất"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/2-proposal/">
+     <b> 2. </b> Bản đề xuất 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+           
+<li
+  data-nav-id="/vi/3-blogstranslated/"
+  title="Các bài blogs đã dịch"
+  class="dd-item 
+        parent
+        
+        
+        "
+>
+  <a href="../../../vi/3-blogstranslated/">
+     <b> 3. </b> Các bài blogs đã dịch 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/3-blogstranslated/3.1-blog1/"
+  title="Blog 1 - AWS Fault Injection Service"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/3-blogstranslated/3.1-blog1/">
+     <b> 3.1. </b> Blog 1 - AWS Fault Injection Service 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/3-blogstranslated/3.2-blog2/"
+  title="Blog 2 - Transfer data from Amazon S3 to IoT Edge device"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/3-blogstranslated/3.2-blog2/">
+     <b> 3.2. </b> Blog 2 - Transfer data from Amazon S3 to IoT Edge device 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/3-blogstranslated/3.3-blog3/"
+  title="Desktop and Application Streaming"
+  class="dd-item 
+        
+        active
+        
+        "
+>
+  <a href="../../../vi/3-blogstranslated/3.3-blog3/">
+     <b> 3.3. </b> Desktop and Application Streaming 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/vi/4-eventparticipated/"
+  title="Các events đã tham gia"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/4-eventparticipated/">
+     <b> 4. </b> Các events đã tham gia 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/4-eventparticipated/4.1-event1/"
+  title="Event 1"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/4-eventparticipated/4.1-event1/">
+     <b> 4.1. </b> Event 1 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/4-eventparticipated/4.2-event2/"
+  title="Event 2"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/4-eventparticipated/4.2-event2/">
+     <b> 4.2. </b> Event 2 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/4-eventparticipated/4.3-event3/"
+  title="Event 3"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/4-eventparticipated/4.3-event3/">
+     <b> 4.3. </b> Event 3 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/vi/5-workshop/"
+  title="Workshop"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/">
+     <b> 5. </b> Workshop 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/5-workshop/5.1-workshop-overview/"
+  title="Giới thiệu"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.1-workshop-overview/">
+     <b> 5.1. </b> Giới thiệu 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.2-prerequiste/"
+  title="Các bước chuẩn bị"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.2-prerequiste/">
+    <b> 5.2. </b>Các bước chuẩn bị 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/"
+  title="Triển khai Backend"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/">
+    <b> 5.3. </b>Triển khai Backend 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/5.3.1-amazondynamodb/"
+  title="Amazon DynamoDB"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/5.3.1-amazondynamodb/">
+    <b> 5.3.1 </b>Amazon DynamoDB 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/5.3.2-amazoncognito/"
+  title="Amazon Cognito"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/5.3.2-amazoncognito/">
+    <b> 5.3. </b>Amazon Cognito 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/5.3.3-amazons3/"
+  title="Amazon S3"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/5.3.3-amazons3/">
+    <b> 5.3.3 </b>Amazon S3 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/5.3.4-lambdaapigateway/"
+  title="LAMBDA &#43; API GATEWAY"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/5.3.4-lambdaapigateway/">
+    <b> 5.3.4 </b>LAMBDA &#43; API GATEWAY 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.4-frontend/"
+  title="Triển khai Frontend"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.4-frontend/">
+     <b> 5.4. </b> Triển khai Frontend 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/5-workshop/5.4-frontend/5.4.1-amazonamplify/"
+  title="Amazon Amplify"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.4-frontend/5.4.1-amazonamplify/">
+    <b> 5.4.1 </b>Amazon Amplify 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.4-frontend/5.4.2-cloudfrontwaf/"
+  title="Amazon CloudFornt &amp; WAF"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.4-frontend/5.4.2-cloudfrontwaf/">
+    <b> 5.4.2 </b>Amazon CloudFornt &amp; WAF 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.4-frontend/5.4.3-route53/"
+  title="Amazon Route53"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.4-frontend/5.4.3-route53/">
+    <b> 5.4.3 </b>Amazon Route53 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.5-ci-cd/"
+  title="CI/CD Pipeline"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.5-ci-cd/">
+     <b> 5.5. </b> CI/CD Pipeline 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.6-cloud-watch/"
+  title="Cloud Watch"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.6-cloud-watch/">
+     <b> 5.6. </b> Cloud Watch 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.7-clean-up/"
+  title="Dọn dẹp tài nguyên"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.7-clean-up/">
+    <b>5.7. </b>Dọn dẹp tài nguyên 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/vi/6-self-evaluation/"
+  title="Tự đánh giá"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/6-self-evaluation/">
+     <b> 6. </b> Tự đánh giá 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+           
+<li
+  data-nav-id="/vi/7-feedback/"
+  title="Chia sẻ, đóng góp ý kiến"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/7-feedback/">
+     <b> 7. </b> Chia sẻ, đóng góp ý kiến 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+    </ul>
+
+     
+    <section id="shortcuts">
+      <h3>
+        More
+      </h3>
+      <ul>
+        
+        <li>
+          <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"
+            ><i class='fab fa-facebook'></i> AWS Study Group</a
+          >
+        </li>
+        
+      </ul>
+    </section>
+     
+    <section id="prefooter">
+      <hr />
+      <ul>
+        
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+            <div class="select-style">
+              <select id="select-language" onchange="location = this.value;">
+                       
+                <option
+                  id="en"
+                  value="https://thienluhoan.github.io/workshop-template/3-blogstranslated/3.3-blog3/"
+                >
+                  English
+                </option>
+                            
+                <option
+                  id="vi"
+                  value="https://thienluhoan.github.io/workshop-template/vi/3-blogstranslated/3.3-blog3/"
+                  selected
+                >
+                  Tiếng Việt
+                </option>
+                   
+              </select>
+              <svg
+                version="1.1"
+                id="Capa_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="255px"
+                height="255px"
+                viewBox="0 0 255 255"
+                style="enable-background: new 0 0 255 255"
+                xml:space="preserve"
+              >
+                <g>
+                  <g id="arrow-drop-down">
+                    <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </a>
+        </li>
+         
+        <li>
+          <a class="padding" href="#" data-clear-history-toggle=""
+            ><i class="fas fa-history fa-fw"></i> Clear History</a
+          >
+        </li>
+        
+      </ul>
+    </section>
+    
+    <section id="footer"><left>
+    
+    <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Migrate" Alt="web counter" border="0" /></a> <br>
+    <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Total CLoud Journey" Alt="web counter" border="0" />
+
+</left>
+<left>
+    <br>
+    <br>
+    <b>Last Updated</b><br>
+    <i>
+        <span id="lastUpdated" style="color:orange;"></span>
+    </i>
+
+    <script>
+        
+        const today = new Date();
+        
+        const formattedDate = today.toLocaleDateString('en-GB');
+        
+        document.getElementById('lastUpdated').textContent = formattedDate;
+    </script>
+</left>
+<left>
+    <br>
+    <br>
+    <b> Team </b> <br>
+
+    <i> <a href="https://www.facebook.com/groups/660548818043427" style="color:orange">First Cloud Journey </a> <br>
+
+    </i>
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script></section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='../../../vi/'>Báo cáo thực tập</a> > <a href='../../../vi/3-blogstranslated/'>Các bài blogs đã dịch</a> > Desktop and Application Streaming
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+  <div class="wrapper"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#điều-kiện-tiên-quyết-và-các-hạn-chế">Điều kiện tiên quyết và các hạn chế</a></li>
+    <li><a href="#bước-1-tạo-nhóm-bảo-mật">Bước 1: Tạo nhóm bảo mật</a></li>
+    <li><a href="#bước-2-tạo-vpc-endpoint">Bước 2: Tạo VPC endpoint</a></li>
+    <li><a href="#bước-3-cấu-hình-thư-mục-workspaces-để-sử-dụng-vpc-endpoint">Bước 3: Cấu hình thư mục WorkSpaces để sử dụng VPC endpoint</a></li>
+    <li><a href="#kết-luận">Kết luận</a></li>
+    <li><a href="#tác-giả">Tác giả</a></li>
+  </ul>
+</nav></div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Desktop and Application Streaming
+            </h1>
+          
+
+        
+
+
+
+	<h1 id="kết-nối-amazon-workspaces-personal-với-aws-privatelink">Kết nối Amazon WorkSpaces Personal với AWS PrivateLink</h1>
+<p>Được viết bởi Dave Jaskie, Gekai Zou, Aamir Khan, and Anshu Prabhat | ngày 26 tháng 6 năm2025 | trong <a href="https://aws.amazon.com/blogs/desktop-and-application-streaming/category/end-user-computing/amazon-workspaces/">Amazon WorkSpaces</a>, <a href="https://aws.amazon.com/blogs/desktop-and-application-streaming/category/networking-content-delivery/aws-privatelink/">AWS PrivateLink</a>, <a href="https://aws.amazon.com/blogs/desktop-and-application-streaming/category/end-user-computing/">End User Computing</a> | <a href="https://aws.amazon.com/blogs/desktop-and-application-streaming/connecting-amazon-workspaces-personal-with-aws-privatelink/">Permalink</a> <a href="https://aws.amazon.com/vi/blogs/desktop-and-application-streaming/connecting-amazon-workspaces-personal-with-aws-privatelink/">| Share</a></p>
+<p>Khách hàng thường hỏi cách tận dụng AWS PrivateLink để kết nối với Amazon WorkSpaces Personal. PrivateLink cung cấp một cách liền mạch để thiết lập kết nối riêng tư, an toàn mà không cần sử dụng các thành phần mạng truyền thống như internet gateway, thiết bị NAT, hoặc cấu hình VPN. Cách tiếp cận này không chỉ đơn giản hóa kiến trúc mạng mà còn tăng cường bảo mật bằng cách giảm đáng kể bề mặt tấn công và giữ toàn bộ lưu lượng dữ liệu nằm an toàn bên trong mạng AWS. Trong bài viết này, chúng tôi sẽ hướng dẫn bạn từng bước cách tích hợp PrivateLink với WorkSpaces, giúp bạn mở khóa những lợi ích này trong môi trường của mình.</p>
+<hr>
+<h2 id="điều-kiện-tiên-quyết-và-các-hạn-chế">Điều kiện tiên quyết và các hạn chế</h2>
+<p>PrivateLink cho WorkSpaces hiện được hỗ trợ cho lưu lượng streaming. Hãy xem <a href="https://docs.aws.amazon.com/workspaces/latest/adminguide/creating-streaming-vpc-endpoints.html">Admin Guide</a> để biết chi tiết về <a href="https://docs.aws.amazon.com/workspaces/latest/adminguide/creating-streaming-vpc-endpoints.html">prerequisites and limitations with WorkSpaces</a>. Để cấu hình PrivateLink, bạn trước hết cần thiết lập nhóm bảo mật (security group), tạo VPC endpoint và cuối cùng cấu hình thư mục WorkSpaces để dùng VPC endpoint.</p>
+<hr>
+<h2 id="bước-1-tạo-nhóm-bảo-mật">Bước 1: Tạo nhóm bảo mật</h2>
+<p>Trong bước này, bạn tạo một security group cho phép các client WorkSpaces giao tiếp với VPC endpoint mà bạn sẽ tạo.</p>
+<ol>
+<li>Trong bảng điều hướng của <a href="https://console.aws.amazon.com/ec2">Amazon EC2 console</a>, vào <strong>Network &amp; Security</strong>, rồi chọn <strong>Security Groups</strong>.</li>
+<li>Chọn <strong>Create security group</strong>.</li>
+<li>Tại phần <strong>Basic details</strong>, nhập:<br>
+For <strong>Security group name</strong> – Nhập tên duy nhất để xác định nhóm bảo mật.<br>
+For <strong>Description</strong> – Nhập mô tả về mục đích của nhóm bảo mật.<br>
+For <strong>VPC</strong> – Chọn VPC mà VPC endpoint của bạn sẽ nằm trong đó.</li>
+<li>Vào phần <strong>Inbound rules</strong> và chọn <strong>Add rule</strong> để tạo quy tắc inbound cho TCP.</li>
+<li>Nhập các thông tin sau:<br>
+For <strong>Type</strong> – Chọn “Custom TCP”.<br>
+For <strong>Port range</strong> – Nhập các cổng: 443, 4195.<br>
+For <strong>Source type</strong> – Chọn “Custom”.<br>
+For <strong>Source</strong> – Nhập dải IP CIDR riêng hoặc Security Group IDs khác mà người dùng của bạn kết nối với điểm cuối VPC. Đảm bảo chỉ cho phép lưu lượng truy cập đến từ nguồn địa chỉ IPv4. Chắc chắn cho phép lưu lượng inbound từ địa chỉ IPv4.</li>
+<li>Lặp lại bước 4 và 5 cho mỗi phạm vi CIDR hoặc security group.</li>
+<li>Vào <strong>Inbound rules</strong>, chọn <strong>Add rule</strong> để tạo quy tắc inbound cho UDP.</li>
+<li>Nhập:<br>
+For <strong>Type</strong> – Chọn “Custom TCP”.<br>
+For <strong>Port range</strong> – Nhập các cổng: 443, 4195.<br>
+For <strong>Source type</strong> – Chọn “Custom”.<br>
+For <strong>Source</strong> – Nhập cùng dải IP CIDR riêng tư hoặc Security Group IDs đã nhập ở Bước 5.</li>
+<li>Lặp lại bước 7 và 8 cho từng nguồn UDP tùy chỉnh.</li>
+<li>Chọn <strong>Create security group</strong>.</li>
+</ol>
+<hr>
+<h2 id="bước-2-tạo-vpc-endpoint">Bước 2: Tạo VPC endpoint</h2>
+<p>Trong Amazon VPC, VPC endpoint cho phép bạn kết nối VPC tới các dịch vụ AWS được hỗ trợ. Trong ví dụ này, bạn cấu hình VPC để người dùng WorkSpaces có thể thực hiện stream từ WorkSpaces.</p>
+<ol>
+<li>Mở <a href="https://console.aws.amazon.com/vpc/">Amazon VPC console</a>.</li>
+<li>Trong bảng điều hướng, vào <strong>Endpoints</strong>, rồi chọn <strong>Create Endpoint</strong>.</li>
+<li>Chọn <strong>Create Endpoint</strong>.</li>
+<li>Đảm bảo các thiết lập sau:<br>
+<strong>Service category</strong> – Chọn “AWS services”.<br>
+<strong>Service Name</strong> – Chọn <strong>com.amazonaws.Region.prod.highlander.</strong><br>
+<strong>VPC</strong> – Chọn VPC mà bạn muốn tạo interface endpoint. Bạn có thể chọn một VPC khác với VPC có tài nguyên WorkSpaces miễn là mạng có thể định tuyến lưu lượng đó đến VPC endpoint.<br>
+<strong>Enable Private DNS Name</strong> – Bỏ chọn nếu người dùng sử dụng proxy mạng để truy cập các phiên streaming; vô hiệu hóa cache proxy trên domain và tên DNS liên quan đến endpoint riêng.<br>
+<strong>DNS record IP type</strong> – Chọn IPv4, vì IPv6 và Dualstack hiện chưa được hỗ trợ.<br>
+<strong>Subnets</strong> – Chọn các subnet (các Availability Zones) để tạo VPC endpoint. Khuyên chọn ít nhất hai subnet.<br>
+<strong>IP address type</strong> – Chọn IPv4.<br>
+<strong>Security groups panel</strong> – Chọn security group bạn đã tạo ở bước 1.<br>
+(Tuỳ chọn) Ở thẻ <strong>Tags</strong>, bạn có thể thêm tag nếu muốn.</li>
+<li>Chọn <strong>Create endpoint</strong>.</li>
+<li>Khi endpoint sẵn sàng dùng, trạng thái trong cột <strong>Status</strong> chuyển sang Available.</li>
+</ol>
+<hr>
+<h2 id="bước-3-cấu-hình-thư-mục-workspaces-để-sử-dụng-vpc-endpoint">Bước 3: Cấu hình thư mục WorkSpaces để sử dụng VPC endpoint</h2>
+<p>Bạn cần cấu hình thư mục WorkSpaces để sử dụng VPC endpoint mà bạn đã tạo cho streaming.</p>
+<ol>
+<li>Mở <a href="https://console.aws.amazon.com/workspaces/v2/home">WorkSpaces console</a> trong cùng vùng AWS như VPC endpoint.</li>
+<li>Trong <strong>Navigation pane</strong>, chọn <strong>Directories</strong>.</li>
+<li>Chọn thư mục (<strong>directory</strong>) bạn muốn sử dụng.</li>
+<li>Vào phần <strong>VPC Endpoints section</strong>, rồi chọn <strong>Edit.</strong></li>
+</ol>
+<p><img src="../../../images/3-BlogsTranslated/3.3-Blog3/VPC2.png" alt="VPC1-1"></p>
+<ol start="5">
+<li>Trong <strong>Edit VPC Endpoint dialog box</strong>, dưới mục <strong>Streaming Endpoint</strong>, chọn VPC endpoint bạn đã tạo.</li>
+</ol>
+<p><img src="../../../images/3-BlogsTranslated/3.3-Blog3/VPC1-1.png" alt="VPC1-1"></p>
+<ol start="6">
+<li><strong>Tuỳ chọn:</strong> bạn có thể <strong>bật Allow users with PCoIP WorkSpaces</strong> có thể stream từ internet. Nếu bật, người dùng PCoIP WorkSpaces có thể stream qua Internet công cộng. Nếu không bật, các PCoIP WorkSpaces trong thư mục không dùng được khi không có internet vì PCoIP WorkSpaces không hỗ trợ streaming qua VPC endpoint.</li>
+<li>Chọn <strong>Save</strong>.<br>
+Lưu ý: Lưu lượng cho các phiên streaming mới sẽ được định tuyến qua VPC endpoint này. Tuy nhiên, các phiên đang chạy vẫn tiếp tục sử dụng endpoint cũ đã cấu hình trước đó.</li>
+</ol>
+<hr>
+<h2 id="kết-luận">Kết luận</h2>
+<p>Trong bài viết này, chúng tôi đã thảo luận cách thiết lập Amazon WorkSpaces Personal với AWS PrivateLink. Nếu bạn cần thêm thông tin về PrivateLink, hãy xem trang sản phẩm AWS. Nếu có câu hỏi, bạn có thể liên hệ đội ngũ hỗ trợ AWS. Để cập nhật các tính năng mới cho End User Compute, hãy kiểm tra “What’s New with AWS” và playlist YouTube tương ứng.</p>
+<hr>
+<h2 id="tác-giả">Tác giả</h2>
+<hr>
+<table>
+<tr>
+<td style="width: 120px; vertical-align: top;">
+<img src="../../../images/3-BlogsTranslated/3.3-Blog3/Jaskie1.jpeg" alt="Dave Jaskie" style="width: 100px; border-radius: 5px;">
+</td>
+<td style="padding-left: 20px; vertical-align: top;">
+<p><strong>Dave Jaskie</strong> là Kiến trúc sư Giải pháp Điện toán Người dùng Cuối Cấp cao của AWS, với 15 năm kinh nghiệm trong lĩnh vực điện toán người dùng cuối. Ngoài công việc, Dave thích đi du lịch và đi bộ đường dài cùng vợ và 4 con.</p>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td style="width: 120px; vertical-align: top;">
+<img src="../../../images/3-BlogsTranslated/3.3-Blog3/Aamir2.png" alt="Dave Jaskie" style="width: 100px; border-radius: 5px;">
+</td>
+<td style="padding-left: 20px; vertical-align: top;">
+<p><strong>Aamir Khan</strong> Quản lý Chương trình Kỹ thuật Cấp cao kỳ cựu trong nhóm Sản phẩm Máy tính Người dùng Cuối, tự hào với 12 năm kinh nghiệm trong ngành. Với phương châm đặt khách hàng lên hàng đầu, phương pháp làm việc của anh đã đặt ra một chuẩn mực. Ngoài công việc chuyên môn, Aamir còn tìm thấy niềm vui trong những khoảnh khắc gia đình và thỉnh thoảng tận hưởng những chuyến phiêu lưu địa hình trên chiếc LC-100 của mình, khám phá những điều kỳ diệu của vùng Tây Bắc Thái Bình Dương.</p>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td style="width: 120px; vertical-align: top;">
+<img src="../../../images/3-BlogsTranslated/3.3-Blog3/Anshu.png" alt="Dave Jaskie" style="width: 100px; border-radius: 5px;">
+</td>
+<td style="padding-left: 20px; vertical-align: top;">
+<p><strong>Anshu Prabhat</strong> là Kỹ sư Phát triển Phần mềm III tại AWS thuộc Tổ chức Hỗ trợ Công việc An toàn với hơn 12 năm kinh nghiệm trong lĩnh vực điện toán đám mây an toàn và các dịch vụ có khả năng mở rộng tại Amazon. Anshu thích tìm hiểu và khám phá thế giới GenAI và cố gắng tự động hóa các tác vụ cá nhân thông thường bằng cách sử dụng Agent.</p>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td style="width: 120px; vertical-align: top;">
+<img src="../../../images/3-BlogsTranslated/3.3-Blog3/image-5.png" alt="Dave Jaskie" style="width: 100px; border-radius: 5px;">
+</td>
+<td style="padding-left: 20px; vertical-align: top;">
+<p><strong>Gekai Zou</strong> là Trưởng phòng Kỹ thuật Sản phẩm Cấp cao của AWS End User Computing. Gekai đã làm việc tại AWS từ năm 2019. Ngoài giờ làm việc, Gekai thích cắm trại và trượt tuyết cùng gia đình.</p>
+</td>
+</tr>
+</table>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="../../../vi/3-blogstranslated/3.2-blog2/" title="Blog 2 - Transfer data from Amazon S3 to IoT Edge device"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="../../../vi/4-eventparticipated/" title="Các events đã tham gia" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="../../../js/clipboard.min.js?1765285412"></script>
+    <script src="../../../js/perfect-scrollbar.min.js?1765285412"></script>
+    <script src="../../../js/perfect-scrollbar.jquery.min.js?1765285412"></script>
+    <script src="../../../js/jquery.sticky.js?1765285412"></script>
+    <script src="../../../js/featherlight.min.js?1765285412"></script>
+    <script src="../../../js/highlight.pack.js?1765285412"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../../js/modernizr.custom-3.6.0.js?1765285412"></script>
+    <script src="../../../js/learn.js?1765285412"></script>
+    <script src="../../../js/hugo-learn.js?1765285412"></script>
+
+    <link href="../../../mermaid/mermaid.css?1765285412" rel="stylesheet" />
+    <script src="../../../mermaid/mermaid.js?1765285412"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function (i, s, o, g, r, a, m) {
+    i["GoogleAnalyticsObject"] = r;
+    ((i[r] =
+      i[r] ||
+      function () {
+        (i[r].q = i[r].q || []).push(arguments);
+      }),
+      (i[r].l = 1 * new Date()));
+    ((a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]));
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m);
+  })(
+    window,
+    document,
+    "script",
+    "https://www.google-analytics.com/analytics.js",
+    "ga",
+  );
+
+  ga("create", "UA-158079754-2", "auto");
+  ga("send", "pageview");
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="vi" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.152.2">
+    <meta
+  name="description"
+  content=""
+/>
+<meta name="author" content="thienlh@thienlu.com" />
+
+    <link rel="icon" href="../../../images/favicon.png" type="image/png">
+
+    <title>Blog 1 - AWS Fault Injection Service :: Báo cáo thực tập</title>
+
+    
+    <link href="../../../css/nucleus.css?1765285412" rel="stylesheet">
+    <link href="../../../css/fontawesome-all.min.css?1765285412" rel="stylesheet">
+    <link href="../../../css/hybrid.css?1765285412" rel="stylesheet">
+    <link href="../../../css/featherlight.min.css?1765285412" rel="stylesheet">
+    <link href="../../../css/perfect-scrollbar.min.css?1765285412" rel="stylesheet">
+    <link href="../../../css/auto-complete.css?1765285412" rel="stylesheet">
+    <link href="../../../css/atom-one-dark-reasonable.css?1765285412" rel="stylesheet">
+    <link href="../../../css/theme.css?1765285412" rel="stylesheet">
+    <link href="../../../css/hugo-theme.css?1765285412" rel="stylesheet">
+    
+    <link href="../../../css/theme-workshop.css?1765285412" rel="stylesheet">
+    
+    
+
+    <script src="../../../js/jquery-3.3.1.min.js?1765285412"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+
+  </head>
+  <body class="" data-url="../../../vi/3-blogstranslated/3.1-blog1/">
+    <nav
+  id="sidebar"
+  class="showVisitedLinks"
+>
+   
+  <div id="header-wrapper">
+    <div id="header"><a id="logo" href="../../../">
+  <svg
+    id="Layer_1"
+    data-name="Layer 1"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 60 30"
+    width="30%"
+  >
+    <defs>
+      <style>
+        .cls-1 {
+          fill: #fff;
+        }
+        .cls-2 {
+          fill: #f90;
+          fill-rule: evenodd;
+        }
+      </style>
+    </defs>
+    <title>AWS-Logo_White-Color</title>
+    <path
+      class="cls-1"
+      d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"
+    ></path>
+    <path
+      class="cls-2"
+      d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"
+    ></path>
+    <path
+      class="cls-2"
+      d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"
+    ></path>
+  </svg>
+</a>
+</div>
+     <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="../../../js/lunr.min.js?1765285412"></script>
+<script type="text/javascript" src="../../../js/auto-complete.js?1765285412"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/thienluhoan.github.io\/workshop-template\/\/vi";
+    
+</script>
+<script type="text/javascript" src="../../../js/search.js?1765285412"></script>
+ 
+  </div>
+
+  <div class="highlightable">
+    <ul class="topics">
+               
+<li
+  data-nav-id="/vi/1-worklog/"
+  title="Nhật ký công việc"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/">
+     <b> 1. </b> Nhật ký công việc 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/1-worklog/1.1-week1/"
+  title="Worklog Tuần 1"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.1-week1/">
+     <b> 1.1. </b> Worklog Tuần 1 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.2-week2/"
+  title="Worklog Tuần 2"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.2-week2/">
+     <b> 1.2. </b> Worklog Tuần 2 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.3-week3/"
+  title="Worklog Tuần 3"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.3-week3/">
+     <b> 1.3. </b> Worklog Tuần 3 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.4-week4/"
+  title="Worklog Tuần 4"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.4-week4/">
+     <b> 1.4. </b> Worklog Tuần 4 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.5-week5/"
+  title="Worklog Tuần 5"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.5-week5/">
+     <b> 1.5. </b> Worklog Tuần 5 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.6-week6/"
+  title="Worklog Tuần 6"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.6-week6/">
+     <b> 1.6. </b> Worklog Tuần 6 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.7-week7/"
+  title="Worklog Tuần 7"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.7-week7/">
+     <b> 1.7. </b> Worklog Tuần 7 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.8-week8/"
+  title="Worklog Tuần 8"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.8-week8/">
+     <b> 1.8. </b> Worklog Tuần 8 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.9-week9/"
+  title="Worklog Tuần 9"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.9-week9/">
+     <b> 1.9. </b> Worklog Tuần 9 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.10-week10/"
+  title="Worklog Tuần 10"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.10-week10/">
+     <b> 1.10. </b> Worklog Tuần 10 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.11-week11/"
+  title="Worklog Tuần 11"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.11-week11/">
+     <b> 1.11. </b> Worklog Tuần 11 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.12-week12/"
+  title="Worklog Tuần 12"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.12-week12/">
+     <b> 1.12 </b> Worklog Tuần 12 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/vi/2-proposal/"
+  title="Bản đề xuất"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/2-proposal/">
+     <b> 2. </b> Bản đề xuất 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+           
+<li
+  data-nav-id="/vi/3-blogstranslated/"
+  title="Các bài blogs đã dịch"
+  class="dd-item 
+        parent
+        
+        
+        "
+>
+  <a href="../../../vi/3-blogstranslated/">
+     <b> 3. </b> Các bài blogs đã dịch 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/3-blogstranslated/3.1-blog1/"
+  title="Blog 1 - AWS Fault Injection Service"
+  class="dd-item 
+        
+        active
+        
+        "
+>
+  <a href="../../../vi/3-blogstranslated/3.1-blog1/">
+     <b> 3.1. </b> Blog 1 - AWS Fault Injection Service 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/3-blogstranslated/3.2-blog2/"
+  title="Blog 2 - Transfer data from Amazon S3 to IoT Edge device"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/3-blogstranslated/3.2-blog2/">
+     <b> 3.2. </b> Blog 2 - Transfer data from Amazon S3 to IoT Edge device 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/3-blogstranslated/3.3-blog3/"
+  title="Desktop and Application Streaming"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/3-blogstranslated/3.3-blog3/">
+     <b> 3.3. </b> Desktop and Application Streaming 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/vi/4-eventparticipated/"
+  title="Các events đã tham gia"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/4-eventparticipated/">
+     <b> 4. </b> Các events đã tham gia 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/4-eventparticipated/4.1-event1/"
+  title="Event 1"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/4-eventparticipated/4.1-event1/">
+     <b> 4.1. </b> Event 1 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/4-eventparticipated/4.2-event2/"
+  title="Event 2"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/4-eventparticipated/4.2-event2/">
+     <b> 4.2. </b> Event 2 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/4-eventparticipated/4.3-event3/"
+  title="Event 3"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/4-eventparticipated/4.3-event3/">
+     <b> 4.3. </b> Event 3 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/vi/5-workshop/"
+  title="Workshop"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/">
+     <b> 5. </b> Workshop 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/5-workshop/5.1-workshop-overview/"
+  title="Giới thiệu"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.1-workshop-overview/">
+     <b> 5.1. </b> Giới thiệu 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.2-prerequiste/"
+  title="Các bước chuẩn bị"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.2-prerequiste/">
+    <b> 5.2. </b>Các bước chuẩn bị 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/"
+  title="Triển khai Backend"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/">
+    <b> 5.3. </b>Triển khai Backend 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/5.3.1-amazondynamodb/"
+  title="Amazon DynamoDB"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/5.3.1-amazondynamodb/">
+    <b> 5.3.1 </b>Amazon DynamoDB 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/5.3.2-amazoncognito/"
+  title="Amazon Cognito"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/5.3.2-amazoncognito/">
+    <b> 5.3. </b>Amazon Cognito 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/5.3.3-amazons3/"
+  title="Amazon S3"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/5.3.3-amazons3/">
+    <b> 5.3.3 </b>Amazon S3 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/5.3.4-lambdaapigateway/"
+  title="LAMBDA &#43; API GATEWAY"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/5.3.4-lambdaapigateway/">
+    <b> 5.3.4 </b>LAMBDA &#43; API GATEWAY 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.4-frontend/"
+  title="Triển khai Frontend"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.4-frontend/">
+     <b> 5.4. </b> Triển khai Frontend 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/5-workshop/5.4-frontend/5.4.1-amazonamplify/"
+  title="Amazon Amplify"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.4-frontend/5.4.1-amazonamplify/">
+    <b> 5.4.1 </b>Amazon Amplify 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.4-frontend/5.4.2-cloudfrontwaf/"
+  title="Amazon CloudFornt &amp; WAF"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.4-frontend/5.4.2-cloudfrontwaf/">
+    <b> 5.4.2 </b>Amazon CloudFornt &amp; WAF 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.4-frontend/5.4.3-route53/"
+  title="Amazon Route53"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.4-frontend/5.4.3-route53/">
+    <b> 5.4.3 </b>Amazon Route53 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.5-ci-cd/"
+  title="CI/CD Pipeline"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.5-ci-cd/">
+     <b> 5.5. </b> CI/CD Pipeline 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.6-cloud-watch/"
+  title="Cloud Watch"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.6-cloud-watch/">
+     <b> 5.6. </b> Cloud Watch 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.7-clean-up/"
+  title="Dọn dẹp tài nguyên"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.7-clean-up/">
+    <b>5.7. </b>Dọn dẹp tài nguyên 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/vi/6-self-evaluation/"
+  title="Tự đánh giá"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/6-self-evaluation/">
+     <b> 6. </b> Tự đánh giá 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+           
+<li
+  data-nav-id="/vi/7-feedback/"
+  title="Chia sẻ, đóng góp ý kiến"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/7-feedback/">
+     <b> 7. </b> Chia sẻ, đóng góp ý kiến 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+    </ul>
+
+     
+    <section id="shortcuts">
+      <h3>
+        More
+      </h3>
+      <ul>
+        
+        <li>
+          <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"
+            ><i class='fab fa-facebook'></i> AWS Study Group</a
+          >
+        </li>
+        
+      </ul>
+    </section>
+     
+    <section id="prefooter">
+      <hr />
+      <ul>
+        
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+            <div class="select-style">
+              <select id="select-language" onchange="location = this.value;">
+                       
+                <option
+                  id="en"
+                  value="https://thienluhoan.github.io/workshop-template/3-blogstranslated/3.1-blog1/"
+                >
+                  English
+                </option>
+                            
+                <option
+                  id="vi"
+                  value="https://thienluhoan.github.io/workshop-template/vi/3-blogstranslated/3.1-blog1/"
+                  selected
+                >
+                  Tiếng Việt
+                </option>
+                   
+              </select>
+              <svg
+                version="1.1"
+                id="Capa_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="255px"
+                height="255px"
+                viewBox="0 0 255 255"
+                style="enable-background: new 0 0 255 255"
+                xml:space="preserve"
+              >
+                <g>
+                  <g id="arrow-drop-down">
+                    <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </a>
+        </li>
+         
+        <li>
+          <a class="padding" href="#" data-clear-history-toggle=""
+            ><i class="fas fa-history fa-fw"></i> Clear History</a
+          >
+        </li>
+        
+      </ul>
+    </section>
+    
+    <section id="footer"><left>
+    
+    <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Migrate" Alt="web counter" border="0" /></a> <br>
+    <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Total CLoud Journey" Alt="web counter" border="0" />
+
+</left>
+<left>
+    <br>
+    <br>
+    <b>Last Updated</b><br>
+    <i>
+        <span id="lastUpdated" style="color:orange;"></span>
+    </i>
+
+    <script>
+        
+        const today = new Date();
+        
+        const formattedDate = today.toLocaleDateString('en-GB');
+        
+        document.getElementById('lastUpdated').textContent = formattedDate;
+    </script>
+</left>
+<left>
+    <br>
+    <br>
+    <b> Team </b> <br>
+
+    <i> <a href="https://www.facebook.com/groups/660548818043427" style="color:orange">First Cloud Journey </a> <br>
+
+    </i>
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script></section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='../../../vi/'>Báo cáo thực tập</a> > <a href='../../../vi/3-blogstranslated/'>Các bài blogs đã dịch</a> > Blog 1 - AWS Fault Injection Service
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+  <div class="wrapper"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#điều-kiện-tiên-quyết"><strong>Điều kiện tiên quyết</strong></a></li>
+    <li><a href="#bước-1-triển-khai-mẫu-cloudformation"><strong>Bước 1: Triển khai mẫu CloudFormation</strong></a></li>
+    <li><a href="#thông-số-thử-nghiệm-có-thể-định-cấu-hình"><strong>Thông số thử nghiệm có thể định cấu hình</strong></a></li>
+    <li><a href="#bước-2-xác-minh-hàm-lambda"><strong>Bước 2: Xác minh hàm Lambda</strong></a></li>
+    <li><a href="#bước-3-bắt-đầu-thử-nghiệm-aws-fis"><strong>Bước 3: Bắt đầu thử nghiệm AWS FIS</strong></a></li>
+    <li><a href="#bước-4-quan-sát-và-phân-tích-kết-quả"><strong>Bước 4: Quan sát và phân tích kết quả</strong></a></li>
+  </ul>
+</nav></div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Blog 1 - AWS Fault Injection Service
+            </h1>
+          
+
+        
+
+
+
+	<h1 id="mô-phỏng-sự-cố-từng-phần-với-aws-fault-injection-service"><strong>Mô phỏng sự cố từng phần với AWS Fault Injection Service</strong></h1>
+<p>Được viết bởi Ozgur Canibeyaz và Pablo Colazurdo | ngày 30 tháng 6 năm 2025 |  trong <a href="https://aws.amazon.com/blogs/mt/category/developer-tools/aws-fault-injection-service-fis/">AWS Fault Injection Service (FIS)</a>, <a href="https://aws.amazon.com/blogs/mt/category/management-and-governance/aws-resilience-hub/">AWS Resilience Hub (ARH)</a>, <a href="https://aws.amazon.com/blogs/mt/category/management-tools/aws-systems-manager/">AWS Systems Manager</a>, <a href="https://aws.amazon.com/blogs/mt/category/management-tools/">Management Tools</a>, <a href="https://aws.amazon.com/blogs/mt/category/resilience/">Resilience</a>, <a href="https://aws.amazon.com/blogs/mt/category/post-types/technical-how-to/">Technical How-to</a> | <a href="https://aws.amazon.com/blogs/mt/simulating-partial-failures-with-aws-fault-injection-service/">Permalink</a> | <a href="https://aws.amazon.com/vi/blogs/mt/simulating-partial-failures-with-aws-fault-injection-service/">Share</a></p>
+<p>Một hệ thống phân tán hiện đại cần có khả năng chịu đựng được các gián đoạn bất ngờ để duy trì tính sẵn sàng, hiệu năng và ổn định. <a href="https://en.wikipedia.org/wiki/Chaos_engineering">Chaos engineering</a> giúp các nhóm phát hiện ra điểm yếu tiềm ẩn bằng cách cố ý tiêm các lỗi vào hệ thống và quan sát cách nó phục hồi. Trong khi kiểm thử truyền thống xác thực hành vi mong đợi, chaos engineering kiểm tra khả năng chịu lỗi của hệ thống khi có sự cố. <a href="https://aws.amazon.com/fis/">AWS Fault Injection Service</a> (AWS FIS) là một dịch vụ AWS được quản lý hoàn chỉnh, giúp các nhóm tiến hành các thí nghiệm tiêm lỗi cho các workload trên AWS. Nó hỗ trợ những kịch bản như kết thúc các <a href="https://aws.amazon.com/ec2/">Amazon EC2 instances</a>, giới hạn lưu lượng yêu cầu <a href="https://aws.amazon.com/api-gateway/">Amazon API Gateway</a> và gây độ trễ mạng. Nhờ đó bạn có thể xác minh tính chịu lỗi trong môi trường tương tự sản xuất. Mặc dù những khả năng này rất mạnh, nhiều dạng lỗi thực tế chỉ ảnh hưởng một phần lưu lượng.</p>
+<p>Trong bài này, bạn sẽ học cách mô phỏng lỗi một phần. Một mode lỗi phổ biến nhưng ít được thử nghiệm — bằng cách kết hợp AWS FIS với định tuyến trọng số (weighted routing) trong <a href="https://aws.amazon.com/elasticloadbalancing/application-load-balancer/">Application Load Balancer (ALB)</a> và một hàm <a href="https://aws.amazon.com/lambda/">AWS Lambda</a> trả về phản hồi lỗi tùy chỉnh. Cách tiếp cận này cho phép bạn kiểm tra cách ứng dụng xử lý điều kiện suy giảm mà không thay đổi mã hoặc gián đoạn lưu lượng bình thường.</p>
+<h1 id="tổng-quan-về-sự-cố-từng-phần"><strong>Tổng quan về sự cố từng phần</strong></h1>
+<p>Giải pháp của chúng tôi kết hợp AWS FIS với định tuyến trọng số trên ALB để điều hướng một tỷ lệ cấu hình được của lưu lượng đến một hàm Lambda trả về lỗi giả lập. Cách tiếp cận này không yêu cầu thay đổi mã ứng dụng và tự động quay lại hoạt động bình thường sau khi thí nghiệm kết thúc.<br>
+<img src="../../../images/3-BlogsTranslated/3.1-Blog1/experiment-flow.png" alt="experiment-flow"></p>
+<p><em>Hình 1 minh họa cách giải pháp thay đổi Load Balancer để tiêm lỗi trong giai đoạn thực hiện thí nghiệm và tự động khôi phục sau đó.</em></p>
+<h1 id="lợi-ích-chính"><strong>Lợi ích chính</strong></h1>
+<p>Giải pháp này mang lại những lợi ích chính cho các nhóm triển khai chaos engineering:</p>
+<ul>
+<li>
+<p>Mô phỏng lỗi có kiểm soát.</p>
+</li>
+<li>
+<p>Không cần chỉnh sửa ứng dụng.</p>
+</li>
+<li>
+<p>Thiết lập và hoàn tác tự động.</p>
+</li>
+<li>
+<p>Tỷ lệ lỗi có thể cấu hình.</p>
+</li>
+</ul>
+<h1 id="hướng-dẫn-triển-khai"><strong>Hướng dẫn triển khai</strong></h1>
+<h2 id="điều-kiện-tiên-quyết"><strong>Điều kiện tiên quyết</strong></h2>
+<p>Trước khi bắt đầu, hãy đảm bảo bạn có:</p>
+<ul>
+<li>
+<p>Một tài khoản AWS với quyền triển khai <a href="https://aws.amazon.com/cloudformation/">AWS CloudFormation</a> stack và quản lý các thí nghiệm AWS FIS.</p>
+</li>
+<li>
+<p>Một ALB đã được cấu hình với nhóm đích (target group) chuyển hướng lưu lượng đến một microservice đang chạy.</p>
+</li>
+<li>
+<p>ALB phải đã hoạt động và có thể truy cập công khai để thử nghiệm các lỗi giả lập.</p>
+</li>
+<li>
+<p><a href="https://aws.amazon.com/cli/">AWS Command Line Interface</a>(AWS CLI) hoặc quyền truy cập giao diện quản lý AWS.</p>
+</li>
+</ul>
+<h2 id="bước-1-triển-khai-mẫu-cloudformation"><strong>Bước 1: Triển khai mẫu CloudFormation</strong></h2>
+<p>Template CloudFormation sẽ thiết lập tất cả tài nguyên cần thiết, bao gồm:</p>
+<ul>
+<li>
+<p>Một hàm Lambda để mô phỏng phản hồi lỗi.</p>
+</li>
+<li>
+<p>Một tài liệu tự động (automation document) của  <a href="https://aws.amazon.com/systems-manager/">AWS Systems Manager (SSM)</a>.</p>
+</li>
+<li>
+<p>Một role IAM cấp quyền để AWS FIS có thể gọi tài liệu tự động SSM.</p>
+</li>
+<li>
+<p>Một mẫu thí nghiệm <a href="https://docs.aws.amazon.com/fis/latest/userguide/experiment-template-example.html">AWS FIS experiment template</a>.</p>
+</li>
+</ul>
+<p><img src="../../../images/3-BlogsTranslated/3.1-Blog1/overall-architecture.png" alt="overall-architecture">
+<em>Hình 2 minh họa góc nhìn tổng quan về các thành phần giải pháp và tương tác giữa chúng.</em></p>
+<h2 id="thông-số-thử-nghiệm-có-thể-định-cấu-hình"><strong>Thông số thử nghiệm có thể định cấu hình</strong></h2>
+<p>Template CloudFormation yêu cầu ba tham số khi triển khai:</p>
+<ul>
+<li>
+<p>Tên của Application Load Balancer.</p>
+</li>
+<li>
+<p>ARN của listener rule ALB cần thay đổi.</p>
+</li>
+<li>
+<p>Thời lượng thử nghiệm tính bằng giây — thời gian mà lỗi một phần được giả lập.</p>
+</li>
+</ul>
+<p>Những cài đặt thí nghiệm khác, chẳng hạn như phần trăm lưu lượng chuyển hướng và mã phản hồi Lambda, được cấu hình trước trong định nghĩa thí nghiệm. Nếu bạn muốn tùy chỉnh các giá trị này, có hai lựa chọn:</p>
+<p><strong>Option 1: Sửa Template CloudFormation và triển khai lại</strong><br>
+Bạn có thể chỉnh sửa trường <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">documentParameters</span> trong phần định nghĩa thí nghiệm của template để thay đổi:</p>
+<ul>
+<li>FailurePercentage (ví dụ: 10, 50, 100).</li>
+</ul>
+<p>Để thay đổi mã HTTP phản hồi từ hàm Lambda (ví dụ từ 500 sang 404), sửa giá trị <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">statusCode</span> trực tiếp trong phần mã nội tuyến của template.</p>
+<p>Sau khi chỉnh sửa, triển khai lại stack để áp dụng thay đổi.</p>
+<p><strong>Option 2: Tạo phiên bản mới của tài liệu SSM Automation</strong><br>
+Nếu bạn không muốn triển khai lại toàn bộ stack:</p>
+<ol>
+<li>
+<p>Vào <strong>AWS Systems Manager</strong> → bảng điều khiển <strong>Documents</strong>.</p>
+</li>
+<li>
+<p>Tìm tài liệu SSM được tạo bởi template.</p>
+</li>
+<li>
+<p>Chọn <strong>Create new version</strong> và điều chỉnh giá trị mặc định như FailurePercentage.</p>
+</li>
+<li>
+<p>Sử dụng phiên bản cập nhật trong một thí nghiệm AWS FIS mới (qua CLI hoặc console).</p>
+</li>
+</ol>
+<p><strong>IAM Permissions</strong>:<br>
+Bạn cần quyền tạo role IAM và policy khi triển khai CloudFormation template. Khi triển khai qua AWS Console, bạn cần xác nhận rằng template tạo tài nguyên IAM. Nếu dùng AWS CLI, thêm flag <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;"> --capabilities CAPABILITY_NAMED_IAM</span>.</p>
+<p><strong>Tải về template:</strong> bạn có thể tải <a href="https://d2908q01vomqb2.cloudfront.net/artifacts/MTBlog/cloudops-1899/fis_template.yaml">CloudFormation template here</a> và lưu lại dưới tên <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">fis_template.yaml</span> trước khi triển khai qua AWS Console hoặc CLI.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>aws cloudformation create-stack --stack-name alb-fis-experiment <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    	--template-body file://fis_template.yaml <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    	--parameters <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	      ParameterKey<span style="color:#f92672">=</span>LoadBalancerName,ParameterValue<span style="color:#f92672">=</span>LoadBalancerName <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>          ParameterKey<span style="color:#f92672">=</span>ListenerRuleArn,ParameterValue<span style="color:#f92672">=</span>RuleARN <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>          ParameterKey<span style="color:#f92672">=</span>TestDurationInSeconds,ParameterValue<span style="color:#f92672">=</span><span style="color:#ae81ff">60</span> <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>	    --capabilities CAPABILITY_NAMED_IAM
+</span></span></code></pre></div><p><span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">LoadBalancerName</span> và <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">RuleARN</span> tương ứng với tên Load Balancer và ARN đầy đủ của listener rule trước service mà bạn muốn giả lập lỗi. Giá trị 60 chỉ định thời gian thử nghiệm tính bằng giây.</p>
+<p>Lưu ý: <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">FISExperimentRole</span> Policy IAM sử dụng <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">&ldquo;Resource&rdquo;: &ldquo;*&quot;</span> cho một số hành động để AWS FIS có thể thay đổi tài nguyên load balancer tạo động. Vì tên tài nguyên ARNs nhóm đích không được biết trước thời điểm triển khai, việc giới hạn quyền theo tài nguyên cụ thể thật sự không khả thi trong ngữ cảnh ví dụ này. Mặc dù cách làm này mang lại tính linh hoạt, <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html">AWS security best practices</a> khuyến nghị nên giới hạn quyền tới các tài nguyên cụ thể nếu bạn biết rõ sẽ sử dụng tài nguyên nào. Nếu bạn biết chính xác các tài nguyên sẽ được sử dụng, hãy cân nhắc cập nhật chính sách để hạn chế quyền truy cập cho phù hợp.</p>
+<h2 id="bước-2-xác-minh-hàm-lambda"><strong>Bước 2: Xác minh hàm Lambda</strong></h2>
+<p>Sau khi triển khai, kiểm tra hàm Lambda trong AWS console để xác nhận nó trả về phản hồi lỗi như mong đợi. Hàm nên trả về dạng:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-JSON" data-lang="JSON"><span style="display:flex;"><span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&#34;statusCode&#34;</span>: <span style="color:#ae81ff">503</span>,
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>   <span style="color:#f92672">&#34;body&#34;</span>: <span style="color:#e6db74">&#34;Service Unavailable - Simulated Error Response&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span> }
+</span></span></code></pre></div><h2 id="bước-3-bắt-đầu-thử-nghiệm-aws-fis"><strong>Bước 3: Bắt đầu thử nghiệm AWS FIS</strong></h2>
+<ol>
+<li>
+<p>Mở bảng điều khiển <strong>AWS Fault Injection Service</strong>.</p>
+</li>
+<li>
+<p>Tìm template đã cấu hình sẵn trong <strong>Experiment Templates</strong>.</p>
+</li>
+<li>
+<p>Chọn bắt đầu thí nghiệm (<strong>Start experiment</strong>).</p>
+</li>
+<li>
+<p>Xác nhận và khởi chạy thử nghiệm.</p>
+</li>
+</ol>
+<p><img src="../../../images/3-BlogsTranslated/3.1-Blog1/fis-console.png" alt="fis-console">
+<em>Hình 3 cho thấy console AWS FIS với template thí nghiệm tùy chỉnh được tạo bởi CloudFormation template.</em></p>
+<p>Khi bạn bắt đầu thí nghiệm, AWS FIS sẽ gọi đến AWS Systems Manager Automation Document  đã tạo trong bước triển khai. Tài liệu này thực hiện các hành động sau:</p>
+<ol>
+<li>
+<p><strong>Tạo một ALB target group mới</strong> trỏ tới hàm Lambda được cấu hình để trả về phản hồi lỗi giả lập.</p>
+</li>
+<li>
+<p><strong>Sửa đổi ALB listener rule</strong> để chia một phần lưu lượng đến nhóm đích mới, mô phỏng lỗi một phần.</p>
+</li>
+<li>
+<p><strong>Chờ trong thời gian đã định</strong> (có thể cấu hình qua CloudFormation template).</p>
+</li>
+<li>
+<p><strong>Quay lại  ALB listener rule</strong> về trạng thái ban đầu và xóa nhóm đích tạm thời.</p>
+</li>
+</ol>
+<p>Toàn bộ vòng đời được tự động hóa — bạn không cần viết mã hay thực hiện cập nhật thủ công cho load balancer. Bạn chỉ việc bắt đầu thí nghiệm từ FIS console và quan sát cách dịch vụ của bạn phản ứng với kịch bản lỗi có kiểm soát.</p>
+<p>Trong ảnh chụp màn hình sau, bạn sẽ thấy quy tắc ALB listener rule ban đầu chỉ có nhóm mục tiêu mặc định được cấu hình.</p>
+<p><img src="../../../images/3-BlogsTranslated/3.1-Blog1/before.png" alt="before"></p>
+<p><em>Hình 4 là ALB listener rule trước khi thí nghiệm bắt đầu, cho thấy một nhóm đích nhận 100% lưu lượng.</em></p>
+<p>Sau khi thử nghiệm bắt đầu, AWS FIS sẽ sửa đổi quy tắc để phân chia lưu lượng — như được hiển thị trong ảnh chụp màn hình Sau.</p>
+<p><img src="../../../images/3-BlogsTranslated/3.1-Blog1/after.png" alt="after"></p>
+<p><em>Hình 5 là ALB listener rule sau khi thí nghiệm bắt đầu, cho thấy nhóm Lambda mới nhận 50% lưu lượng và phản hồi lỗi đã định.</em></p>
+<h2 id="bước-4-quan-sát-và-phân-tích-kết-quả"><strong>Bước 4: Quan sát và phân tích kết quả</strong></h2>
+<p>Bạn có thể xác minh thí nghiệm bằng cách làm mới DNS của ALB trên trình duyệt hoặc chạy vòng lặp curl:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> true; <span style="color:#66d9ef">do</span> curl <span style="color:#ae81ff">\-</span>s http://<span style="color:#ae81ff">\&lt;</span>your-alb-dns-name<span style="color:#ae81ff">\&gt;</span>; sleep 1; <span style="color:#66d9ef">done</span>
+</span></span></code></pre></div><p><em><img src="../../../images/3-BlogsTranslated/3.1-Blog1/curl-test.gif" alt="curl-test">Hình 6 minh họa đầu ra CLI gửi yêu cầu liên tục đến URL ALB để thể hiện cách giải pháp tiêm lỗi trong quá trình thực nghiệm.</em></p>
+<p>Bạn sẽ thấy đầu ra xen kẽ giữa:</p>
+<ul>
+<li>
+<p>Backend service is healthy (backend service)</p>
+</li>
+<li>
+<p>Dịch vụ không khả dụng – Phản hồi lỗi mô phỏng (Lambda)</p>
+</li>
+</ul>
+<p>Bạn có thể theo dõi <strong>Amazon CloudWatch Logs</strong> để xem metrics hàm Lambda và <strong>Application behavior</strong>  (cơ chế retry, failover,…).<br>
+<strong>Lưu ý:</strong> Sau khi bắt đầu thử nghiệm, có thể mất đến một phút trước khi nhóm đích mới gắn vào ALB và lưu lượng bắt đầu được phân luồng sang hàm Lambda. Trong khoảng thời gian ngắn này, tất cả yêu cầu vẫn có thể đạt đến service backend ban đầu.</p>
+<h1 id="cơ-chế-khôi-phục"><strong>Cơ chế khôi phục</strong></h1>
+<p>Cơ chế rollback của thí nghiệm:</p>
+<ul>
+<li>
+<p>ALB Listener rule tự động được hoàn tác khi kết thúc thời gian thử nghiệm.</p>
+</li>
+<li>
+<p>Nhóm đích tạm thời bị loại bỏ và xóa để tránh tồn đọng cấu hình.</p>
+</li>
+<li>
+<p>Nếu thí nghiệm bị hủy bỏ, quy trình rollback vẫn trả hệ thống về trạng thái ban đầu.</p>
+</li>
+</ul>
+<h1 id="cân-nhắc"><strong>Cân nhắc</strong></h1>
+<p>Bài viết này cung cấp thông tin kỹ thuật và cấu hình ví dụ. Việc triển khai trong môi trường thực tế có thể yêu cầu xem xét thêm về bảo mật, tuân thủ và các yếu tố kỹ thuật. Luôn kiểm thử kỹ trong môi trường không phải sản xuất trước.</p>
+<h1 id="dọn-dẹp"><strong>Dọn dẹp</strong></h1>
+<p>Để tránh phát sinh chi phí về sau, hãy xóa các tài nguyên đã triển khai:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Bash" data-lang="Bash"><span style="display:flex;"><span>aws cloudformation delete-stack <span style="color:#ae81ff">\-</span>-stack-name alb-fis-experiment
+</span></span></code></pre></div><h1 id="kết-thúc"><strong>Kết thúc</strong></h1>
+<p>Trong bài viết này, chúng tôi đã minh họa cách mở rộng khả năng của AWS FIS bằng cách mô phỏng lỗi một phần cho workload đứng sau ALB sử dụng Lambda. Giải pháp này cho phép các nhóm thử nghiệm khả năng chịu lỗi của ứng dụng trước các sự cố gián đoạn mà không gây ra toàn bộ outage. Bằng cách tận dụng AWS FIS, Lambda và quy tắc định tuyến ALB, bạn có thể tạo ra các kịch bản lỗi có kiểm soát và nâng cao độ bền hệ thống.</p>
+<p>Để tìm hiểu thêm, hãy tham khảo các tài nguyên sau:</p>
+<ul>
+<li><a href="https://docs.aws.amazon.com/fis/latest/userguide/">AWS Fault Injection Service Documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/elasticloadbalancing/latest/application/">Amazon ALB Documentation</a></li>
+<li><a href="https://docs.aws.amazon.com/fis/latest/userguide/actions-ssm-agent.html">Use Systems Manager SSM documents with AWS FIS</a></li>
+</ul>
+<p>Get started with the <a href="https://d2908q01vomqb2.cloudfront.net/artifacts/MTBlog/cloudops-1899/fis_template.yaml">CloudFormation template</a> và chia sẻ trải nghiệm của bạn trong phần bình luận phía dưới.</p>
+<p>TAGS: <a href="https://aws.amazon.com/blogs/mt/tag/aws-fault-injection-simulator/">aws fault injection simulator</a>, <a href="https://aws.amazon.com/blogs/mt/tag/chaos-engineering/">chaos engineering</a></p>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td style="width: 120px; vertical-align: top;">
+<img src="../../../images/3-BlogsTranslated/3.1-Blog1/author-canibeya.jpeg" alt="Dave Jaskie" style="width: 100px; border-radius: 5px;">
+</td>
+<td style="padding-left: 20px; vertical-align: top;">
+<p><strong>Ozgur Canibeyaz</strong> Ozgur là Senior Technical Account Manager tại Amazon Web Services với 8 năm kinh nghiệm. Ozgur giúp khách hàng tối ưu hóa việc sử dụng AWS bằng cách giải quyết các thử thách kỹ thuật, khám phá cơ hội tiết kiệm chi phí, đạt được sự xuất sắc vận hành và xây dựng các dịch vụ đổi mới bằng sản phẩm AWS.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td style="width: 120px; vertical-align: top;">
+<img src="../../../images/3-BlogsTranslated/3.1-Blog1/author-pablo.png" alt="Dave Jaskie" style="width: 100px; border-radius: 5px;">
+</td>
+<td style="padding-left: 20px; vertical-align: top;">
+<p><strong>Pablo Colazurdo</strong> Pablo là Principal Solutions Architect tại AWS nơi anh ấy thích giúp khách hàng khởi động các dự án thành công trên Cloud. Anh ấy có nhiều năm kinh nghiệm làm việc với các công nghệ đa dạng và luôn đam mê học hỏi điều mới. Pablo lớn lên ở Argentina nhưng giờ thích mưa ở Ireland trong lúc nghe nhạc, đọc sách hoặc chơi D&amp;D với các con.</p>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="../../../vi/3-blogstranslated/" title="Các bài blogs đã dịch"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="../../../vi/3-blogstranslated/3.2-blog2/" title="Blog 2 - Transfer data from Amazon S3 to IoT Edge device" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="../../../js/clipboard.min.js?1765285412"></script>
+    <script src="../../../js/perfect-scrollbar.min.js?1765285412"></script>
+    <script src="../../../js/perfect-scrollbar.jquery.min.js?1765285412"></script>
+    <script src="../../../js/jquery.sticky.js?1765285412"></script>
+    <script src="../../../js/featherlight.min.js?1765285412"></script>
+    <script src="../../../js/highlight.pack.js?1765285412"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../../js/modernizr.custom-3.6.0.js?1765285412"></script>
+    <script src="../../../js/learn.js?1765285412"></script>
+    <script src="../../../js/hugo-learn.js?1765285412"></script>
+
+    <link href="../../../mermaid/mermaid.css?1765285412" rel="stylesheet" />
+    <script src="../../../mermaid/mermaid.js?1765285412"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function (i, s, o, g, r, a, m) {
+    i["GoogleAnalyticsObject"] = r;
+    ((i[r] =
+      i[r] ||
+      function () {
+        (i[r].q = i[r].q || []).push(arguments);
+      }),
+      (i[r].l = 1 * new Date()));
+    ((a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]));
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m);
+  })(
+    window,
+    document,
+    "script",
+    "https://www.google-analytics.com/analytics.js",
+    "ga",
+  );
+
+  ga("create", "UA-158079754-2", "auto");
+  ga("send", "pageview");
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="vi" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.152.2">
+    <meta
+  name="description"
+  content=""
+/>
+<meta name="author" content="thienlh@thienlu.com" />
+
+    <link rel="icon" href="../../../images/favicon.png" type="image/png">
+
+    <title>Blog 2 - Transfer data from Amazon S3 to IoT Edge device :: Báo cáo thực tập</title>
+
+    
+    <link href="../../../css/nucleus.css?1765285412" rel="stylesheet">
+    <link href="../../../css/fontawesome-all.min.css?1765285412" rel="stylesheet">
+    <link href="../../../css/hybrid.css?1765285412" rel="stylesheet">
+    <link href="../../../css/featherlight.min.css?1765285412" rel="stylesheet">
+    <link href="../../../css/perfect-scrollbar.min.css?1765285412" rel="stylesheet">
+    <link href="../../../css/auto-complete.css?1765285412" rel="stylesheet">
+    <link href="../../../css/atom-one-dark-reasonable.css?1765285412" rel="stylesheet">
+    <link href="../../../css/theme.css?1765285412" rel="stylesheet">
+    <link href="../../../css/hugo-theme.css?1765285412" rel="stylesheet">
+    
+    <link href="../../../css/theme-workshop.css?1765285412" rel="stylesheet">
+    
+    
+
+    <script src="../../../js/jquery-3.3.1.min.js?1765285412"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+
+  </head>
+  <body class="" data-url="../../../vi/3-blogstranslated/3.2-blog2/">
+    <nav
+  id="sidebar"
+  class="showVisitedLinks"
+>
+   
+  <div id="header-wrapper">
+    <div id="header"><a id="logo" href="../../../">
+  <svg
+    id="Layer_1"
+    data-name="Layer 1"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 60 30"
+    width="30%"
+  >
+    <defs>
+      <style>
+        .cls-1 {
+          fill: #fff;
+        }
+        .cls-2 {
+          fill: #f90;
+          fill-rule: evenodd;
+        }
+      </style>
+    </defs>
+    <title>AWS-Logo_White-Color</title>
+    <path
+      class="cls-1"
+      d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"
+    ></path>
+    <path
+      class="cls-2"
+      d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"
+    ></path>
+    <path
+      class="cls-2"
+      d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"
+    ></path>
+  </svg>
+</a>
+</div>
+     <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="../../../js/lunr.min.js?1765285412"></script>
+<script type="text/javascript" src="../../../js/auto-complete.js?1765285412"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/thienluhoan.github.io\/workshop-template\/\/vi";
+    
+</script>
+<script type="text/javascript" src="../../../js/search.js?1765285412"></script>
+ 
+  </div>
+
+  <div class="highlightable">
+    <ul class="topics">
+               
+<li
+  data-nav-id="/vi/1-worklog/"
+  title="Nhật ký công việc"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/">
+     <b> 1. </b> Nhật ký công việc 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/1-worklog/1.1-week1/"
+  title="Worklog Tuần 1"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.1-week1/">
+     <b> 1.1. </b> Worklog Tuần 1 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.2-week2/"
+  title="Worklog Tuần 2"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.2-week2/">
+     <b> 1.2. </b> Worklog Tuần 2 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.3-week3/"
+  title="Worklog Tuần 3"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.3-week3/">
+     <b> 1.3. </b> Worklog Tuần 3 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.4-week4/"
+  title="Worklog Tuần 4"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.4-week4/">
+     <b> 1.4. </b> Worklog Tuần 4 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.5-week5/"
+  title="Worklog Tuần 5"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.5-week5/">
+     <b> 1.5. </b> Worklog Tuần 5 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.6-week6/"
+  title="Worklog Tuần 6"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.6-week6/">
+     <b> 1.6. </b> Worklog Tuần 6 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.7-week7/"
+  title="Worklog Tuần 7"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.7-week7/">
+     <b> 1.7. </b> Worklog Tuần 7 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.8-week8/"
+  title="Worklog Tuần 8"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.8-week8/">
+     <b> 1.8. </b> Worklog Tuần 8 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.9-week9/"
+  title="Worklog Tuần 9"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.9-week9/">
+     <b> 1.9. </b> Worklog Tuần 9 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.10-week10/"
+  title="Worklog Tuần 10"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.10-week10/">
+     <b> 1.10. </b> Worklog Tuần 10 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.11-week11/"
+  title="Worklog Tuần 11"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.11-week11/">
+     <b> 1.11. </b> Worklog Tuần 11 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/1-worklog/1.12-week12/"
+  title="Worklog Tuần 12"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/1-worklog/1.12-week12/">
+     <b> 1.12 </b> Worklog Tuần 12 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/vi/2-proposal/"
+  title="Bản đề xuất"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/2-proposal/">
+     <b> 2. </b> Bản đề xuất 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+           
+<li
+  data-nav-id="/vi/3-blogstranslated/"
+  title="Các bài blogs đã dịch"
+  class="dd-item 
+        parent
+        
+        
+        "
+>
+  <a href="../../../vi/3-blogstranslated/">
+     <b> 3. </b> Các bài blogs đã dịch 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/3-blogstranslated/3.1-blog1/"
+  title="Blog 1 - AWS Fault Injection Service"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/3-blogstranslated/3.1-blog1/">
+     <b> 3.1. </b> Blog 1 - AWS Fault Injection Service 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/3-blogstranslated/3.2-blog2/"
+  title="Blog 2 - Transfer data from Amazon S3 to IoT Edge device"
+  class="dd-item 
+        
+        active
+        
+        "
+>
+  <a href="../../../vi/3-blogstranslated/3.2-blog2/">
+     <b> 3.2. </b> Blog 2 - Transfer data from Amazon S3 to IoT Edge device 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/3-blogstranslated/3.3-blog3/"
+  title="Desktop and Application Streaming"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/3-blogstranslated/3.3-blog3/">
+     <b> 3.3. </b> Desktop and Application Streaming 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/vi/4-eventparticipated/"
+  title="Các events đã tham gia"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/4-eventparticipated/">
+     <b> 4. </b> Các events đã tham gia 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/4-eventparticipated/4.1-event1/"
+  title="Event 1"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/4-eventparticipated/4.1-event1/">
+     <b> 4.1. </b> Event 1 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/4-eventparticipated/4.2-event2/"
+  title="Event 2"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/4-eventparticipated/4.2-event2/">
+     <b> 4.2. </b> Event 2 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/4-eventparticipated/4.3-event3/"
+  title="Event 3"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/4-eventparticipated/4.3-event3/">
+     <b> 4.3. </b> Event 3 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/vi/5-workshop/"
+  title="Workshop"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/">
+     <b> 5. </b> Workshop 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/5-workshop/5.1-workshop-overview/"
+  title="Giới thiệu"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.1-workshop-overview/">
+     <b> 5.1. </b> Giới thiệu 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.2-prerequiste/"
+  title="Các bước chuẩn bị"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.2-prerequiste/">
+    <b> 5.2. </b>Các bước chuẩn bị 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/"
+  title="Triển khai Backend"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/">
+    <b> 5.3. </b>Triển khai Backend 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/5.3.1-amazondynamodb/"
+  title="Amazon DynamoDB"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/5.3.1-amazondynamodb/">
+    <b> 5.3.1 </b>Amazon DynamoDB 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/5.3.2-amazoncognito/"
+  title="Amazon Cognito"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/5.3.2-amazoncognito/">
+    <b> 5.3. </b>Amazon Cognito 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/5.3.3-amazons3/"
+  title="Amazon S3"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/5.3.3-amazons3/">
+    <b> 5.3.3 </b>Amazon S3 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.3-backend/5.3.4-lambdaapigateway/"
+  title="LAMBDA &#43; API GATEWAY"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.3-backend/5.3.4-lambdaapigateway/">
+    <b> 5.3.4 </b>LAMBDA &#43; API GATEWAY 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.4-frontend/"
+  title="Triển khai Frontend"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.4-frontend/">
+     <b> 5.4. </b> Triển khai Frontend 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/vi/5-workshop/5.4-frontend/5.4.1-amazonamplify/"
+  title="Amazon Amplify"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.4-frontend/5.4.1-amazonamplify/">
+    <b> 5.4.1 </b>Amazon Amplify 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.4-frontend/5.4.2-cloudfrontwaf/"
+  title="Amazon CloudFornt &amp; WAF"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.4-frontend/5.4.2-cloudfrontwaf/">
+    <b> 5.4.2 </b>Amazon CloudFornt &amp; WAF 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.4-frontend/5.4.3-route53/"
+  title="Amazon Route53"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.4-frontend/5.4.3-route53/">
+    <b> 5.4.3 </b>Amazon Route53 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.5-ci-cd/"
+  title="CI/CD Pipeline"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.5-ci-cd/">
+     <b> 5.5. </b> CI/CD Pipeline 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.6-cloud-watch/"
+  title="Cloud Watch"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.6-cloud-watch/">
+     <b> 5.6. </b> Cloud Watch 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/vi/5-workshop/5.7-clean-up/"
+  title="Dọn dẹp tài nguyên"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/5-workshop/5.7-clean-up/">
+    <b>5.7. </b>Dọn dẹp tài nguyên 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/vi/6-self-evaluation/"
+  title="Tự đánh giá"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/6-self-evaluation/">
+     <b> 6. </b> Tự đánh giá 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+           
+<li
+  data-nav-id="/vi/7-feedback/"
+  title="Chia sẻ, đóng góp ý kiến"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../../../vi/7-feedback/">
+     <b> 7. </b> Chia sẻ, đóng góp ý kiến 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+    </ul>
+
+     
+    <section id="shortcuts">
+      <h3>
+        More
+      </h3>
+      <ul>
+        
+        <li>
+          <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"
+            ><i class='fab fa-facebook'></i> AWS Study Group</a
+          >
+        </li>
+        
+      </ul>
+    </section>
+     
+    <section id="prefooter">
+      <hr />
+      <ul>
+        
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+            <div class="select-style">
+              <select id="select-language" onchange="location = this.value;">
+                       
+                <option
+                  id="en"
+                  value="https://thienluhoan.github.io/workshop-template/3-blogstranslated/3.2-blog2/"
+                >
+                  English
+                </option>
+                            
+                <option
+                  id="vi"
+                  value="https://thienluhoan.github.io/workshop-template/vi/3-blogstranslated/3.2-blog2/"
+                  selected
+                >
+                  Tiếng Việt
+                </option>
+                   
+              </select>
+              <svg
+                version="1.1"
+                id="Capa_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="255px"
+                height="255px"
+                viewBox="0 0 255 255"
+                style="enable-background: new 0 0 255 255"
+                xml:space="preserve"
+              >
+                <g>
+                  <g id="arrow-drop-down">
+                    <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </a>
+        </li>
+         
+        <li>
+          <a class="padding" href="#" data-clear-history-toggle=""
+            ><i class="fas fa-history fa-fw"></i> Clear History</a
+          >
+        </li>
+        
+      </ul>
+    </section>
+    
+    <section id="footer"><left>
+    
+    <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Migrate" Alt="web counter" border="0" /></a> <br>
+    <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Total CLoud Journey" Alt="web counter" border="0" />
+
+</left>
+<left>
+    <br>
+    <br>
+    <b>Last Updated</b><br>
+    <i>
+        <span id="lastUpdated" style="color:orange;"></span>
+    </i>
+
+    <script>
+        
+        const today = new Date();
+        
+        const formattedDate = today.toLocaleDateString('en-GB');
+        
+        document.getElementById('lastUpdated').textContent = formattedDate;
+    </script>
+</left>
+<left>
+    <br>
+    <br>
+    <b> Team </b> <br>
+
+    <i> <a href="https://www.facebook.com/groups/660548818043427" style="color:orange">First Cloud Journey </a> <br>
+
+    </i>
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script></section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            
+            
+          
+          
+            <a href='../../../vi/'>Báo cáo thực tập</a> > <a href='../../../vi/3-blogstranslated/'>Các bài blogs đã dịch</a> > Blog 2 - Transfer data from Amazon S3 to IoT Edge device
+          
+        
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+  <div class="wrapper"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#bước-1-phát-triển-và-đóng-gói-component-iot-greengrass-download-manager-tùy-chỉnh"><strong>Bước 1: Phát triển và đóng gói component IoT Greengrass Download Manager tùy chỉnh</strong></a></li>
+    <li><a href="#bước-2-xây-dựng-công-bố-và-triển-khai-component-download-manager"><strong>Bước 2: Xây dựng, công bố và triển khai component Download Manager</strong></a></li>
+    <li><a href="#bước-3-upload-tệp-cần-tải-về-thiết-bị-edge"><strong>Bước 3: Upload tệp cần tải về thiết bị edge</strong></a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#bước-4-viết-script-python-để-đồng-bộ-dữ-liệu"><strong>Bước 4: Viết script Python để đồng bộ dữ liệu</strong></a></li>
+  </ul>
+</nav></div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Blog 2 - Transfer data from Amazon S3 to IoT Edge device
+            </h1>
+          
+
+        
+
+
+
+	<h1 id="chuyển-dữ-liệu-từ-amazon-s3-sang-thiết-bị-iot-edge">Chuyển dữ liệu từ Amazon S3 sang thiết bị IoT edge</h1>
+<p>Được viết bởi Rashmi Varshney, Nilo Bustani, and Tamil Jayakumar | ngày 28 tháng 6 năm 2025 | trong  <a href="https://aws.amazon.com/blogs/iot/category/internet-of-things/aws-iot-platform/">AWS IoT Core</a>, <a href="https://aws.amazon.com/blogs/iot/category/internet-of-things/aws-greengrass/">AWS IoT Greengrass</a>, <a href="https://aws.amazon.com/blogs/iot/category/learning-levels/">Learning Levels</a>, <a href="https://aws.amazon.com/blogs/iot/category/post-types/technical-how-to/">Technical How-to</a> | <a href="https://aws.amazon.com/blogs/iot/transfer-data-from-amazon-s3-to-iot-edge-device/">Permalink</a> | <a href="https://aws.amazon.com/vi/blogs/iot/transfer-data-from-amazon-s3-to-iot-edge-device/">Share</a></p>
+<p>Việc truyền dữ liệu một cách liền mạch giữa đám mây và các thiết bị edge là rất quan trọng cho các ứng dụng IoT trong nhiều ngành như chăm sóc sức khỏe, sản xuất, phương tiện tự hành và hàng không vũ trụ. Ví dụ, nó <a href="https://aws.amazon.com/blogs/industries/aws-and-safran-passenger-innovations/">enables aircraft operators to seamlessly transfer software updates</a> toàn đội bay mà không cần sử dụng thiết bị lưu trữ vật lý thủ công. Bằng cách tận dụng <a href="https://aws.amazon.com/iot/">AWS IoT</a> và <a href="https://aws.amazon.com/pm/serv-s3/?gclid=CjwKCAjw1K-zBhBIEiwAWeCOF4sL-QIlVtb-xKGajtiSz2t9K29QR4JX6KAWojyIO5LzC3g-sQu2VxoCH3oQAvD_BwE&amp;trk=20e04791-939c-4db9-8964-ee54c41bc6ad&amp;sc_channel=ps&amp;ef_id=CjwKCAjw1K-zBhBIEiwAWeCOF4sL-QIlVtb-xKGajtiSz2t9K29QR4JX6KAWojyIO5LzC3g-sQu2VxoCH3oQAvD_BwE:G:s&amp;s_kwcid=AL!4422!3!651751060962!e!!g!!amazon%20s3!19852662362!145019251177">Amazon Simple Storage Service (Amazon S3)</a>, bạn có thể thiết lập một cơ chế truyền dữ liệu cho phép trao đổi dữ liệu thời gian thực và lịch sử giữa đám mây và thiết bị edge.</p>
+<h1 id="giới-thiệu">Giới thiệu</h1>
+<p>Bài viết này hướng dẫn bạn từng bước cách truyền dữ liệu dưới dạng tệp từ Amazon S3 đến thiết bị IoT Edge của bạn.</p>
+<p>Chúng ta sẽ sử dụng <a href="https://aws.amazon.com/greengrass/">AWS IoT Greengrass</a>, một runtime mã nguồn mở cho edge và dịch vụ đám mây để xây dựng, triển khai từ xa và quản lý phần mềm thiết bị trên hàng triệu thiết bị. IoT Greengrass cung cấp các component được xây dựng sẵn cho các trường hợp sử dụng phổ biến, giúp bạn khám phá, nhập, cấu hình và triển khai ứng dụng và dịch vụ tại edge mà không cần hiểu các giao thức thiết bị khác nhau, quản lý thông tin xác thực hoặc tương tác với các API bên ngoài. Bạn cũng có thể tạo các component tùy chỉnh dựa trên trường hợp sử dụng IoT của bạn.</p>
+<p>Trong bài này, chúng tôi sẽ xây dựng và triển khai một component IoT Greengrass tùy chỉnh tận dụng khả năng của <a href="https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/examples-s3-transfermanager.html">Amazon S3 Transfer Manager</a>. Component IoT Greengrass này thực hiện các hành động như tải xuống thông qua các topic <a href="https://docs.aws.amazon.com/iot/latest/developerguide/jobs-what-is.html">IoT Jobs</a>. Các tham số được đặt trong IoT Jobs xác định các hành động đó.</p>
+<p>S3 Transfer Manager sử dụng API multipart upload và các byte-range fetches để truyền tệp từ Amazon S3 đến thiết bị edge. Bạn có thể xem chi tiết thêm về khả năng của S3 Transfer Manager trong <a href="https://aws.amazon.com/blogs/developer/introducing-crt-based-s3-client-and-the-s3-transfer-manager-in-the-aws-sdk-for-java-2-x/">blog</a> gốc.</p>
+<h1 id="các-điều-kiện-tiên-quyết"><strong>Các điều kiện tiên quyết</strong></h1>
+<p>Để giả lập thiết bị edge, chúng ta sẽ dùng một EC2 instance. Trước khi tiến hành các bước truyền tệp từ Amazon S3 đến instance của bạn, hãy đảm bảo bạn có các điều kiện sau:</p>
+<ol>
+<li>
+<p>Một <a href="https://console.aws.amazon.com/">AWS account</a> với quyền tạo và truy cập các Amazon EC2 instances,  <a href="https://aws.amazon.com/systems-manager/">AWS Systems Manager (SSM)</a>, <a href="https://aws.amazon.com/cloudformation/">AWS Cloudformation</a> stack,  <a href="https://aws.amazon.com/iam">AWS IAM</a> Roles và Policies,  <a href="https://aws.amazon.com/s3/">Amazon S3</a>, <a href="https://aws.amazon.com/iot-core/">AWS IoT Core</a> và  <a href="https://aws.amazon.com/s3/">Amazon S3</a>, <a href="https://aws.amazon.com/iot-core/">AWS IoT Core</a></p>
+</li>
+<li>
+<p><a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html">AWS CLI</a> đã được cài đặt và cấu hình trên máy tính của bạn, kèm <a href="https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html">SSM Manager Plugin</a>.</p>
+</li>
+<li>
+<p>Làm theo các bước trong repository  <a href="https://github.com/aws-samples/vscode-on-ec2-for-prototyping/blob/main/README.md">Visual Studio Code on EC2 for Prototyping</a> để triển khai một EC2 instance. Sử dụng IDE VS Code chạy trên trình duyệt để chỉnh sửa file và thực thi các hướng dẫn.</p>
+</li>
+</ol>
+<p><em>Khi triển khai, EC2 instance sẽ được gắn một IAM Role cho phép truy cập không hạn chế đến mọi tài nguyên AWS. Chúng tôi khuyến nghị bạn xem xét lại role gắn vào EC2 instance và chỉnh sửa để giới hạn quyền chỉ cho SSM, S3, IoT Core và IoT Greengrass.</em></p>
+<hr>
+<h1 id="tổng-quan-giải-pháp"><strong>Tổng quan giải pháp</strong></h1>
+<p>Việc truyền tệp từ Amazon S3 đến thiết bị edge gồm việc tạo một IoT Greengrass component tùy chỉnh gọi là “Download Manager”. Component này chịu trách nhiệm tải tệp từ Amazon S3 về thiết bị edge, trong trường hợp này là một EC2 instance giả lập thiết bị edge. Quy trình có thể được chia thành các bước sau:</p>
+<ul>
+<li>
+<p>Bước 1: Phát triển và đóng gói IoT Greengrass Download Manager Component tùy chỉnh, chịu logic truyền tệp. Sau khi đóng gói, truyền component này lên Component được chỉ định and  Content Bucket trên Amazon S3.</p>
+</li>
+<li>
+<p>Bước 3: Tải các tệp cần truyền đến thiết bị edge vào ‘Component and Content Bucket’ trên Amazon S3.</p>
+</li>
+<li>
+<p>Bước 4: Download Manager Component trên thiết bị edge (EC2) sẽ tải các tệp từ Amazon S3 bucket và lưu chúng vào hệ thống file ở thiết bị edge.</p>
+</li>
+</ul>
+<p><img src="../../../images/3-BlogsTranslated/3.2-Blog2/iotb-727-hla.jpeg" alt="iotb-727-hla"></p>
+<p><em>Hình 1 – Chuyển tệp từ Amazon S3 sang EC2 instance  mô phỏng thiết bị biên</em></p>
+<h2 id="bước-1-phát-triển-và-đóng-gói-component-iot-greengrass-download-manager-tùy-chỉnh"><strong>Bước 1: Phát triển và đóng gói component IoT Greengrass Download Manager tùy chỉnh</strong></h2>
+<p>1.1 Sao chép thành phần IoT Greengrass tùy chỉnh từ <a href="https://github.com/aws-samples/sample-asset-transfer-manager-for-edge-iot">aws-samples repository</a></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git clone https://github.com/aws-samples/sample-asset-transfer-manager-for-edge-iot.git
+</span></span><span style="display:flex;"><span>cd download-manager
+</span></span></code></pre></div><p>1.2 Làm theo <a href="https://github.com/aws-samples/sample-asset-transfer-manager-for-edge-iot?tab=readme-ov-file#aws-iot-greengrass-core-device-setup">instructions</a> để cấu hình EC2 instance như một thiết bị core IoT Greengrass.<br>
+1.3 The IoT Greengrass Development Kit Command-Line Interface (GDK CLI) đọc từ file cấu hình gdk-config.json để xây dựng và công bố component. Cập nhật file gdk-config.json, thay us-west-2 bằng vùng (region) bạn triển khai và cập nhật gdk_version theo phiên bản gdk CLI bạn sử dụng:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;component&#34;</span>: {
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;com.example.DownloadManager&#34;</span>: {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;author&#34;</span>: <span style="color:#e6db74">&#34;Amazon&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;build&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;build_system&#34;</span>: <span style="color:#e6db74">&#34;zip&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;options&#34;</span>: {
+</span></span><span style="display:flex;"><span>          <span style="color:#f92672">&#34;zip_name&#34;</span>: <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;publish&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;bucket&#34;</span>: <span style="color:#e6db74">&#34;greengrass-artifacts&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;region&#34;</span>: <span style="color:#e6db74">&#34;us-west-2&#34;</span>
+</span></span><span style="display:flex;"><span>      }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  },
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;gdk_version&#34;</span>: <span style="color:#e6db74">&#34;1.3.0&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="bước-2-xây-dựng-công-bố-và-triển-khai-component-download-manager"><strong>Bước 2: Xây dựng, công bố và triển khai component Download Manager</strong></h2>
+<p>2.1 Bạn có thể <a href="https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-development-kit-cli-component.html#greengrass-development-kit-cli-component-build">build</a> và <a href="https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-development-kit-cli-component.html#greengrass-development-kit-cli-component-publish">publish</a> Download Manager Component lên Amazon S3 bucket theo <a href="https://github.com/aws-samples/sample-asset-transfer-manager-for-edge-iot/blob/main/README.md#build-and-publish-the-component">instructions here</a>.</p>
+<p>Bước này sẽ tự động tạo một Amazon S3 bucket tên greengrass-artifacts-YOUR_REGION-YOUR_AWS_ACCOUNT_ID. Các thành phần được xây dựng được lưu trữ dưới dạng các đối tượng trong Amazon S3 bucket này. Chúng tôi sẽ sử dụng Amazon S3 bucket này để xuất bản thành phần Download Manager tùy chỉnh và cũng sử dụng thành phần này để lưu trữ các tài sản sẽ được tải xuống EC2 instance.</p>
+<p>2.2 Thực hiện theo hướng dẫn được đề cập <a href="https://docs.aws.amazon.com/greengrass/v2/developerguide/device-service-role.html#device-service-role-access-s3-bucket">here</a> để cho phép thiết bị IoT Greengrass core  truy cập vào Amazon S3 bucket.</p>
+<p>2.3 Sau khi xuất bản thành công thành phần Download Manager, bạn có thể tìm thấy nó trong AWS Management Console → AWS IoT Core → Greengrass Devices → Components → My Components.</p>
+<p><img src="../../../images/3-BlogsTranslated/3.2-Blog2/IOTB-727-GGComponents.jpg" alt="IOTB-727-GGComponents"><em>Hình 2 – Danh sách các thành phần Greengrass của AWS IoTCore</em></p>
+<p>2.4 Để cho phép chuyển tệp từ Amazon S3 bucket sang thiết bị biên, chúng tôi sẽ triển khai thành phần Download Manager lên thiết bị Greengrass mô phỏng đang chạy trên EC2 instance. Từ danh sách thành phần ở trên, nhấp vào thành phần có tiêu đề com.example. DownloadManager và nhấn Deploy, chọn Create new deployment và nhấn Next.</p>
+<p>2.5 Nhập tên triển khai là &ldquo;My Deployment&rdquo; và &ldquo;Deployment Target&rdquo; là &ldquo;Core Device&rdquo;. Nhập tên thiết bị lõi có thể tìm thấy trong AWS Management Console → AWS IoT Core → Greengrass Devices → Core devices, rồi nhấn &ldquo;Next&rdquo;.</p>
+<p>2.6 Chọn thành phần: Cùng với thành phần tùy chỉnh, chúng tôi cũng sẽ triển khai các thành phần công khai được cung cấp bởi AWS được liệt kê dưới đây:</p>
+<ul>
+<li>aws.greengrass.Nucleus – Thành phần hạt nhân IoT Greengrass là thành phần bắt buộc và là yêu cầu tối thiểu để chạy phần mềm IoT Greengrass Core trên thiết bị biên.</li>
+<li>aws.greengrass.Cli – Thành phần IoT Greengrass CLI cung cấp giao diện dòng lệnh cục bộ mà bạn có thể sử dụng trên thiết bị biên để phát triển và gỡ lỗi các thành phần cục bộ. IoT Greengrass CLI cho phép bạn tạo các triển khai cục bộ và khởi động lại các thành phần trên thiết bị biên.</li>
+<li>aws.greengrass.TokenExchangeService – Dịch vụ trao đổi mã thông báo cung cấp thông tin xác thực AWS có thể được sử dụng để tương tác với các dịch vụ AWS từ các thành phần tùy chỉnh. Điều này rất cần thiết để thư viện boto3 tải xuống các tệp từ Amazon S3 bucket xuống thiết bị biên.</li>
+</ul>
+<p><img src="../../../images/3-BlogsTranslated/3.2-Blog2/IOTB-727-DMComponent.jpg" alt="IOTB-727-DMComponent"></p>
+<p><em>Hình 3 – Chọn các thành phần để triển khai</em></p>
+<p>2.7 Cấu hình Thành phần: Từ danh sách các thành phần Công khai, hãy cấu hình <a href="https://docs.aws.amazon.com/greengrass/v2/developerguide/greengrass-nucleus-component.html#greengrass-nucleus-component-configuration-interpolate-component-configuration">Nucleus component</a> và bật cờ `interpolateComponentConfiguration` thành true. Nên đặt tùy chọn này thành true để thiết bị biên có thể chạy các thành phần IoT Greengrass bằng các <a href="https://docs.aws.amazon.com/greengrass/v2/developerguide/component-recipe-reference.html">recipe variables</a> từ cấu hình. Thao tác này cũng sẽ tham chiếu đến thingName trong cơ sở mã từ biến môi trường AWS_IOT_THING_NAME và không cần phải mã hóa cứng thingName.</p>
+<p>Trong danh sách Cấu hình thành phần, hãy chọn thành phần Nucleus và nhấn Configure Component. Cập nhật phần Configuration để Merge như sau và nhấn Xác nhận.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;interpolateComponentConfiguration&#34;</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><img src="../../../images/3-BlogsTranslated/3.2-Blog2/IOTB-727-configureNucleus.jpg" alt="IOTB-727-configureNucleus"></p>
+<p><em>Hình 4 – Cấu hình aws.greengrass.Nucleus</em></p>
+<p>2.8 Giữ nguyên cấu hình triển khai mặc định và tiếp tục đến trang Xem lại và nhấp vào Triển khai.</p>
+<p>2.9 Bạn có thể theo dõi quá trình bằng cách xem tệp IoT Greengrass log trên thiết bị IoT Greengrass được mô phỏng đang chạy trên EC2 instance. Bạn sẽ thấy &ldquo;status=SUCCEEDED&rdquo; trong log.</p>
+<p>sudo tail -f /greengrass/v2/logs/greengrass.log</p>
+<p>2.10 Sau khi triển khai thành công, bạn có thể theo dõi nhật ký cho thành phần Download Manager tùy chỉnh trên thiết bị IoT Greengrass mô phỏng đang chạy trên EC2 instance như hiển thị bên dưới. Bạn sẽ thấy currentState=RUNNING trong nhật ký.</p>
+<p>sudo tail -f /greengrass/v2/logs/com.example.DownloadManager.log</p>
+<p>2.11 Thư mục tải xuống được cấu hình thành /opt/downloads khi triển khai Download Manager component Tải xuống tùy chỉnh. Giám sát quá trình tải xuống bằng cách mở cửa sổ terminal trong IDE bằng lệnh sau:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo su
+</span></span><span style="display:flex;"><span>cd /opt/downloads
+</span></span><span style="display:flex;"><span>ls
+</span></span></code></pre></div><h2 id="bước-3-upload-tệp-cần-tải-về-thiết-bị-edge"><strong>Bước 3: Upload tệp cần tải về thiết bị edge</strong></h2>
+<p>Thành phần Download Manager hỗ trợ việc truyền tệp từ Amazon S3 đến thiết bị biên của bạn. AWS IoT Jobs đóng vai trò quan trọng trong quá trình này bằng cách cho phép bạn xác định và thực hiện các thao tác từ xa trên các thiết bị được kết nối. Với AWS IoT Jobs, bạn có thể tạo một tác vụ hướng dẫn thiết bị biên tải xuống tệp từ một vị trí Amazon S3 bucket được chỉ định. Tác vụ này đóng vai trò như một tập hợp các hướng dẫn, chỉ dẫn thành phần Download Manager tìm kiếm tệp mong muốn trong Amazon S3 bucket. Sau khi tác vụ được tạo và gửi đến thiết bị biên, thành phần Download Manager sẽ bắt đầu quá trình tải xuống, truyền liền mạch các tệp được chỉ định từ Amazon S3 đến bộ nhớ cục bộ của thiết bị biên.</p>
+<p>3.1 Tạo một thư mục có tên là uploads trong Amazon S3 bucket (greengrass-artifacts-YOUR_REGION-YOUR_AWS_ACCOUNT_ID) đã tạo ở Bước 2.1. Tải hình ảnh được tạo bởi GenAI bên dưới có tên là owl.png vào thư mục uploads trên Amazon S3 bucket.</p>
+<p><img src="../../../images/3-BlogsTranslated/3.2-Blog2/IOTB-727-DownloadImage.jpg" alt="IOTB-727-DownloadImage.jpg"></p>
+<p><em>Hình 5 – Hình ảnh được tạo bởi GenAI – owl.png</em></p>
+<p>Để đơn giản hóa, chúng tôi đang sử dụng lại cùng một Amazon S3 bucket<span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">(greengrass-artifacts-YOUR_REGION-YOUR_AWS_ACCOUNT_ID)</span>. Tuy nhiên, tốt nhất là nên tạo 2 thùng riêng biệt cho các thành phần IoT Greengrass và các tệp cần tải xuống biên.</p>
+<p>3.2 Sau khi tệp đã được tải lên Amazon S3 bucket, hãy sao chép S3 URI của hình ảnh này để sử dụng trong bước tiếp theo. S3 URI sẽ là <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">s3://greengrass-artifacts-REGION-ACCOUNT_ID/uploads/owl_logo.png</span>.</p>
+<h3></h3>
+<h2 id="bước-4-viết-script-python-để-đồng-bộ-dữ-liệu"><strong>Bước 4: Viết script Python để đồng bộ dữ liệu</strong></h2>
+<p>4.1 Tạo AWS IoT Job Document</p>
+<p>4.1.1 Từ AWS Management Console, điều hướng đến AWS IoT Core → Remote actions→ Jobs and click Create job.</p>
+<p>4.1.2 Chọn tạo công việc tùy chỉnh</p>
+<p>4.1.3 Đặt tên công việc, ví dụ: Test-1 và tùy chọn cung cấp mô tả, sau đó nhấp vào Tiếp theo.</p>
+<p>4.1.4 Đối với Job Target, hãy chọn thiết bị lõi được chỉ định bởi tên thiết bị&lt; <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;"> YOUR GREENGRASS DEVICE NAME</span> &gt;. Bạn có thể để Thing group trống ngay bây giờ.</p>
+<p>4.1.5 Chọn Job document From từ mẫu và chọn AWS-Download-File từ Mẫu.</p>
+<p>4.1.6 Dán S3 URI vào phần downloadUrl. S3 URI phải bắt đầu bằng <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">s3://greengrass-artifacts-REGION-ACCOUNT_ID/uploads/owl_logo.png</span></p>
+<p>4.1.7 Đối với tệp Path, hãy nhập thư mục con nơi bạn muốn tệp sẽ được tải xuống. Với blog này, chúng ta sẽ tạo một thư mục có tên là images và nhấp vào Next. Không thêm dấu /vào đường dẫn vì thành phần sẽ tự động thêm tiền tố đường dẫn.</p>
+<p>4.1.8 Để cấu hình tác vụ và loại chạy, chọn Snapshot và nhấp vào Submit.</p>
+<p>4.2 Theo dõi nhật ký thành phần trên EC2 instance để xem thư mục tải xuống đang được tạo và hình ảnh có tên owl.png đang được tải xuống.</p>
+<p><span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">sudo tail -f /greengrass/v2/logs/com.example.DownloadManager.log</span></p>
+<p>4.3 Theo dõi Tiến trình Tác vụ: Mỗi tài liệu Tác vụ cũng hỗ trợ cập nhật trạng thái thực thi từ cấp độ tác vụ và cấp độ sự vật. Từ AWS Management Console → Jobs → Test-1→ Job executions.</p>
+<p><img src="../../../images/3-BlogsTranslated/3.2-Blog2/IOTB-727-TrackJobExecution.jpg" alt="IOTB-727-TrackJobExecution"></p>
+<p><em>Hình 6 – Theo dõi việc thực hiện công việc</em></p>
+<p>4.4 Để xem trạng thái thực hiện từ thiết bị biên, hãy nhấp vào hộp kiểm cho thiết bị lõi trong phần Thực hiện công việc.<br>
+<img src="../../../images/3-BlogsTranslated/3.2-Blog2/IOTB-727-ExecutionStatus.jpg" alt="IOTB-727-ExecutionStatus">
+<em>Hình 7 – Xem chi tiết trạng thái thực hiện công việc</em><br>
+4.5 Sau khi tệp đã được tải xuống EC2 instance, bạn có thể tìm thấy tệp đó trong thư mục <span style="color: red; background-color: #f2f2f2; padding: 2px 4px; border-radius: 3px;">/opt/downloads/images</span> trong thiết bị lõi.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>sudo su
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># cd /opt/downloads/images/</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># ls -alh</span>
+</span></span><span style="display:flex;"><span>total 1.1M
+</span></span><span style="display:flex;"><span>drwxrwxr-x <span style="color:#ae81ff">2</span> ggc_user ggc_group 4.0K Jun <span style="color:#ae81ff">13</span> 17:10 .
+</span></span><span style="display:flex;"><span>drwx------ <span style="color:#ae81ff">3</span> ggc_user root      4.0K Jun <span style="color:#ae81ff">13</span> 17:10 ..
+</span></span><span style="display:flex;"><span>-rw-rw-r-- <span style="color:#ae81ff">1</span> ggc_user ggc_group 1.1M Jun <span style="color:#ae81ff">13</span> 17:10 owl_logo.png
+</span></span></code></pre></div><h1 id="dọn-dẹp"><strong>Dọn dẹp</strong></h1>
+<p>Để đảm bảo hiệu quả chi phí, blog này sử dụng AWS Free Tier cho tất cả các dịch vụ, ngoại trừ phiên bản EC2 và ổ đĩa EBS được gắn vào phiên bản này. EC2 instance được sử dụng trong ví dụ này yêu cầu On-Demand t3.medium instance theo yêu cầu để chứa cả môi trường phát triển và thiết bị biên được mô phỏng trong cùng một phiên bản EC2 cơ sở. Để biết thêm thông tin, vui lòng tham khảo chi tiết về <a href="https://aws.amazon.com/ec2/pricing/on-demand/">pricing</a>. Sau khi hoàn thành hướng dẫn này, hãy nhớ truy cập AWS Console và xóa các tài nguyên đã tạo trong quá trình này bằng cách làm theo hướng dẫn được cung cấp. Bước này rất quan trọng để tránh phát sinh bất kỳ khoản phí ngoài ý muốn nào trong tương lai.</p>
+<p>Hướng dẫn dọn dẹp:</p>
+<ol>
+<li>Mở S3 từ AWS console và xóa nội dung của Amazon S3 bucket có tên greengrass-artifacts-YOUR_REGION-YOUR_AWS_ACCOUNT_ID và Amazon S3 bucket.</li>
+<li>Mở IoT Core từ AWS console và xóa tất cả các tác vụ khỏi IoT Jobs Manager Dashboard.</li>
+<li>Mở IoT Greengrass từ bảng điều khiển AWS và xóa IoT thing Group, Vật, Chứng chỉ, Chính sách và Vai trò được liên kết với MyGreengrassCore.</li>
+<li>Làm theo hướng dẫn <a href="https://github.com/aws-samples/vscode-on-ec2-for-prototyping/blob/main/README.md#cleanup">cleanup</a> trong kho lưu trữ aws-samples <a href="https://github.com/aws-samples/vscode-on-ec2-for-prototyping/blob/main/README.md">VS Code on EC2 repository</a>.</li>
+</ol>
+<h1 id="tài-liệu-tham-khảo-của-khách-hàng"><strong>Tài liệu tham khảo của khách hàng</strong></h1>
+<p><a href="https://aws.amazon.com/blogs/industries/aws-and-safran-passenger-innovations/">AWS customers</a> đang sử dụng phương pháp này để chuyển tệp từ Amazon S3 sang thiết bị biên.</p>
+<h1 id="kết-luận"><strong>Kết luận</strong></h1>
+<p>Bài đăng trên blog này minh họa cách khách hàng AWS có thể di chuyển dữ liệu hiệu quả từ Amazon S3 sang các thiết bị biên của họ. Các bước được trình bày chi tiết cho phép tải xuống liền mạch các bản cập nhật phần mềm, cập nhật chương trình cơ sở, nội dung và các tệp thiết yếu khác. Khả năng giám sát theo thời gian thực cung cấp khả năng hiển thị và kiểm soát toàn diện mọi hoạt động truyền tệp. Bạn có thể tối ưu hóa hơn nữa hoạt động của mình bằng cách triển khai chức năng <a href="https://aws.amazon.com/blogs/developer/pausing-and-resuming-transfers-using-transfer-manager/">pause and resume</a> được đề cập trong blog. Ngoài ra, bạn có thể sử dụng AWS IoT Greengrass và Amazon S3 Transfer Manager để triển khai luồng dữ liệu ngược từ các thiết bị biên sang Amazon S3. Hơn nữa, thông qua thành phần IoT Greengrass tùy chỉnh, bạn có thể tạo điều kiện thuận lợi cho việc tải lên nhật ký và dữ liệu đo từ xa, mở ra những cơ hội mạnh mẽ cho bảo trì dự đoán, phân tích thời gian thực và thông tin chi tiết dựa trên dữ liệu.</p>
+<h1 id="về-các-tác-giả"><strong>Về các tác giả</strong></h1>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td style="width: 120px; vertical-align: top;">
+<img src="../../../images/3-BlogsTranslated/3.2-Blog2/Tamil_resized.jpg" alt="Dave Jaskie" style="width: 100px; border-radius: 5px;">
+</td>
+<td style="padding-left: 20px; vertical-align: top;">
+<p><strong>Tamil Jayakumar</strong> Tamil Jayakumar là Kiến trúc sư Giải pháp Chuyên biệt &amp; Kỹ sư Nguyên mẫu tại Amazon Web Services. Anh có hơn 14 năm kinh nghiệm trong lĩnh vực phát triển phần mềm, phát triển Proof of Concept, tạo ra các Sản phẩm Khả thi Tối thiểu (MVP) bằng cách sử dụng kỹ năng phát triển ứng dụng và kiến ​​trúc sư giải pháp toàn diện. Anh là một chuyên gia công nghệ thực hành, đam mê giải quyết các thách thức công nghệ bằng các giải pháp sáng tạo cả về phần mềm và phần cứng, kết hợp nhu cầu kinh doanh với năng lực CNTT.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td style="width: 120px; vertical-align: top;">
+<img src="../../../images/3-BlogsTranslated/3.2-Blog2/Rashmi_resized-1.jpg" alt="Dave Jaskie" style="width: 100px; border-radius: 5px;">
+</td>
+<td style="padding-left: 20px; vertical-align: top;">
+<p><strong>Rashmi Varshney</strong> Rashmi Varshney là Kiến trúc sư Giải pháp Cấp cao tại Amazon Web Services, có trụ sở tại Austin. Cô có hơn 20 năm kinh nghiệm, chủ yếu trong lĩnh vực phân tích. Cô đam mê và thích hỗ trợ khách hàng xây dựng chiến lược áp dụng đám mây, thiết kế các giải pháp sáng tạo và thúc đẩy sự xuất sắc trong vận hành. Là thành viên của Cộng đồng Kỹ thuật Phân tích tại AWS, cô tích cực đóng góp vào các nỗ lực hợp tác trong ngành.</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+<table>
+<tr>
+<td style="width: 120px; vertical-align: top;">
+<img src="../../../images/3-BlogsTranslated/3.2-Blog2/Nilo_resized-1.jpg" alt="Dave Jaskie" style="width: 100px; border-radius: 5px;">
+</td>
+<td style="padding-left: 20px; vertical-align: top;">
+<p><strong>Nilo Bustani</strong> Nilo Bustani là Kiến trúc sư Giải pháp Cao cấp tại AWS với hơn 20 năm kinh nghiệm trong lĩnh vực phát triển ứng dụng, kiến ​​trúc đám mây và lãnh đạo kỹ thuật. Cô chuyên hỗ trợ khách hàng xây dựng các chiến lược quan sát và thực hành quản trị mạnh mẽ trên các môi trường đám mây lai và đa đám mây. Cô tận tâm cung cấp cho các tổ chức các công cụ và thực hành cần thiết để thành công trong hành trình chuyển đổi sang đám mây và AI.</p>
+</td>
+</tr>
+</table>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="../../../vi/3-blogstranslated/3.1-blog1/" title="Blog 1 - AWS Fault Injection Service"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="../../../vi/3-blogstranslated/3.3-blog3/" title="Desktop and Application Streaming" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="../../../js/clipboard.min.js?1765285412"></script>
+    <script src="../../../js/perfect-scrollbar.min.js?1765285412"></script>
+    <script src="../../../js/perfect-scrollbar.jquery.min.js?1765285412"></script>
+    <script src="../../../js/jquery.sticky.js?1765285412"></script>
+    <script src="../../../js/featherlight.min.js?1765285412"></script>
+    <script src="../../../js/highlight.pack.js?1765285412"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../../js/modernizr.custom-3.6.0.js?1765285412"></script>
+    <script src="../../../js/learn.js?1765285412"></script>
+    <script src="../../../js/hugo-learn.js?1765285412"></script>
+
+    <link href="../../../mermaid/mermaid.css?1765285412" rel="stylesheet" />
+    <script src="../../../mermaid/mermaid.js?1765285412"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function (i, s, o, g, r, a, m) {
+    i["GoogleAnalyticsObject"] = r;
+    ((i[r] =
+      i[r] ||
+      function () {
+        (i[r].q = i[r].q || []).push(arguments);
+      }),
+      (i[r].l = 1 * new Date()));
+    ((a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]));
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m);
+  })(
+    window,
+    document,
+    "script",
+    "https://www.google-analytics.com/analytics.js",
+    "ga",
+  );
+
+  ga("create", "UA-158079754-2", "auto");
+  ga("send", "pageview");
+</script>
+
+  </body>
+</html>

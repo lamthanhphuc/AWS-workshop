@@ -1,0 +1,2240 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="Hugo 0.152.2">
+    <meta
+  name="description"
+  content=""
+/>
+<meta name="author" content="thienlh@thienlu.com" />
+
+    <link rel="icon" href="../images/favicon.png" type="image/png">
+
+    <title>Proposal :: Internship Report</title>
+
+    
+    <link href="../css/nucleus.css?1765285411" rel="stylesheet">
+    <link href="../css/fontawesome-all.min.css?1765285411" rel="stylesheet">
+    <link href="../css/hybrid.css?1765285411" rel="stylesheet">
+    <link href="../css/featherlight.min.css?1765285411" rel="stylesheet">
+    <link href="../css/perfect-scrollbar.min.css?1765285411" rel="stylesheet">
+    <link href="../css/auto-complete.css?1765285411" rel="stylesheet">
+    <link href="../css/atom-one-dark-reasonable.css?1765285411" rel="stylesheet">
+    <link href="../css/theme.css?1765285411" rel="stylesheet">
+    <link href="../css/hugo-theme.css?1765285411" rel="stylesheet">
+    
+    <link href="../css/theme-workshop.css?1765285411" rel="stylesheet">
+    
+    
+
+    <script src="../js/jquery-3.3.1.min.js?1765285411"></script>
+
+    <style>
+      :root #header + #content > #left > #rlblock_left{
+          display:none !important;
+      }
+      
+    </style>
+    
+
+  </head>
+  <body class="" data-url="../2-proposal/">
+    <nav
+  id="sidebar"
+  class="showVisitedLinks"
+>
+   
+  <div id="header-wrapper">
+    <div id="header"><a id="logo" href="../">
+  <svg
+    id="Layer_1"
+    data-name="Layer 1"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 60 30"
+    width="30%"
+  >
+    <defs>
+      <style>
+        .cls-1 {
+          fill: #fff;
+        }
+        .cls-2 {
+          fill: #f90;
+          fill-rule: evenodd;
+        }
+      </style>
+    </defs>
+    <title>AWS-Logo_White-Color</title>
+    <path
+      class="cls-1"
+      d="M14.09,10.85a4.7,4.7,0,0,0,.19,1.48,7.73,7.73,0,0,0,.54,1.19.77.77,0,0,1,.12.38.64.64,0,0,1-.32.49l-1,.7a.83.83,0,0,1-.44.15.69.69,0,0,1-.49-.23,3.8,3.8,0,0,1-.6-.77q-.25-.42-.51-1a6.14,6.14,0,0,1-4.89,2.3,4.54,4.54,0,0,1-3.32-1.19,4.27,4.27,0,0,1-1.22-3.2A4.28,4.28,0,0,1,3.61,7.75,6.06,6.06,0,0,1,7.69,6.46a12.47,12.47,0,0,1,1.76.13q.92.13,1.91.36V5.73a3.65,3.65,0,0,0-.79-2.66A3.81,3.81,0,0,0,7.86,2.3a7.71,7.71,0,0,0-1.79.22,12.78,12.78,0,0,0-1.79.57,4.55,4.55,0,0,1-.58.22l-.26,0q-.35,0-.35-.52V2a1.09,1.09,0,0,1,.12-.58,1.2,1.2,0,0,1,.47-.35A10.88,10.88,0,0,1,5.77.32,10.19,10.19,0,0,1,8.36,0a6,6,0,0,1,4.35,1.35,5.49,5.49,0,0,1,1.38,4.09ZM7.34,13.38a5.36,5.36,0,0,0,1.72-.31A3.63,3.63,0,0,0,10.63,12,2.62,2.62,0,0,0,11.19,11a5.63,5.63,0,0,0,.16-1.44v-.7a14.35,14.35,0,0,0-1.53-.28,12.37,12.37,0,0,0-1.56-.1,3.84,3.84,0,0,0-2.47.67A2.34,2.34,0,0,0,5,11a2.35,2.35,0,0,0,.61,1.76A2.4,2.4,0,0,0,7.34,13.38Zm13.35,1.8a1,1,0,0,1-.64-.16,1.3,1.3,0,0,1-.35-.65L15.81,1.51a3,3,0,0,1-.15-.67.36.36,0,0,1,.41-.41H17.7a1,1,0,0,1,.65.16,1.4,1.4,0,0,1,.33.65l2.79,11,2.59-11A1.17,1.17,0,0,1,24.39.6a1.1,1.1,0,0,1,.67-.16H26.4a1.1,1.1,0,0,1,.67.16,1.17,1.17,0,0,1,.32.65L30,12.39,32.88,1.25A1.39,1.39,0,0,1,33.22.6a1,1,0,0,1,.65-.16h1.54a.36.36,0,0,1,.41.41,1.36,1.36,0,0,1,0,.26,3.64,3.64,0,0,1-.12.41l-4,12.86a1.3,1.3,0,0,1-.35.65,1,1,0,0,1-.64.16H29.25a1,1,0,0,1-.67-.17,1.26,1.26,0,0,1-.32-.67L25.67,3.64,23.11,14.34a1.26,1.26,0,0,1-.32.67,1,1,0,0,1-.67.17Zm21.36.44a11.28,11.28,0,0,1-2.56-.29,7.44,7.44,0,0,1-1.92-.67,1,1,0,0,1-.61-.93v-.84q0-.52.38-.52a.9.9,0,0,1,.31.06l.42.17a8.77,8.77,0,0,0,1.83.58,9.78,9.78,0,0,0,2,.2,4.48,4.48,0,0,0,2.43-.55,1.76,1.76,0,0,0,.86-1.57,1.61,1.61,0,0,0-.45-1.16A4.29,4.29,0,0,0,43,9.22l-2.41-.76A5.15,5.15,0,0,1,38,6.78a3.94,3.94,0,0,1-.83-2.41,3.7,3.7,0,0,1,.45-1.85,4.47,4.47,0,0,1,1.19-1.37A5.27,5.27,0,0,1,40.51.29,7.4,7.4,0,0,1,42.6,0a8.87,8.87,0,0,1,1.12.07q.57.07,1.08.19t.95.26a4.27,4.27,0,0,1,.7.29,1.59,1.59,0,0,1,.49.41.94.94,0,0,1,.15.55v.79q0,.52-.38.52a1.76,1.76,0,0,1-.64-.2,7.74,7.74,0,0,0-3.2-.64,4.37,4.37,0,0,0-2.21.47,1.6,1.6,0,0,0-.79,1.48,1.58,1.58,0,0,0,.49,1.18,4.94,4.94,0,0,0,1.83.92L44.55,7a5.08,5.08,0,0,1,2.57,1.6A3.76,3.76,0,0,1,47.9,11a4.21,4.21,0,0,1-.44,1.93,4.4,4.4,0,0,1-1.21,1.47,5.43,5.43,0,0,1-1.85.93A8.25,8.25,0,0,1,42.05,15.62Z"
+    ></path>
+    <path
+      class="cls-2"
+      d="M45.19,23.81C39.72,27.85,31.78,30,25,30A36.64,36.64,0,0,1,.22,20.57c-.51-.46-.06-1.09.56-.74A49.78,49.78,0,0,0,25.53,26.4,49.23,49.23,0,0,0,44.4,22.53C45.32,22.14,46.1,23.14,45.19,23.81Z"
+    ></path>
+    <path
+      class="cls-2"
+      d="M47.47,21.21c-.7-.9-4.63-.42-6.39-.21-.53.06-.62-.4-.14-.74,3.13-2.2,8.27-1.57,8.86-.83s-.16,5.89-3.09,8.35c-.45.38-.88.18-.68-.32C46.69,25.8,48.17,22.11,47.47,21.21Z"
+    ></path>
+  </svg>
+</a>
+</div>
+     <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="search" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-times"></i></span>
+</div>
+
+<script type="text/javascript" src="../js/lunr.min.js?1765285411"></script>
+<script type="text/javascript" src="../js/auto-complete.js?1765285411"></script>
+<script type="text/javascript">
+    
+        var baseurl = "https:\/\/thienluhoan.github.io\/workshop-template\/";
+    
+</script>
+<script type="text/javascript" src="../js/search.js?1765285411"></script>
+ 
+  </div>
+
+  <div class="highlightable">
+    <ul class="topics">
+               
+<li
+  data-nav-id="/1-worklog/"
+  title="Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/">
+     <b> 1. </b> Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/1-worklog/1.1-week1/"
+  title="Week 1 Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/1.1-week1/">
+     <b> 1.1. </b> Week 1 Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/1-worklog/1.2-week2/"
+  title="Week 2 Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/1.2-week2/">
+     <b> 1.2. </b> Week 2 Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/1-worklog/1.3-week3/"
+  title="Week 3 Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/1.3-week3/">
+     <b> 1.3. </b> Week 3 Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/1-worklog/1.4-week4/"
+  title="Week 4 Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/1.4-week4/">
+     <b> 1.4. </b> Week 4 Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/1-worklog/1.5-week5/"
+  title="Week 5 Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/1.5-week5/">
+     <b> 1.5. </b> Week 5 Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/1-worklog/1.6-week6/"
+  title="Week 6 Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/1.6-week6/">
+     <b> 1.6. </b> Week 6 Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/1-worklog/1.7-week7/"
+  title="Week 7 Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/1.7-week7/">
+     <b> 1.7. </b> Week 7 Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/1-worklog/1.8-week8/"
+  title="Week 8 Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/1.8-week8/">
+     <b> 1.8. </b> Week 8 Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/1-worklog/1.9-week9/"
+  title="Week 9 Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/1.9-week9/">
+     <b> 1.9. </b> Week 9 Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/1-worklog/1.10-week10/"
+  title="Week 10 Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/1.10-week10/">
+     <b> 1.10. </b> Week 10 Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/1-worklog/1.11-week11/"
+  title="Week 11 Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/1.11-week11/">
+     <b> 1.11. </b> Week 11 Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/1-worklog/1.12-week12/"
+  title="Week 12 Worklog"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../1-worklog/1.12-week12/">
+     <b> 1.12 </b> Week 12 Worklog 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/2-proposal/"
+  title="Proposal"
+  class="dd-item 
+        
+        active
+        
+        "
+>
+  <a href="../2-proposal/">
+     <b> 2. </b> Proposal 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+           
+<li
+  data-nav-id="/3-blogstranslated/"
+  title="Translated Blogs"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../3-blogstranslated/">
+     <b> 3. </b> Translated Blogs 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/3-blogstranslated/3.1-blog1/"
+  title="Blog 1 - AWS Fault Injection Service"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../3-blogstranslated/3.1-blog1/">
+     <b> 3.1. </b> Blog 1 - AWS Fault Injection Service 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/3-blogstranslated/3.2-blog2/"
+  title="Blog 2 - Transfer data from Amazon S3 to IoT Edge device"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../3-blogstranslated/3.2-blog2/">
+     <b> 3.2. </b> Blog 2 - Transfer data from Amazon S3 to IoT Edge device 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/3-blogstranslated/3.3-blog3/"
+  title="Desktop and Application Streaming"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../3-blogstranslated/3.3-blog3/">
+     <b> 3.3. </b> Desktop and Application Streaming 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/4-eventparticipated/"
+  title="Events Participated"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../4-eventparticipated/">
+     <b> 4. </b> Events Participated 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/4-eventparticipated/4.1-event1/"
+  title="Event 1"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../4-eventparticipated/4.1-event1/">
+     <b> 4.1. </b> Event 1 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/4-eventparticipated/4.2-event2/"
+  title="Event 2"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../4-eventparticipated/4.2-event2/">
+     <b> 4.2. </b> Event 2 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/4-eventparticipated/4.3-event3/"
+  title="Event 3"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../4-eventparticipated/4.3-event3/">
+     <b> 4.3. </b> Event 3 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/5-workshop/"
+  title="Workshop"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/">
+     <b> 5. </b> Workshop 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/5-workshop/5.1-workshop-overview/"
+  title="Introduction"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.1-workshop-overview/">
+     <b> 5.1. </b> Introduction 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/5-workshop/5.2-prerequiste/"
+  title="Prerequiste"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.2-prerequiste/">
+    <b> 5.2. </b>Prerequiste 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/5-workshop/5.3-backend/"
+  title="Backend Deployment"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.3-backend/">
+    <b> 5.3. </b>Backend Deployment 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/5-workshop/5.3-backend/5.3.1-amazondynamodb/"
+  title="Amazon DynamoDB"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.3-backend/5.3.1-amazondynamodb/">
+    <b> 5.3.1 </b>Amazon DynamoDB 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/5-workshop/5.3-backend/5.3.2-amazoncognito/"
+  title="Amazon Cognito"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.3-backend/5.3.2-amazoncognito/">
+    <b> 5.3.2 </b>Amazon Cognito 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/5-workshop/5.3-backend/5.3.3-amazons3/"
+  title="Amazon S3"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.3-backend/5.3.3-amazons3/">
+    <b> 5.3.3 </b>Amazon S3 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/5-workshop/5.3-backend/5.3.4-lambdaapigateway/"
+  title="LAMBDA &#43; API GATEWAY"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.3-backend/5.3.4-lambdaapigateway/">
+    <b> 5.3.4 </b>LAMBDA &#43; API GATEWAY 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+    
+            
+<li
+  data-nav-id="/5-workshop/5.4-frontend/"
+  title="Frontend Development"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.4-frontend/">
+     <b> 5.4. </b> Frontend Development 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+  <ul>
+          
+            
+<li
+  data-nav-id="/5-workshop/5.4-frontend/5.4.1-amazonamplify/"
+  title="Amazon Amplify"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.4-frontend/5.4.1-amazonamplify/">
+    <b> 5.4.1 </b>Amazon Amplify 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/5-workshop/5.4-frontend/5.4.2-cloudfrontwaf/"
+  title="Amazon CloudFornt &amp; WAF"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.4-frontend/5.4.2-cloudfrontwaf/">
+    <b> 5.4.2 </b>Amazon CloudFornt &amp; WAF 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/5-workshop/5.4-frontend/5.4.3-route53/"
+  title="Amazon Route53"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.4-frontend/5.4.3-route53/">
+    <b> 5.4.3 </b>Amazon Route53 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+    
+            
+<li
+  data-nav-id="/5-workshop/5.5-ci-cd/"
+  title="CI/CD Pipeline"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.5-ci-cd/">
+     <b> 5.5. </b> CI/CD Pipeline 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/5-workshop/5.6-cloud-watch/"
+  title="Cloud Watch"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.6-cloud-watch/">
+     <b> 5.6. </b> Cloud Watch 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+            
+<li
+  data-nav-id="/5-workshop/5.7-clean-up/"
+  title="Clean Up"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../5-workshop/5.7-clean-up/">
+    <b>5.7. </b>Clean Up 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+     
+  </ul>
+  
+</li>
+           
+<li
+  data-nav-id="/6-self-evaluation/"
+  title="Self-evaluation"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../6-self-evaluation/">
+     <b> 6. </b> Self-evaluation 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+           
+<li
+  data-nav-id="/7-feedback/"
+  title="Feedback &amp; Suggestions"
+  class="dd-item 
+        
+        
+        
+        "
+>
+  <a href="../7-feedback/">
+     <b> 7. </b> Feedback &amp; Suggestions 
+    <i class="fas fa-check read-icon"></i>
+    
+  </a>
+   
+</li>
+    
+    </ul>
+
+     
+    <section id="shortcuts">
+      <h3>
+        More
+      </h3>
+      <ul>
+        
+        <li>
+          <a class="padding" href="https://www.facebook.com/groups/awsstudygroupfcj/"
+            ><i class='fab fa-facebook'></i> AWS Study Group</a
+          >
+        </li>
+        
+      </ul>
+    </section>
+     
+    <section id="prefooter">
+      <hr />
+      <ul>
+        
+        <li>
+          <a class="padding">
+            <i class="fas fa-language fa-fw"></i>
+            <div class="select-style">
+              <select id="select-language" onchange="location = this.value;">
+                       
+                <option
+                  id="en"
+                  value="https://thienluhoan.github.io/workshop-template/2-proposal/"
+                  selected
+                >
+                  English
+                </option>
+                            
+                <option
+                  id="vi"
+                  value="https://thienluhoan.github.io/workshop-template/vi/2-proposal/"
+                >
+                  Tiếng Việt
+                </option>
+                   
+              </select>
+              <svg
+                version="1.1"
+                id="Capa_1"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                x="0px"
+                y="0px"
+                width="255px"
+                height="255px"
+                viewBox="0 0 255 255"
+                style="enable-background: new 0 0 255 255"
+                xml:space="preserve"
+              >
+                <g>
+                  <g id="arrow-drop-down">
+                    <polygon points="0,63.75 127.5,191.25 255,63.75 		" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+          </a>
+        </li>
+         
+        <li>
+          <a class="padding" href="#" data-clear-history-toggle=""
+            ><i class="fas fa-history fa-fw"></i> Clear History</a
+          >
+        </li>
+        
+      </ul>
+    </section>
+    
+    <section id="footer"><left>
+    
+    <b> Workshop</b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7920860&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Migrate" Alt="web counter" border="0" /></a> <br>
+    <b> <a href="https://cloudjourney.awsstudygroup.com/">Cloud Journey</a></b> <br>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=7830807&style=0038&nbdigits=9&type=page&initCount=0"
+        title="Total CLoud Journey" Alt="web counter" border="0" />
+
+</left>
+<left>
+    <br>
+    <br>
+    <b>Last Updated</b><br>
+    <i>
+        <span id="lastUpdated" style="color:orange;"></span>
+    </i>
+
+    <script>
+        
+        const today = new Date();
+        
+        const formattedDate = today.toLocaleDateString('en-GB');
+        
+        document.getElementById('lastUpdated').textContent = formattedDate;
+    </script>
+</left>
+<left>
+    <br>
+    <br>
+    <b> Team </b> <br>
+
+    <i> <a href="https://www.facebook.com/groups/660548818043427" style="color:orange">First Cloud Journey </a> <br>
+
+    </i>
+</left>
+
+<script async defer src="https://buttons.github.io/buttons.js"></script></section>
+  </div>
+</nav>
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable">
+              
+              <div>
+                <div id="top-bar">
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fas fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fas fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                 
+                 
+                    
+          
+          
+            
+            
+          
+          
+            <a href='../'>Internship Report</a> > Proposal
+          
+        
+          
+        
+                 
+                  </span>
+                </div>
+                
+                    <div class="progress">
+  <div class="wrapper"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#1-executive-summary">1. Executive Summary</a></li>
+        <li><a href="#2-problem-statement">2. Problem Statement</a></li>
+        <li><a href="#3-solution-architecture">3. Solution Architecture</a></li>
+        <li><a href="#4-technical-implementation">4. Technical Implementation</a></li>
+        <li><a href="#5-roadmap--milestones">5. Roadmap &amp; Milestones</a></li>
+        <li><a href="#6-budget-estimate">6. Budget Estimate</a></li>
+        <li><a href="#7-risk-assessment">7. Risk Assessment</a></li>
+        <li><a href="#8-expected-results">8. Expected Results</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+</div>
+
+                
+              </div>
+            </div>
+            
+        <div id="head-tags">
+        
+        </div>
+        
+        <div id="body-inner">
+          
+            <h1>
+              
+              Proposal
+            </h1>
+          
+
+        
+
+
+
+	<h1 id="serverless-student-management-system">Serverless Student Management System</h1>
+<p>This is the DOCX version of the proposal. Download the <a href="../document/ProposalTemplate.docx">Proposal</a> to view more details.</p>
+<h3 id="1-executive-summary">1. Executive Summary</h3>
+<p>Serverless Student Management Platform is a cloud-based student management platform designed for educational institutions and small businesses to enhance the ability to manage, analyze, and interact with student data. The platform supports up to 50-100 students initially, with the ability to flexibly scale up to 500–1000 students without major infrastructure changes, using AWS Serverless services such as Lambda, DynamoDB, API Gateway.</p>
+<h3 id="2-problem-statement">2. Problem Statement</h3>
+<p><strong>Current Problem</strong></p>
+<p>Current student management systems require manual data entry, which is difficult to manage when there are many classes. There is no centralized system for real-time data or analytics, and third-party platforms are often expensive and too complex.</p>
+<p><strong>Solution</strong></p>
+<p>The platform uses Amazon API Gateway to receive REST requests, AWS Lambda to handle business logic, Amazon DynamoDB to store student data and scores. AWS Amplify with React/TypeScript provides the web interface, and Amazon Cognito ensures secure access. Similar to traditional LMS systems but at a lower cost, users can register new students and manage information, but the platform operates at a smaller scale and serves learning purposes.</p>
+<p><strong>Benefits and ROI</strong></p>
+<p>The solution creates a basic foundation for IT students to develop serverless AWS skills, while providing effective management tools for teachers to support teaching and assessment. The platform reduces manual reporting for each class through a centralized system, simplifies management and maintenance, and improves data reliability. The estimated monthly cost is $7-20 USD according to the detailed budget estimate, totaling $40-60 USD for 3 months.</p>
+<h3 id="3-solution-architecture">3. Solution Architecture</h3>
+<p>The system is designed according to the AWS Well-Architected Framework architecture with interconnected layers, ensuring data management, authentication, and monitoring capabilities. The serverless architecture helps optimize costs and ensure automatic scalability.</p>
+<!-- ![Cloud Security & Monitoring System Architecture](/images/2-Proposal/edge_architecture.jpeg) -->
+<p><img src="../images/2-Proposal/Solution.drawio.png" alt="Platform Architecture Diagram"></p>
+<h4 id="aws-core-services-used">AWS Core Services Used</h4>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Services</strong></th>
+          <th><strong>Key Features</strong></th>
+          <th><strong>Key Benefits</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Amazon Route 53</strong></td>
+          <td>Manage DNS and route traffic to CloudFront</td>
+          <td>Set up custom domains, health checks, geo-routing, SSL integration to ensure secure and fast access.</td>
+      </tr>
+      <tr>
+          <td><strong>Amazon CloudFront</strong></td>
+          <td>CDN delivery for static content and frontend resources</td>
+          <td>Global latency reduction, caching at edge locations, HTTPS support, WAF integration for protection and OAC for S3.</td>
+      </tr>
+      <tr>
+          <td><strong>AWS WAF</strong></td>
+          <td>Firewall to protect web applications from attacks</td>
+          <td>Block malicious requests, rate limiting, IP filtering, seamless integration with CloudFront to secure traffic.</td>
+      </tr>
+      <tr>
+          <td><strong>AWS Amplify</strong></td>
+          <td>Frontend hosting and deployment with CI/CD</td>
+          <td>Build and deploy web applications quickly, integrate with Cognito/AppSync for user-friendly interface.</td>
+      </tr>
+      <tr>
+          <td><strong>Amazon API Gateway</strong></td>
+          <td>Handle and route API requests from frontend to backend</td>
+          <td>Support REST/HTTP APIs, throttling, caching, and authorizer for increased performance and security.</td>
+      </tr>
+      <tr>
+          <td><strong>Amazon Cognito</strong></td>
+          <td>Manage user authentication and authorization</td>
+          <td>Support MFA, JWT tokens, groups for permissions (teacher/admin vs. student), easy integration with AppSync/API Gateway.</td>
+      </tr>
+      <tr>
+          <td><strong>AWS Lambda</strong></td>
+          <td>Execute backend logic and event handling</td>
+          <td>Serverless, auto-scaling, pay-per-use, CRUD processing.</td>
+      </tr>
+      <tr>
+          <td><strong>Amazon DynamoDB</strong></td>
+          <td>NoSQL data storage for student information and assignments</td>
+          <td>Fast query, auto-scaling, Global Secondary Indexes (GSI) support for complex searches and low cost.</td>
+      </tr>
+      <tr>
+          <td><strong>Amazon CloudWatch</strong></td>
+          <td>Monitor logs, metrics, and system alarms</td>
+          <td>Real-time monitoring, set alarms to detect problems early, integrate with Lambda/DynamoDB for optimization.</td>
+      </tr>
+      <tr>
+          <td><strong>Amazon S3</strong></td>
+          <td>Store artifacts and builds from CI/CD</td>
+          <td>Cheap, highly sustainable static file hosting, integrated with CodePipeline to store deployed artifacts.</td>
+      </tr>
+      <tr>
+          <td><strong>GitLab</strong></td>
+          <td>Manage source code and trigger CI/CD pipeline</td>
+          <td>Version control (GitLab.com or self-hosted), merge requests, issue tracking, webhooks integrated with CodePipeline to automate deployment.</td>
+      </tr>
+      <tr>
+          <td><strong>AWS CodePipeline</strong></td>
+          <td>Orchestrate CI/CD pipeline from source to deploy</td>
+          <td>Automate the entire process from GitLab to production, integrated with CodeBuild/CodeDeploy, support approvals and notifications.</td>
+      </tr>
+      <tr>
+          <td><strong>AWS CodeBuild</strong></td>
+          <td>Build and test code from GitLab repository</td>
+          <td>Automatically compile, package artifacts, run unit tests in pipeline, support multi-environment builds.</td>
+      </tr>
+      <tr>
+          <td><strong>AWS CodeDeploy</strong></td>
+          <td>Deploy applications to AWS services</td>
+          <td>Support blue/green deployment, automatic rollback, zero-downtime deployments for Lambda/Amplify.</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="component-design">Component Design</h4>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Layer</strong></th>
+          <th><strong>Main Components</strong></th>
+          <th><strong>Functionality</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Edge Layer</strong></td>
+          <td>Route53, CloudFront, WAF</td>
+          <td>DNS, CDN, security layer</td>
+      </tr>
+      <tr>
+          <td><strong>Frontend Layer</strong></td>
+          <td>Amplify, Cognito</td>
+          <td>Web interface, authentication</td>
+      </tr>
+      <tr>
+          <td><strong>Backend Layer</strong></td>
+          <td>API Gateway, Lambda, DynamoDB</td>
+          <td>Logic processing, CRUD, data storage</td>
+      </tr>
+      <tr>
+          <td><strong>Monitoring Layer</strong></td>
+          <td>CloudWatch</td>
+          <td>Logs, metrics, alerts</td>
+      </tr>
+      <tr>
+          <td><strong>CI/CD Layer</strong></td>
+          <td>GitLab, CodePipeline, CodeBuild, CodeDeploy, S3</td>
+          <td>Build &amp; deploy automation</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="main-flow-annotation">Main Flow Annotation</h4>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Flow</strong></th>
+          <th><strong>Description</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>(1)</strong></td>
+          <td>User accesses via Route53 → CloudFront → Amplify (frontend).</td>
+      </tr>
+      <tr>
+          <td><strong>(2)</strong></td>
+          <td>Amplify communicates with API Gateway to send/receive data.</td>
+      </tr>
+      <tr>
+          <td><strong>(3.1)</strong></td>
+          <td>API Gateway → Lambda to handle logic (CRUD, etc.).</td>
+      </tr>
+      <tr>
+          <td><strong>(3.2)</strong></td>
+          <td>Cognito authenticates and returns tokens.</td>
+      </tr>
+      <tr>
+          <td><strong>(4)</strong></td>
+          <td>Dev pushes code to GitLab → CodePipeline pull → CodeBuild/CodeDeploy → Amplify/Lambda.</td>
+      </tr>
+      <tr>
+          <td><strong>(5)</strong></td>
+          <td>CloudWatch collects logs and metrics.</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="4-technical-implementation">4. Technical Implementation</h3>
+<h4 id="implementation-phases">Implementation Phases</h4>
+<p>The project was implemented in <strong>5 weeks</strong> with 5 main phases:</p>
+<ol>
+<li><strong>Week 1 - Foundation Setup</strong></li>
+</ol>
+<ul>
+<li><strong>Days 1-2</strong>: Set up AWS account, configure IAM roles/policies, set up billing alerts</li>
+<li><strong>Days 3-4</strong>: Create DynamoDB tables (Students, Courses, Grades, Assignments) with GSI, configure Cognito User Pools with groups (Admin/Teacher/Student)</li>
+<li><strong>Days 5-7</strong>: Initialize IaC templates (AWS CDK/CloudFormation), research serverless patterns, design detailed architecture with sequence diagrams, setup Git repo structure for parallel development</li>
+</ul>
+<ol start="2">
+<li><strong>Week 2 - Backend &amp; Frontend Parallel (Parallel Development Phase 1)</strong></li>
+</ol>
+<ul>
+<li><strong>Backend Team (Day 1-7)</strong>:</li>
+<li>Build 50+ Lambda functions for: Students (CRUD, search, bulk import/export), Courses (CRUD, enrollment), Grades (CRUD, analytics, statistics), Assignments (CRUD, submissions), Auth (login, registration, refresh token)</li>
+<li>Set up API Gateway with 50+ REST endpoints: <code>/students/*</code> (10 endpoints), <code>/courses/*</code> (8 endpoints), <code>/grades/*</code> (12 endpoints), <code>/assignments/*</code> (8 endpoints)</li>
+<li>Unit testing with 80%+ coverage</li>
+<li><strong>Frontend Team (July 1)</strong>:</li>
+<li>Deploy Amplify hosting with React/TypeScript, setup routing (React Router)</li>
+<li>Build UI components: Layout (Header, Sidebar, Footer), Authentication (Login, Register), Dashboard (Overview, Stats cards)</li>
+<li>Setup API client (Axios/Fetch), state management (Redux/Zustand), form validation (React Hook Form)</li>
+</ul>
+<ol start="3">
+<li><strong>Week 3 - Backend &amp; Frontend Parallel (Parallel Development Phase 2)</strong></li>
+</ol>
+<ul>
+<li><strong>Backend Team (Day 1-7)</strong>:</li>
+<li>Integrate Lambda handlers for automated workflows</li>
+<li>Integration testing with Postman/SWAGGER</li>
+<li><strong>Frontend Team (July 1)</strong>:</li>
+<li>Build 15+ pages: Student Management (List, Create, Edit, Detail, Import), Course Management (List, Create, Edit, Enrollment), Grade Management (List, Input, Analytics), Assignment (List, Submit, Review)</li>
+<li><strong>Integration (Days 6-7)</strong>:</li>
+<li>Connect CloudFront CDN with Route53, configure WAF rules (rate limiting, geo-blocking), SSL/TLS certificates</li>
+<li>End-to-end testing between Frontend and Backend</li>
+</ul>
+<ol start="4">
+<li><strong>Week 4 - CI/CD with CodeBuild, CodeDeploy, CodePipeline</strong></li>
+</ol>
+<ul>
+<li><strong>Day 1-2</strong>: Learn and configure AWS CodeBuild for frontend and backend (buildspec, build environment, save artifacts to S3)</li>
+<li><strong>Day 3-4</strong>: Set up AWS CodePipeline to automate the build and deploy process from GitLab to AWS environment (connect stages: source, build, deploy)</li>
+<li><strong>Day 5-6</strong>: Configure AWS CodeDeploy to deploy backend (Lambda or EC2) and frontend (Amplify or S3), test the automated deployment process</li>
+<li><strong>Day 7</strong>: Test the entire pipeline, ensure the build, automated deployment works stably, record results and optimize the pipeline</li>
+</ul>
+<ol start="5">
+<li><strong>Week 5 - Testing &amp; Demo (Testing &amp; Launch)</strong></li>
+</ol>
+<ul>
+<li><strong>Day 1-2</strong>: End-to-end testing (user flows, edge cases), load testing with 100+ concurrent users</li>
+<li><strong>Day 3-4</strong>: Performance optimization (Lambda memory tuning, DynamoDB capacity adjustment, CloudFront caching)</li>
+<li><strong>Day 5-6</strong>: Complete documentation (architecture diagrams, API docs, deployment guide, user manual)</li>
+<li><strong>Day 7</strong>: Demo preparation, presentation slides, video recording</li>
+</ul>
+<h4 id="technical-requirements">Technical Requirements</h4>
+<p><strong>Student Management System</strong>: Full web dashboard with 5 main modules (Students, Courses, Grades, Assignments). Frontend React/TypeScript running on Amplify Hosting with 15+ pages and 50+ components. Cognito authenticates and authorizes all users, including 5-10 admins/teachers (with high permissions like CRUD data) and students (with limited permissions like viewing scores, classes).</p>
+<p><strong>Comprehensive API architecture</strong>: 50+ REST API endpoints via API Gateway (CRUD operations, search, bulk actions). Backend built in parallel with Frontend to optimize development time.</p>
+<p><strong>Smart Analytics Platform</strong>: Practical knowledge of AWS Amplify (hosting React), Lambda (50+ business processing functions), DynamoDB (5 tables with GSI). Use AWS CDK/SDK for IaC programming and automation. Parallel development methodology with Git branching strategy for Backend/Frontend teams.</p>
+<h3 id="5-roadmap--milestones">5. Roadmap &amp; Milestones</h3>
+<p>To fit the internship time, the project is implemented in <strong>5 weeks</strong> with 5 main phases:</p>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Phase</strong></th>
+          <th><strong>Time</strong></th>
+          <th><strong>Main Objective</strong></th>
+          <th><strong>Deliverables</strong></th>
+          <th><strong>Success Criteria</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>1: Setting up the foundation</strong></td>
+          <td>Week 1</td>
+          <td>Setting up the AWS environment</td>
+          <td>• AWS account with IAM setup<br>• 7 DynamoDB tables with GSI<br>• Cognito User Pool<br>• IaC templates (CDK/CloudFormation)<br>• Git repo structure</td>
+          <td>• Infrastructure as Code complete<br>• Security baseline up to standard<br>• Parallel dev environment ready</td>
+      </tr>
+      <tr>
+          <td><strong>2: Backend &amp; Frontend Parallel (Phase 1)</strong></td>
+          <td>Week 2</td>
+          <td>Build core Backend + Frontend foundation</td>
+          <td>• 50+ Lambda functions<br>• API Gateway with 50+ REST endpoints<br>• React/TypeScript app foundation<br>• 10+ UI components<br>• Unit tests (&gt;80% coverage)</td>
+          <td>• 50+ active API endpoints<br>• API response time &lt;500ms<br>• Frontend routing setup<br>• All backend tests passed</td>
+      </tr>
+      <tr>
+          <td><strong>3: Backend &amp; Frontend Parallel (Phase 2)</strong></td>
+          <td>Week 3</td>
+          <td>Integrating Lambda workflows &amp; integration testing</td>
+          <td>• Integrating Lambda handlers for automated workflows<br>• Integration testing with Postman/SWAGGER<br>• 15+ complete pages<br>• CloudFront + Route53 + WAF<br>• Responsive design</td>
+          <td>• Automated workflows work well<br>• Integration tested with Postman/SWAGGER<br>• All pages integrated with backend<br>• SSL/HTTPS enabled<br>• Mobile responsive</td>
+      </tr>
+      <tr>
+          <td><strong>4: CI/CD with CodeBuild, CodeDeploy, CodePipeline</strong></td>
+          <td>Week 4</td>
+          <td>Set up and test automated CI/CD process</td>
+          <td>• Configure CodeBuild for frontend/backend<br>• Set up CodePipeline connecting GitLab, CodeBuild, CodeDeploy<br>• Test automated deployment for backend/frontend</td>
+          <td>• Build and deploy automation work well<br>• Artifacts stored correctly<br>• Pipeline optimized</td>
+      </tr>
+      <tr>
+          <td><strong>5: Test &amp; Demo</strong></td>
+          <td>Week 5</td>
+          <td>Test and finalize</td>
+          <td>• Load test reports (50+ users)<br>• Performance optimization<br>• Complete documentation<br>• Demo video + slides</td>
+          <td>• System uptime ≥99%<br>• All features stable<br>• Documentation complete<br>• Demo ready</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="6-budget-estimate">6. Budget Estimate</h3>
+<p>Download <a href="../images/2-Proposal/MyEstimate.pdf">budget estimate file</a> for detailed cost information.</p>
+<h4 id="infrastructure-costs">Infrastructure Costs</h4>
+<p><strong>AWS Services:</strong></p>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Services</strong></th>
+          <th><strong>Usage Description</strong></th>
+          <th><strong>Estimated Cost / Month (USD)</strong></th>
+          <th><strong>Notes</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Amazon API Gateway</strong></td>
+          <td>Handles ~100k-500k API calls/month</td>
+          <td>$3.8</td>
+          <td>HTTP APIs, REST APIs, first 1M calls free</td>
+      </tr>
+      <tr>
+          <td><strong>AWS Lambda</strong></td>
+          <td>~200k-500k requests, 100k-200k GB-sec</td>
+          <td>$0.5</td>
+          <td>Requests, GB-sec, 1M requests + 400k GB-sec free</td>
+      </tr>
+      <tr>
+          <td><strong>Amazon DynamoDB</strong></td>
+          <td>~5-10 GB storage, 250k-500k reads/writes</td>
+          <td>$1</td>
+          <td>Reads, Writes, Storage, 25 GB + 25 RCU/WCU free</td>
+      </tr>
+      <tr>
+          <td><strong>Amazon Cognito</strong></td>
+          <td>~100-200 monthly active users</td>
+          <td>$0</td>
+          <td>First 10k users free</td>
+      </tr>
+      <tr>
+          <td><strong>Amazon S3</strong></td>
+          <td>~5 GB storage, low requirements</td>
+          <td>$0.13</td>
+          <td>Storage, requests, free credits available</td>
+      </tr>
+      <tr>
+          <td><strong>Amazon CloudWatch</strong></td>
+          <td>~5 GB logs, 10 metrics/alarms</td>
+          <td>$4</td>
+          <td>Logs, metrics, alarms, 5 GB free</td>
+      </tr>
+      <tr>
+          <td><strong>AWS Amplify</strong></td>
+          <td>Dashboard hosting, few builds/month</td>
+          <td>$1</td>
+          <td>Build minutes, storage, free credits available</td>
+      </tr>
+      <tr>
+          <td><strong>Amazon Route 53</strong></td>
+          <td>DNS queries, storage zones</td>
+          <td>$1</td>
+          <td>Storage zone, DNS queries</td>
+      </tr>
+      <tr>
+          <td><strong>AWS WAF</strong></td>
+          <td>Web ACL Assessment, Rules</td>
+          <td>$7</td>
+          <td>Web ACL, rules, rule management costs extra</td>
+      </tr>
+      <tr>
+          <td><strong>AWS CodeBuild</strong></td>
+          <td>~10 builds/month, 100 minutes</td>
+          <td>$0.9</td>
+          <td>$0.005/min build, 100 minutes/month free</td>
+      </tr>
+      <tr>
+          <td><strong>AWS CodeDeploy</strong></td>
+          <td>Application Deployment</td>
+          <td>$0.8</td>
+          <td>EC2/on-premises, serverless free</td>
+      </tr>
+      <tr>
+          <td><strong>Amazon CloudFront</strong></td>
+          <td>Static Content Delivery CDN</td>
+          <td>$1</td>
+          <td>First 1 TB/month free, $0.085/GB thereafter</td>
+      </tr>
+      <tr>
+          <td><strong>AWS CodePipeline</strong></td>
+          <td>CI/CD automation (GitLab → CodeBuild → CodeDeploy)</td>
+          <td>$1</td>
+          <td>$1/month for each active pipeline</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="estimated-total">Estimated total</h4>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Total cost / month (estimated)</strong></th>
+          <th><strong>3-month total (estimated)</strong></th>
+          <th><strong>With AWS Free Tier</strong></th>
+          <th><strong>Notes</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>~$7 – $20 / month</strong></td>
+          <td><strong>~$40 – $60 / 3 months</strong></td>
+          <td><strong>~$15 – $30 / 3 months</strong></td>
+          <td>Depends on actual usage. Take advantage of Free Tier (first year) + AWS Educate credits to reduce costs by 50%.</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="note">Note</h4>
+<ul>
+<li>All core services are included in the first year free plan.</li>
+<li>Additional discounts may apply if using AWS Educate / Student Credits.</li>
+</ul>
+<h3 id="7-risk-assessment">7. Risk Assessment</h3>
+<p>Based on the NIST Risk Management Framework, the project team identified key risks and mitigation measures.</p>
+<table>
+  <thead>
+      <tr>
+          <th><strong>Risk Code</strong></th>
+          <th><strong>Description</strong></th>
+          <th><strong>Level</strong></th>
+          <th><strong>Mitigation</strong></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>R1 – Data Leakage</strong></td>
+          <td>Data exposure due to incorrect configuration</td>
+          <td><strong>High</strong></td>
+          <td>Apply Cognito auth, IAM least privilege, DynamoDB encryption</td>
+      </tr>
+      <tr>
+          <td><strong>R2 – API Overload</strong></td>
+          <td>Too many requests causing slowness</td>
+          <td><strong>Medium</strong></td>
+          <td>Throttling API Gateway/AppSync, CloudWatch alarms</td>
+      </tr>
+      <tr>
+          <td><strong>R3 – Lambda Cold Start</strong></td>
+          <td>Delay when invoking</td>
+          <td><strong>Medium</strong></td>
+          <td>Optimize code, Provisioned Concurrency if needed</td>
+      </tr>
+      <tr>
+          <td><strong>R4 – Cost Overrun</strong></td>
+          <td>Unusual usage increase (high emails)</td>
+          <td><strong>Medium</strong></td>
+          <td>AWS Budgets alerts, monitor Cost Explorer</td>
+      </tr>
+      <tr>
+          <td><strong>R5 – Service Downtime</strong></td>
+          <td>AWS Outage</td>
+          <td><strong>Low</strong></td>
+          <td>Multi-AZ config, backups DynamoDB</td>
+      </tr>
+  </tbody>
+</table>
+<p><strong>Contingency Plan (Summary):</strong></p>
+<ul>
+<li>
+<p>Recovery: Use CloudFormation to quickly recreate infrastructure in the event of a failure or deployment error.</p>
+</li>
+<li>
+<p>Monitoring &amp; Alerting: Set up CloudWatch alarms to detect performance, security, and cost issues early, send email notifications to the operations team.</p>
+</li>
+<li>
+<p>Continuous Improvement: Periodically evaluate CI/CD processes, automate testing, optimize pipelines, and update documentation to ensure the system is always stable and easy to maintain.</p>
+</li>
+</ul>
+<h3 id="8-expected-results">8. Expected Results</h3>
+<p><strong>Technical Results:</strong></p>
+<ul>
+<li>
+<p>Complete a serverless student management system with an automated CI/CD process, ensuring fast and stable build, test, and deployment.</p>
+</li>
+<li>
+<p>API fully supports student management functions, integrates Lambda workflows, integration testing with Postman/SWAGGER.</p>
+</li>
+<li>
+<p>Modern frontend with React/TypeScript, 15+ pages, 50+ UI components, realtime connection with backend.</p>
+</li>
+<li>
+<p>Integrates key AWS services: API Gateway, Lambda, DynamoDB, Cognito, S3, Amplify, CloudWatch, Route53, CloudFront, WAF, CodePipeline, CodeBuild, CodeDeploy.</p>
+</li>
+<li>
+<p>Performance: API response &lt;500ms, uptime ≥99%, CI/CD process optimizes cost and deployment time.</p>
+</li>
+<li>
+<p>Actual cost: $7-20/month, total ~$21-60 for 3 months (can be reduced to $15-30 with AWS Free Tier and Educate credits).</p>
+</li>
+</ul>
+<p><strong>Long-term value:</strong></p>
+<ul>
+<li>Easily expandable to mobile apps or advanced AI/analytics integration.</li>
+<li>A practice and training platform for serverless, CI/CD, and DevOps for students and small businesses.</li>
+</ul>
+
+
+
+
+
+<footer class=" footline" >
+	
+</footer>
+
+        
+        </div> 
+        
+
+      </div>
+
+    <div id="navigation">
+        
+        
+        
+        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                        
+                        
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                        
+                    
+                    
+
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+                        
+            
+            
+                
+                    
+                
+                
+
+                    
+                    
+                    
+
+                    
+            
+        
+                    
+            
+        
+        
+        
+
+
+	 
+	 
+		
+			<a class="nav nav-prev" href="../1-worklog/1.12-week12/" title="Week 12 Worklog"> <i class="fa fa-chevron-left"></i></a>
+		
+		
+			<a class="nav nav-next" href="../3-blogstranslated/" title="Translated Blogs" style="margin-right: 0px;"><i class="fa fa-chevron-right"></i></a>
+		
+	
+    </div>
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="../js/clipboard.min.js?1765285411"></script>
+    <script src="../js/perfect-scrollbar.min.js?1765285411"></script>
+    <script src="../js/perfect-scrollbar.jquery.min.js?1765285411"></script>
+    <script src="../js/jquery.sticky.js?1765285411"></script>
+    <script src="../js/featherlight.min.js?1765285411"></script>
+    <script src="../js/highlight.pack.js?1765285411"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../js/modernizr.custom-3.6.0.js?1765285411"></script>
+    <script src="../js/learn.js?1765285411"></script>
+    <script src="../js/hugo-learn.js?1765285411"></script>
+
+    <link href="../mermaid/mermaid.css?1765285411" rel="stylesheet" />
+    <script src="../mermaid/mermaid.js?1765285411"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <script>
+  (function (i, s, o, g, r, a, m) {
+    i["GoogleAnalyticsObject"] = r;
+    ((i[r] =
+      i[r] ||
+      function () {
+        (i[r].q = i[r].q || []).push(arguments);
+      }),
+      (i[r].l = 1 * new Date()));
+    ((a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]));
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m);
+  })(
+    window,
+    document,
+    "script",
+    "https://www.google-analytics.com/analytics.js",
+    "ga",
+  );
+
+  ga("create", "UA-158079754-2", "auto");
+  ga("send", "pageview");
+</script>
+
+  </body>
+</html>
