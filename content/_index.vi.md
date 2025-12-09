@@ -23,7 +23,7 @@ chapter: false
 
 &emsp; **Thời gian thực tập:** Từ ngày 08/09/2025 đến ngày 09/12/2025
 
-![Ảnh đại diện của bạn](/images/avatar.jpg)
+![Ảnh đại diện của bạn](/images/avatar1.jpg)
 
 
 
