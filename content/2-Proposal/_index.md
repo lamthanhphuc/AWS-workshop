@@ -8,6 +8,8 @@ pre: " <b> 2. </b> "
 
 # Serverless Student Management System
 
+Download [Proposal Template](/document/ProposalTemplate.docx) for detailed cost information.
+
 ### 1. Executive Summary
 
 Serverless Student Management Platform is a cloud-based student management platform designed for educational institutions and small businesses to enhance the ability to manage, analyze, and interact with student data. The platform supports up to 50-100 students initially, with the ability to flexibly scale up to 500–1000 students without major infrastructure changes, using AWS Serverless services such as Lambda, DynamoDB, API Gateway.

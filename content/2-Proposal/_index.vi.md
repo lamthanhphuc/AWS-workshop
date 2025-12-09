@@ -8,6 +8,8 @@ pre: " <b> 2. </b> "
 
 # Serverless Student Management System
 
+Download [Proposal Template](/document/ProposalTemplate.docx) for detailed cost information.
+
 ### 1. Tóm tắt điều hành
 
 Serverless Student Management Platform là nền tảng quản lý sinh viên dựa trên đám mây, được thiết kế dành cho các tổ chức giáo dục và doanh nghiệp nhỏ nhằm nâng cao khả năng quản lý, phân tích và tương tác với dữ liệu sinh viên. Nền tảng hỗ trợ tối đa 50-100 sinh viên ban đầu, với khả năng mở rộng linh hoạt lên đến 500–1000 sinh viên mà không cần thay đổi hạ tầng lớn, nhờ sử dụng các dịch vụ AWS Serverless như Lambda, DynamoDB, API Gateway.
